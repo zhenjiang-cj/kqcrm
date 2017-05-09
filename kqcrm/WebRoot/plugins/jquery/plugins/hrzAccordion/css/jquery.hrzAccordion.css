@@ -1,0 +1,131 @@
+/* hide container until all is ready */
+.news {
+    display: none;
+    margin:0;
+    padding:0;
+    width:100%;
+}
+
+/*Main Container*/
+.container {
+    width: 100%;
+
+}
+
+.container ul {
+
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+}
+
+.container li {
+    display: inline;
+    margin: 0;
+}
+
+/*Content Container*/
+.contentContainer {
+    padding-left: 0;
+    float: left;
+    width: 0;
+    height: 310px;
+    overflow: hidden;
+}
+
+.contentWrapper {
+
+}
+
+.contentInnerWrapper {
+    text-align: justify;
+    padding: 0 1px 0 15px;
+}
+
+/* Handle*/
+.handle {
+    float: left;
+    width: 38px;
+    height: 310px;
+    margin: 1px -10px 1px 1px;
+    background: url(./hrzAccordio/blade.png) no-repeat;
+    _background: url(./hrzAccordio/blade.jpg) no-repeat;
+    cursor: pointer;
+    z-index: 999
+}
+
+.handleOver {
+    background: url(./hrzAccordio/blade_sel.png) no-repeat;
+    _background: url(./hrzAccordio/blade_sel.jpg) no-repeat;
+    cursor: pointer;
+    z-index: 999
+}
+
+.handleSelected {
+    background: url(./hrzAccordio/blade_sel.png) no-repeat;
+    _background: url(./hrzAccordio/blade_sel.jpg) no-repeat;
+    cursor: pointer;
+    z-index: 999
+}
+
+/*EXTRAS*/
+.contentWrapper h3 {
+    FILTER: progid:DXImageTransform.Microsoft.Alpha(style=3,opacity=100,finishOpacity=30,startX=100,finishX=310,startY=400,finishY=500); BACKGROUND-COLOR: #e4fab3;
+    border-bottom: 1px solid silver;
+    text-align: center;
+    width: 100%;
+    height: 20px;
+    font: 16px 'ËÎÌו';
+    font-weight: bold;
+    color: #555;
+    letter-spacing: 5px;
+}
+
+p.content {
+    padding: 0 10px;
+    text-indent: 10px;
+    z-index: 1;
+}
+
+.news div.box {
+    background: #000;
+    filter: Alpha(opacity = 0);
+    -moz-opacity: 0.01;
+    opacity: 0.01;
+    height: 300px;
+    width: 330px;;
+    z-index: 100;
+    position: absolute;
+    top: 20px;
+    left: 100px;
+}
+
+.ie6 .handle {
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 16px;
+    BACKGROUND: url(./hrzAccordio/blade_grey2.png) no-repeat;
+    FLOAT: left;
+    MARGIN: 1px;
+    VERTICAL-ALIGN: middle;
+    WIDTH: 32px;
+    COLOR: #9e9e9e;
+    HEIGHT: 310px;
+    TEXT-ALIGN: center
+}
+
+.ie6 .contentContainer {
+    BACKGROUND: url(./hrzAccordio/blade_grey2.png) repeat-x
+}
+
+.ie6 .handleOver {
+    BACKGROUND: url(./hrzAccordio/blade_grey2.png) no-repeat
+}
+
+.ie6 .handleSelected {
+    BACKGROUND: url(./hrzAccordio/blade_grey2.png) no-repeat
+}
+
+.test4 .handleInnerWrapper {
+    PADDING-TOP: 149px
+}

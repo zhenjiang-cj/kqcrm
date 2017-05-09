@@ -1,0 +1,40 @@
+button#mArea div {
+	margin-top: -2px;
+	white-space: nowrap;
+}
+
+button#mArea {
+	display: none;
+	padding: 0 10px;
+	border: 0 none;
+	line-height: 24px;
+	height: 24px;
+	background: url(../images/show/btn_green.png) no-repeat 0 0;
+	_background: url(../images/show/btn_green.gif) no-repeat 0 0;
+	position: relative;
+	color: #555;
+	font-weight: bold;
+	float: right;
+}
+
+button#mArea b {
+	position: absolute;
+	right: -7px;
+	top: 0;
+	display: block;
+	height: 24px;
+	width: 7px;
+	background: url(../images/show/btn_green.png) no-repeat right -24px;
+	_background: url(../images/show/btn_green.gif) no-repeat right -24px;
+	font-weight: normal;
+}
+
+.btn_green {
+	background-image: url(../images/show/btn_green.png) !important;
+	_background-image: url(../images/show/btn_green.gif) !important;
+}
+
+.btn_red {
+	background-image: url(../images/show/btn_red.png) !important;
+	_background-image: url(../images/show/btn_red.gif) !important;
+}
