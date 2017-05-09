@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="GB2312"?>
+<!DOCTYPE struts-config PUBLIC
+       "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+       "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+	<global-forwards>
+		<forward name="Global_ERROR_PAGE" path="/coremain/global/error.jsp">
+			<description>
+				<![CDATA[ 公共错误页面Forward定义 , 
+				 name 属性必需和 GlobalConst.Global_ERROR_PAGE 相同]]>
+			</description>
+		</forward>
+	</global-forwards>
+
+</struts-config>
