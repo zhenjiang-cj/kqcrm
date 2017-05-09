@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  
+  	<context-param>
+		<param-name>config</param-name>
+		<param-value>/WEB-INF/classes/config.properties</param-value>
+	</context-param>
+	
+	<!-- 启动加载配置 START--> 
+    <servlet>
+		<servlet-name>appInit</servlet-name>
+		<servlet-class>com.nl.util.config.StartUpServlet</servlet-class> 
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<!-- 初始化配置文件请求 -->
+	<servlet-mapping>
+		<servlet-name>appInit</servlet-name>
+		<url-pattern>*.init</url-pattern>
+	</servlet-mapping>
+	<!-- 启动加载配置 END-->
+	
+	<servlet>
+		<servlet-name>action</servlet-name>
+		<servlet-class>
+			com.newland.struts.base.NewLandActionServlet
+		</servlet-class>
+		<init-param>
+			<param-name>config</param-name>
+			<param-value>
+			/WEB-INF/struts-global-config.xml,
+			/WEB-INF/config/struts-config-system.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	
+  	<!-- 字符集过滤配置 START-->
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>GBK</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>*.jsp</url-pattern>
+    </filter-mapping>
+    <listener>
+        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+    </listener>
+    <!-- 字符集过滤配置 END-->
+    <!-- 
+    <filter>
+        <filter-name>struts2</filter-name>
+        <filter-class>org.apache.struts2.dispatcher.FilterDispatcher</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>struts2</filter-name>
+        <url-pattern>*.action</url-pattern>
+    </filter-mapping>
+     -->
+    <taglib>
+		<taglib-uri>/WEB-INF/struts-bean.tld</taglib-uri>
+		<taglib-location>/WEB-INF/tlds/struts-bean.tld</taglib-location>
+	</taglib>
+
+	<taglib>
+		<taglib-uri>/WEB-INF/struts-html.tld</taglib-uri>
+		<taglib-location>/WEB-INF/tlds/struts-html.tld</taglib-location>
+	</taglib>
+
+	<taglib>
+		<taglib-uri>/WEB-INF/struts-logic.tld</taglib-uri>
+		<taglib-location>/WEB-INF/tlds/struts-logic.tld</taglib-location>
+	</taglib>
+	
+	<taglib>
+		<taglib-uri>/WEB-INF/struts-nested.tld</taglib-uri>
+		<taglib-location>/WEB-INF/tlds/struts-nested.tld</taglib-location>
+	</taglib>
+	
+	<taglib>
+		<taglib-uri>/WEB-INF/taglibs-log.tld</taglib-uri>
+		<taglib-location>/WEB-INF/tlds/taglibs-log.tld</taglib-location>
+	</taglib>
+	
+	<taglib>
+		<taglib-uri>/WEB-INF/c.tld</taglib-uri>
+		<taglib-location>/WEB-INF/tlds/c.tld</taglib-location>
+	</taglib>
+	
+	<taglib>
+		<taglib-uri>/WEB-INF/c-rt.tld</taglib-uri>
+		<taglib-location>/WEB-INF/tlds/c-rt.tld</taglib-location>
+	</taglib>
+	
+	<taglib>
+		<taglib-uri>/pageListTag.tld</taglib-uri>
+		<taglib-location>/WEB-INF/tlds/pageListTag.tld</taglib-location>
+	</taglib>
+
+	<taglib>
+		<taglib-uri>/fn.tld</taglib-uri>
+		<taglib-location>/WEB-INF/tlds/fn.tld</taglib-location>
+	</taglib>
+</web-app>
