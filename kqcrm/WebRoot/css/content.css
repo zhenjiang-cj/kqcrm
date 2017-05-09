@@ -1,0 +1,40 @@
+@charset "utf-8";
+/* CSS Document add by Cain */
+/*html,body{height:100%} */
+body{background:none;}
+.iframe-content{height:100%; position:relative; width:1104px; margin:0px auto;}
+
+.ds{border:1px dashed black;}
+.bntSty{background:url(../biui/images/common/button.jpg) no-repeat; width:75px; height:20px; text-align:center; color:#000000; font-size:12px; list-style:none; border:0px; line-height:20px; cursor:pointer; margin:0px 2px;border:0px; }
+.TabList{ background:#8caedb; width:100%; border-collapse:collapse;border-spacing:0;border-left:1px solid #4286fb;border-top:1px solid #4286fb; z-index:10}
+.TabList th{ background-color:#f3f8fe; font-size:12px; height:25px; line-height:25px; color:#000000;  border-right:1px solid #4286fb;border-bottom:1px solid #4286fb;padding:2px 0px; font-weight:bold}
+.TabList td{ background-color:#FFFFFF; font-size:12px; height:25px; line-height:25px; color:#555555;  border-right:1px solid #4286fb;border-bottom:1px solid #4286fb;padding:2px 0px;padding-left:8px;padding-right:8px;}
+.TabList .tit{ background-color:#f3f8fe; width:100px; height:25px; line-height:25px; color:#000000; text-align:left;}
+.TabList .tit02{ background-color:#f3f8fe; width:120px; height:25px; line-height:25px; color:#000000; text-align:left;}
+.TabList .R{ color:#FF0000}
+.black_overlay{
+             display: none; 
+             position: absolute;  
+             top: 0%;  
+             left: 0%;  
+             width: 100%;  
+             height: 100%;  
+             background-color: black;  
+             z-index:1001;  
+             -moz-opacity: 0.8;  
+             opacity:.80;  
+             filter: alpha(opacity=80);  
+        } 
+.white_content {
+     display: none;  
+     position: absolute; 
+     top: 8%; 
+     left: 8%; 
+     width: 80%; 
+     height: 80%; 
+     padding: 16px;
+     border: 2px solid orange; 
+     background-color: white; 
+     z-index:1002;
+     overflow: auto;
+ }  

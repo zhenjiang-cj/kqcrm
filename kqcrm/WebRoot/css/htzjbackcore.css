@@ -1,0 +1,32 @@
+.mylogo {
+       background:url(../images/header_logo.png) no-repeat;
+       float:left; width:1024px; height:100px; text-indent:-1000px;
+  }
+.myBody{
+	background: url(../images/login_center.jpg);height:100%;
+}
+.myLogin{
+	background: url(../images/success_bg.gif);
+}
+  
+/* Layout */
+body, #splitBar { background:#dfe8f6;}
+
+
+
+/* ----------------------------------------------------------------- Pages */
+/* Layout */
+body, #splitBar { background:#dfe8f6;}
+#splitBarProxy { border-color:#c0c0c0; background:#CCC;}
+
+#header, #header .headerNav { background:url(../images/header_bg.png) repeat-x;}
+#header { background-color:#102c4a;}
+#header .logo { background:url(../default/images/logo.png) no-repeat;}
+#header .nav li { float:left; margin-left:-1px; padding:0 8px; line-height:11px; background:url(./images/listLine.png) no-repeat;}
+#header .nav li a { color:#15428b;}
+#header .themeList li div { background:url(../default/images/themeButton.png) no-repeat;}
+.toggleCollapse, .toggleCollapse div { background:url(../images/layout/toggleSidebar.png) no-repeat;}
+.toggleCollapse { border-style:solid; border-width:1px 1px 0 1px; border-color:#99BBE8; background-color:#dfe8f6;}
+.toggleCollapse h2 { color:#15428B;}
+#sidebar_s .collapse { border:solid 1px #99bbe8; background:#eff5f6;}
+#sidebar_s .collapse:hover { background:#f5f9fa;}
