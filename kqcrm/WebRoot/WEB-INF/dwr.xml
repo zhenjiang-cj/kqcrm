@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC "-//GetAhead Limited//DTD Direct Web Remoting 2.0//EN" "http://www.getahead.ltd.uk/dwr/dwr20.dtd">
+<dwr>	
+	<!-- DWR start -->
+    <allow>
+		<create creator="new" javascript="OnuManageDWR" scope="page">
+			<param name="class" value="com.nl.onuzj.dwr.OnuManage" />
+		</create>
+		
+		<create creator="new" javascript="BidInfoManageDWR" scope="page">
+			<param name="class" value="com.nl.bidzj.dwr.BidInfoManage" />
+		</create>
+		<convert converter="bean" match="com.nl.bidzj.dt.BidCompanyInfo"></convert>
+		
+		<create creator="new" javascript="DictMgmtDWR" scope="page">
+			<param name="class" value="com.nl.util.config.DictMgmt" />
+		</create>
+		<convert converter="bean" match="com.nl.util.config.DictInfo"></convert>
+		
+		
+		<create creator="new" javascript="FormulaPraseDwr" scope="page">
+			<param name="class" value="com.nl.util.FormulaPrase" />
+		</create>
+		
+		<create creator="new" javascript="ChooseModelDWR" scope="page">
+			<param name="class" value="com.nl.complexWork.terminalInfo.brandModelRelManage.dwr.ChooseModel" />
+		</create>
+		
+		<create creator="new" javascript="ModelListDWR" scope="page">
+			<param name="class" value="com.nl.complexWork.terminalInfo.terminalManage.dwr.ModelList" />
+		</create>
+		
+		<create creator="new" javascript="AccountAuditManageDWR" scope="page">
+			<param name="class" value="com.nl.complexWork.accountAudit.dwr.AccountAuditManage" />
+		</create>
+		
+		<create creator="new" javascript="ExtInfoDWR" scope="page">
+			<param name="class" value="com.nl.custInfo.dwr.ExtInfo" />
+		</create>
+		
+		<create creator="new" javascript="SensManageDWR" scope="page">
+			<param name="class" value="com.nl.sensitive.dwr.SensitiveManage" />
+		</create>
+		
+		<create creator="new" javascript="CheckValueDWR" scope="page">
+			<param name="class" value="com.nl.complexWork.terminalInfo.terminalProManage.dwr.CheckValue" />
+		</create>
+		
+		<create creator="new" javascript="UniCustHelpDWR" scope="page">
+			<param name="class" value="com.nl.unizj.dwr.CheckValue" />
+		</create>
+		
+		<create creator="new" javascript="GetPrivDWR" scope="page">
+			<param name="class" value="com.nl.complexWork.marketBudget.dwr.PrivList" />
+		</create>
+		
+		<create creator="new" javascript="VerifyDWR" scope="page">
+			<param name="class" value="com.nl.portal.dwr.Verification" />
+		</create>
+		<create creator="new" javascript="GimsDWR" scope="page">
+			<param name="class" value="com.nl.gims.dwr.GimsDwr" />		
+		</create> 
+		<create creator="new" javascript="StuManageDWR" scope="page">
+			<param name="class" value="com.nl.unizj.dwr.StuManageDwr" />		
+		</create>
+		<create creator="new" javascript="FlowTaskDWR" scope="page">
+			<param name="class" value="com.nl.custmgrflow.centralWorkFlow.dwr.FlowTaskDWR" />		
+		</create>
+		<create creator="new" javascript="PrivBreakingDWR" scope="page">
+			<param name="class" value="com.nl.custmgrflow.privBreakingFlow.dwr.PrivBreakingDWR" />		
+		</create>
+		<create creator="new" javascript="GhMsisdnFlowDWR" scope="page">
+			<param name="class" value="com.nl.custmgrflow.ghMsisdnFlow.dwr.GhMsisdnFlowDWR" />		
+		</create>
+		<create creator="new" javascript="SchoolDWR" scope="page">
+			<param name="class" value="com.nl.school.dwr.SchoolDWR" />		
+		</create>
+		
+		<signatures>
+			<![CDATA[ 
+				import java.util.List; 
+				import java.util.Map; 
+				]]>
+		</signatures>
+		
+	</allow>
+    <!-- DWR end -->
+</dwr>
