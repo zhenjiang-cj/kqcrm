@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC
+       "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+       "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+
+	<form-beans>
+       <form-bean name="reportForm"  type="com.nl.report.actionForm.ReportForm"></form-bean>
+    </form-beans>
+    
+    
+	<action-mappings>
+	
+		<action path="/reportAction" type="com.nl.report.action.ReportAction" parameter="method"
+		 name="reportForm"  scope="request" validate="false">
+			<forward name="report_line" path="/coremain/report/line.jsp" />
+			<forward name="report_table" path="/coremain/report/table.jsp" />
+			<forward name="report_frame" path="/coremain/report/frame.jsp" />
+		</action>
+						
+	</action-mappings>
+	
+
+</struts-config>
