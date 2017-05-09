@@ -1,0 +1,53 @@
+body{
+	font-size: 12px; color: #000000; font-family: "verdana",  "宋体";
+	margin:0px;
+	SCROLLBAR-FACE-COLOR: #CFE2FC;
+	SCROLLBAR-HIGHLIGHT-COLOR: #fcfcfc;
+	SCROLLBAR-3DLIGHT-COLOR: #7eabf7;
+	SCROLLBAR-ARROW-COLOR: #2F5FAE;
+	SCROLLBAR-TRACK-COLOR: #e3f0ff;
+	SCROLLBAR-DARKSHADOW-COLOR: #CEE1FD;
+	border:1px solid #C4D7FF;
+}
+body table{width:100%}
+td {font-size: 12px; color: #000000; font-family: "verdana",  "宋体";}
+a:link {
+	color: #000000;text-decoration: underline
+}
+a:visited {
+	color: #000000;text-decoration: underline
+}
+a:active {
+	text-decoration: none
+}
+a:hover {
+	text-decoration:underline;
+}
+input {
+	font-size: 9pt;
+	height: 18px;
+	padding-right: 1px;
+	padding-left: 1px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	border-top-width: 1px;
+	border-left-width: 1px;
+	border-left-color: #cccccc;
+	border-bottom-width: 1px;
+	border-bottom-color: #cccccc;
+	border-top-color: #cccccc;
+	border-right-width: 1px;
+	border-right-color: #cccccc
+}
+
+/* 接口传输及时性状态颜色标识 */
+/* 最佳时间接口 */
+.stl_best {color: #00CC33}
+/* 可接受时间接口 */
+.stl_accept {color: #CC9999}
+/* 告警时间接口 */
+.stl_alarm {color: #FFFF99}
+/* 故障时间接口 */
+.stl_fail {color: #FF0066}
+/* 延迟时间接口 */
+.stl_delay {color: #CC00FF}
