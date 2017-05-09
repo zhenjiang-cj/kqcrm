@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap 	
+PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+"http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="UserSql">
+	<typeAlias alias="user" type="com.nl.portal.dt.UserInfo"/>
+	
+	<select id='queryUser' parameterClass="java.util.HashMap" resultClass="user" >
+        select *
+		  from (select a.*, row_number() over(order by a.sno) rn, count(*) over() totalCount
+		          from (
+		          select a.sno,a.user_id,a.user_name,a.msisdn,a.email from kq_isc_user a where is_valid =1 
+		           <dynamic>
+					<isNotEmpty property="user_name">
+							and a.user_name  like '%$user_name$%'
+					</isNotEmpty>
+				  </dynamic>         
+		                   ) a) t
+		 where t.rn>(#page_num#-1)*#page_size# and #page_num#*#page_size# >= t.rn
+	</select>
+	
+	
+	<select id="getSno" resultClass="java.lang.String">
+		select seq_value from kq_seq_sno_srl
+	</select>
+	
+	<update id="addSno" parameterClass="java.util.HashMap">
+	    update kq_seq_sno_srl 
+		   set seq_value = seq_value+1 
+	</update>
+	
+	<select id="getRole" resultClass="java.lang.String">
+		select seq_value from kq_seq_role_srl
+	</select>
+	
+	<update id="addRole" parameterClass="java.util.HashMap">
+	    update kq_seq_role_srl 
+		   set seq_value = seq_value+1 
+	</update>
+	
+	
+	<select id='getCityByPro' parameterClass="java.util.HashMap" resultClass="user" >
+        with cte_child(org_id,parent_org_id,org_name,data_level,order_num )
+			as
+			(
+			   select org_id ,parent_org_id,org_name,data_level,order_num
+			    from org_tree_data_type_3 
+			    where  (   
+				 org_id = #provinces#
+				  
+			    )
+			    union all
+			    select a.org_id ,a.parent_org_id,a.org_name,a.data_level,a.order_num  
+			    from org_tree_data_type_3 a, cte_child b
+			    where a.parent_org_id=b.org_id
+			)  
+			select * from cte_child where  1=1
+			order by data_level,order_num
+	</select>
+	<select id='getCityByPro' parameterClass="java.util.HashMap" resultClass="user" >
+        with cte_child(org_id,parent_org_id,org_name,data_level,order_num )
+			as
+			(
+			   select org_id ,parent_org_id,org_name,data_level,order_num
+			    from org_tree_data_type_3 
+			    where  (   
+				 org_id = #city#
+				  
+			    )
+			    union all
+			    select a.org_id ,a.parent_org_id,a.org_name,a.data_level,a.order_num  
+			    from org_tree_data_type_3 a, cte_child b
+			    where a.parent_org_id=b.org_id
+			)  
+			select * from cte_child where  1=1
+			order by data_level,order_num
+	</select>
+	
+	<insert id="doUserAdd" parameterClass="java.util.HashMap">
+		
+		insert into kq_isc_user
+		( 
+			sno,
+			user_id,
+			user_name,
+			user_pswd,
+			msisdn,
+			email,
+			is_valid
+
+		)
+		values
+		(   #sno#,
+			#user_id#,
+			#user_name#,
+			#user_pswd#,
+			#msisdn#,
+			#email#,
+			1
+		)
+		
+	</insert>
+	<insert id="doUserRegionAdd" parameterClass="java.util.HashMap">
+		
+		insert into kq_isc_user_region
+		( 
+			sno,
+			user_level,
+			provinces,
+			city,
+			region,
+			is_valid
+
+		)
+		values
+		(   #sno#,
+			#level#,
+			#provinces#,
+			#city#,
+			#region#,
+			1
+		)
+		
+	</insert>
+	
+	<update id="delVerifi" parameterClass="java.util.HashMap">
+	  UPDATE kq_isc_user set is_valid=0 where is_valid =1 and sno = #sno#
+	</update>
+	
+	
+	<select id='queryUserListBysno' parameterClass="java.util.HashMap" resultClass="user" >
+        select *
+		  from (select a.*, row_number() over(order by a.sno) rn, count(*) over() totalCount
+		          from (
+		          select a.sno,a.user_id,a.user_name,a.msisdn,a.email ,
+		          		 b.user_level,b.provinces,b.city,b.region
+		          from kq_isc_user a,kq_isc_user_region b
+		           where a.is_valid =1
+		             and b.is_valid=1
+		             and a.sno = b.sno
+		           <dynamic>
+					<isNotEmpty property="sno">
+							and a.sno =  #sno#
+					</isNotEmpty>
+				  </dynamic>         
+		                   ) a) t 
+	</select>
+	
+	<update id="doUserEdit" parameterClass="java.util.HashMap">
+	  UPDATE kq_isc_user 
+	  set user_name=#user_name# ,
+		  msisdn = #msisdn#,
+		  email = #email#
+	  where is_valid =1 
+	  and sno = #sno#
+	</update>
+	
+	<update id="doUserEdit" parameterClass="java.util.HashMap">
+	  UPDATE kq_isc_user_region 
+	  set level=#level#,
+			provinces=#provinces#,
+			city=#city#,
+			region=#region# 
+	  where is_valid =1 
+	  and sno = #sno#
+	</update>
+	
+	<select id='queryAllRole' parameterClass="java.util.HashMap" resultClass="user" >
+        select a.ROLE_ID,a.ROLE_NAME,a.REMARK,a.SYSID from kq_isc_role a where ENFLAG=1 
+	</select>
+	
+	<select id='queryRoleByUser' parameterClass="java.util.HashMap" resultClass="user" >
+        select a.ROLE_ID,a.ROLE_NAME,a.REMARK,a.SYSID from kq_isc_role a,kq_isc_user_role b 
+        where a.ENFLAG=1 
+        and a.role_id =b.role_id
+        and b.sno =#sno#
+	</select>
+	
+	<update id="delUserRole" parameterClass="java.util.HashMap">
+	  delete kq_isc_user_role where sno = #sno# and role_id =#role_id#
+	</update>
+	
+	<insert id="doUserRegionAdd" parameterClass="java.util.HashMap">
+		
+		insert into kq_isc_user_role
+		( 
+			sno,
+			role_id 
+
+		)
+		values
+		(   #sno#,
+			#role_id# 
+		)
+		
+	</insert>
+	<select id='queryRole' parameterClass="java.util.HashMap" resultClass="user" >
+       select *
+		  from (select a.*, row_number() over(order by a.sno) rn, count(*) over() totalCount
+		          from (
+		          select a.role_id,a.role_name,a.remark as role_remark,a.sysid from kq_isc_role a where enflag =1 
+		           <dynamic>
+					<isNotEmpty property="role_name">
+							and a.role_name   like '%$role_name$%'
+					</isNotEmpty>
+				  </dynamic>         
+		                   ) a) t
+		 where t.rn>(#page_num#-1)*#page_size# and #page_num#*#page_size# >= t.rn
+	</select>
+	
+	 <select id="queryAllprivilege" parameterClass="java.util.HashMap" resultClass="user">
+		  
+		with cte_child(privilege_id,privilege_name,parent_id,sysid )
+			as
+			(
+			   select t.privilege_id,t.privilege_name, t.parent_id,t.sysid
+			    from kq_isc_privilege t
+			    where  t.status =1
+			      and t.sysid =#sysid#
+			    union all
+			    select a.privilege_id ,a.privilege_name,a.parent_id,a.sysid
+			    from kq_isc_privilege a, cte_child b
+			    where a.parent_id=b.privilege_id
+			)  
+			select * from cte_child where  1=1
+			order by privilege_id,sysid
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<insert id='insertAdmUserLog' parameterClass='AdmUserLog'>
+		insert into AdmUserLog(
+			lgUserID,
+			lgOptrType,
+			lgObjType,
+			lgNotes,
+			lgStatus,
+			lgDate,
+			lgUserType,
+			lgpcIP,
+			lgpcName
+		)values(
+			#lgUserID#,
+			#lgOptrType#,
+			#lgObjType#,
+			#lgNotes#,
+			#lgStatus#,
+			CONVERT(varchar(100), GETDATE(), 120),
+			#lgUserType#,
+			#lgpcIP#,
+			#lgpcName#
+		)
+	</insert>		
+	
+	<select id='queryLogList' parameterClass="java.util.HashMap" resultClass="AdmUserLog" >
+        select *
+		  from (select a.*, row_number() over(order by a.lgDate) rn, count(*) over() totalCount
+		          from (select t.lgID,
+		          			   t.lgUserID,
+		                       t.lgOptrType,
+		                       t.lgObjType,
+		                       t.lgNotes,
+		                       t.lgStatus,
+		                       CONVERT(varchar(100), t.lgDate, 120) as lgDate,
+		                       t.lgUserType,
+		                       t.lgpcIP,
+		                       t.lgpcName
+		                  from AdmUserLog t
+		           where 1=1
+		           <dynamic>
+					<isNotEmpty property="user_id">
+							and t.lgUserID = #user_id#
+					</isNotEmpty>
+				  </dynamic>         
+		                   ) a) t
+		 where t.rn>(#page_num#-1)*#page_size# and #page_num#*#page_size# >= t.rn
+	</select>
+	
+	<select id='queryDictCfg' parameterClass="java.util.HashMap" resultClass="KmDictCfg" >
+        select dict_id,
+        	   dict_name,
+        	   value,
+        	   value_name,
+        	   parent_id,
+        	   sort_id,
+        	   remark,
+        	   is_modify,
+        	   is_recursion
+		  from km_dict_cfg
+		 where dict_id = #dict_id#
+		   and is_valid = 1
+		order by sort_id asc
+	</select>
+	
+	<select id='queryUserInfo' parameterClass="java.util.HashMap" resultClass="AdmUserFc" >
+        select auID,auName,auPwd,auType,auOrgId,auOrgName,auBeginDate,auEndDate,auSetUser,auSetDate,auState
+		  from AdmUserFc
+		 where auID = #auID#
+		   and auState = 1
+	</select>
+	
+	<select id='queryUserDept' parameterClass="java.util.HashMap" resultClass="HtzjCodeBm" >
+        select bmdm,bmmc,bmxh,bmlx,bmdz,bmdh,bmfzr,bz from htzj_code_bm where bmdm = #bmdm#
+	</select>
+	
+	
+</sqlMap>

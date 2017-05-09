@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap 	
+PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+"http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="AliasConfig">
+
+	<!-- 操作流水表 -->
+	<typeAlias alias="AdmUserLog" type="com.nl.portal.dt.AdmUserLog" />
+	
+	<!-- 字典表 -->
+	<typeAlias alias="KmDictCfg" type="com.nl.portal.dt.KmDictCfg" />
+	
+	<!-- 用户信息表 -->
+	<typeAlias alias="AdmUserFc" type="com.nl.portal.dt.AdmUserFc" />
+	
+	<!-- 申请工单信息表 -->
+	<typeAlias alias="CompanyOrderInfo" type="com.nl.integratedManage.dt.CompanyOrderInfo" />
+	
+	<!-- 变更事项工单信息表 -->
+	<typeAlias alias="CompanyChangeOrder" type="com.nl.integratedManage.dt.CompanyChangeOrder" />
+		
+	<!-- 遗失补证工单信息表 -->
+	<typeAlias alias="CompanySuppleOrder" type="com.nl.integratedManage.dt.CompanySuppleOrder" />
+	
+	<!-- 资质备案工单信息表 -->
+	<typeAlias alias="CompanyBakOrder" type="com.nl.integratedManage.dt.CompanyBakOrder" />
+	
+	<!-- 任务节点配置表 -->
+	<typeAlias alias="FlowTaskNodeCfg" type="com.nl.integratedManage.dt.FlowTaskNodeCfg" />
+		
+	<!-- 公司信息表 -->
+	<typeAlias alias="CompanyBaseInfo" type="com.nl.integratedManage.dt.CompanyBaseInfo" />
+	
+	<!-- 公司类型统计 -->
+	<typeAlias alias="CompanyTypeReport" type="com.nl.integratedManage.dt.CompanyTypeReport" />
+	
+	<!-- 资质类型统计 -->
+	<typeAlias alias="AptitudeTypeReport" type="com.nl.integratedManage.dt.AptitudeTypeReport" />
+	
+	<!-- 资质审批情况简表 -->
+	<typeAlias alias="AuditReport" type="com.nl.integratedManage.dt.AuditReport" />
+	
+	<!-- 企业新增注销报表 -->
+	<typeAlias alias="CancelReport" type="com.nl.integratedManage.dt.CancelReport" />
+	
+	<!-- 工单流程表 -->
+	<typeAlias alias="FlowTaskInstance" type="com.nl.integratedManage.dt.FlowTaskInstance" />
+	
+	<!-- 公告表 -->
+	<typeAlias alias="CompanyOrderPublish" type="com.nl.integratedManage.dt.CompanyOrderPublish" />
+	
+</sqlMap>

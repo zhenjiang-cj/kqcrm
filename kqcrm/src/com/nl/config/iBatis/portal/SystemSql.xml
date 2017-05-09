@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap 	
+PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+"http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="SystemSql">
+	<typeAlias alias="AdmUserFc" type="com.nl.portal.dt.AdmUserFc"/>
+	<typeAlias alias="HtzjCodeBm" type="com.nl.portal.dt.HtzjCodeBm"/>
+	
+	
+	<insert id='insertAdmUserLog' parameterClass='AdmUserLog'>
+		insert into AdmUserLog(
+			lgUserID,
+			lgOptrType,
+			lgObjType,
+			lgNotes,
+			lgStatus,
+			lgDate,
+			lgUserType,
+			lgpcIP,
+			lgpcName
+		)values(
+			#lgUserID#,
+			#lgOptrType#,
+			#lgObjType#,
+			#lgNotes#,
+			#lgStatus#,
+			CONVERT(varchar(100), GETDATE(), 120),
+			#lgUserType#,
+			#lgpcIP#,
+			#lgpcName#
+		)
+	</insert>		
+	
+	<select id='queryLogList' parameterClass="java.util.HashMap" resultClass="AdmUserLog" >
+        select *
+		  from (select a.*, row_number() over(order by a.lgDate) rn, count(*) over() totalCount
+		          from (select t.lgID,
+		          			   t.lgUserID,
+		                       t.lgOptrType,
+		                       t.lgObjType,
+		                       t.lgNotes,
+		                       t.lgStatus,
+		                       CONVERT(varchar(100), t.lgDate, 120) as lgDate,
+		                       t.lgUserType,
+		                       t.lgpcIP,
+		                       t.lgpcName
+		                  from AdmUserLog t
+		           where 1=1
+		           <dynamic>
+					<isNotEmpty property="user_id">
+							and t.lgUserID = #user_id#
+					</isNotEmpty>
+				  </dynamic>         
+		                   ) a) t
+		 where t.rn>(#page_num#-1)*#page_size# and #page_num#*#page_size# >= t.rn
+	</select>
+	
+	<select id='queryDictCfg' parameterClass="java.util.HashMap" resultClass="KmDictCfg" >
+        select dict_id,
+        	   dict_name,
+        	   value,
+        	   value_name,
+        	   parent_id,
+        	   sort_id,
+        	   remark,
+        	   is_modify,
+        	   is_recursion
+		  from km_dict_cfg
+		 where dict_id = #dict_id#
+		   and is_valid = 1
+		order by sort_id asc
+	</select>
+	
+	<select id='queryUserInfo' parameterClass="java.util.HashMap" resultClass="AdmUserFc" >
+        select auID,auName,auPwd,auType,auOrgId,auOrgName,auBeginDate,auEndDate,auSetUser,auSetDate,auState
+		  from AdmUserFc
+		 where auID = #auID#
+		   and auState = 1
+	</select>
+	
+	<select id='queryUserDept' parameterClass="java.util.HashMap" resultClass="HtzjCodeBm" >
+        select bmdm,bmmc,bmxh,bmlx,bmdz,bmdh,bmfzr,bz from htzj_code_bm where bmdm = #bmdm#
+	</select>
+	
+	
+</sqlMap>

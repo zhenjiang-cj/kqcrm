@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap 	
+PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+"http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="operatorManageSql">
+
+    <typeAlias alias="operator" type="com.nl.portal.dt.SysOperator"/>
+    <typeAlias alias="operRole" type="com.nl.portal.dt.SysOperatorRole"/>
+    <typeAlias alias="roleData" type="com.nl.portal.dt.IscUserRoleData"/>
+    <typeAlias alias="priDataRel" type="com.nl.portal.dt.IscPriDataRel"/>
+    <typeAlias alias="syncData" type="com.nl.portal.dt.SyncData"/>
+    <typeAlias alias="companyUser" type="com.nl.portal.dt.KmCompanyUser"/>
+    
+    
+    
+    <select id='queryCompanyUser' parameterClass="java.util.HashMap" resultClass="companyUser">
+	    select *
+		  from km_company_user t
+		 where t.status = 1
+		 	<dynamic>
+				<isNotEmpty property="company_user_id">
+					<isNotEqual property="company_user_id" compareValue="">
+						and t.company_user_id = #company_user_id#
+					</isNotEqual>
+				</isNotEmpty>
+				<isNotEmpty property="user_pwd">
+					<isNotEqual property="user_pwd" compareValue="">
+						and t.user_pwd = #user_pwd#
+					</isNotEqual>
+				</isNotEmpty>
+			  </dynamic> 
+		 	
+		 	
+	</select>
+    
+    
+    <select id='queryOperatorList' parameterClass="java.util.HashMap" resultClass="operator" >
+        select *
+		  from (select tt.*, row_number() over(order by user_name) rs, count(*) over() totalcount
+		          from (select t1.user_seq,
+		                       t1.user_id,
+		                       t1.user_name,
+		                       t1.msisdn,
+		                       t1.is_valid en_flag,
+		                       t1.hr_id hr_sno,
+		                       t2.dept_id sno_dept,
+		                       t3.dept_name sno_dept_name
+		                  from (portal_user      t1
+							   left join
+		                  	   (select hr_id as sno_user,dept_id from portal_user_dept  
+		                  	     where  getdate() > begin_date  and (end_date is null or end_date = '' or  end_date>getdate())) t2
+		                       on t1.hr_id = t2.sno_user)
+		                       left join
+		                       (select * from portal_dept_info where is_valid=1)     t3 
+		                  	   on t2.dept_id = t3.dept_id 	                   
+		                   ) tt
+		           where 1=1
+		           <dynamic>
+					<isNotEmpty property="user_id">
+						<isNotEqual property="user_id" compareValue="">
+							and tt.user_id = #user_id#
+						</isNotEqual>
+					</isNotEmpty>
+					<isNotEmpty property="user_name">
+						<isNotEqual property="user_name" compareValue="">
+							and tt.user_name like #user_name#
+						</isNotEqual>
+					</isNotEmpty>
+				  </dynamic>         
+		                   ) a
+		 where a.rs > #startNum#
+		   and #endNum# >= a.rs
+	</select>
+	
+	<select id='getDetpList' resultClass="operator">
+	    select t.dept_id as sno_dept,
+	    	   t.dept_name as sno_dept_name
+		  from portal_dept_info t
+		 where t.is_valid = 1
+	</select>
+	
+	<insert id="insertPortalUser" parameterClass="java.util.HashMap">
+		insert into portal_user 
+		(
+			 user_id,
+			 user_name,
+			 user_pswd,
+			 msisdn,
+			 email,
+			 hr_id,
+			 is_valid
+		)
+		values
+		(
+			#user_id#,
+			#user_name#,
+			#password#,
+			#msisdn#,
+			#email#,
+			#user_id#,
+			1
+		)
+	</insert>
+	
+	<insert id="insertPortalUserDept" parameterClass="java.util.HashMap">
+		insert into portal_user_dept 
+		(
+			 hr_id,
+			 dept_id,
+			 begin_date,
+			 end_date
+		)
+		values
+		(
+			#user_id#,
+			#dept_id#,
+			#begin_date#,
+			#end_date#
+		)
+	</insert>
+	
+	<select id='getOperatorById' parameterClass="java.lang.String" resultClass="operator">
+	    select t.user_id,
+		       t.user_name
+		  from portal_user t
+		 where t.is_valid = 1
+		   and t.user_id = #userId#
+	</select>
+	
+	<select id='queryOperatorDetail' parameterClass="java.util.HashMap" resultClass="operator">		 				
+		select t1.user_seq,
+		       t1.user_id,
+		       t1.user_name,
+		       t1.msisdn,
+		       t1.hr_id as hr_sno,
+		       t1.is_valid en_flag,
+		       isnull(t1.email,'-') email,
+		       t1.user_pswd userPassword,
+		       isnull(t4.dept_id, '0') sno_dept,
+		       isnull(t4.dept_name, '-') sno_dept_name,
+		       CONVERT(varchar(100), t4.begin_date, 23) as begin_date,
+		       CONVERT(varchar(100), t4.end_date, 23) as end_date
+		  from (select * from portal_user where user_seq = #userSeq#) t1
+		  left join	       
+		       (select t2.*,t3.dept_name from 
+          		   (select hr_id,dept_id,begin_date,end_date from portal_user_dept  where  getdate()> begin_date and (end_date = '' or end_date is null or  end_date>getdate())) t2,
+				   (select dept_id,dept_name from portal_dept_info where is_valid=1)     t3 
+				   where t2.dept_id = t3.dept_id
+				     and t2.dept_id = #snoDept#
+				     ) t4
+		 on t1.hr_id = t4.hr_id
+	</select>
+	
+	<select id='queryOperRoleBySeq' parameterClass="java.util.HashMap" resultClass="operRole" >
+		select t1.user_seq,
+		       isnull(t1.data_type,0) data_type,
+		       isnull(t1.data_level,0) data_level,
+		       isnull(t1.code,'') code,
+		       t2.role_id,
+		       t2.role_name,
+		       isnull(t2.remark, '') remark,
+		       t2.status enflag,
+		       t2.sysid
+		  from portal_user_role t1, portal_role t2
+		 where t1.role_id = t2.role_id
+		   and t1.user_seq = #userSeq#
+		   and t1.is_valid = 1
+		   and t2.sysid = #sysId#
+		   and t2.status = 1
+	</select>
+	
+		
+	<update id="updateOperator" parameterClass="operator">
+	    update portal_user 
+		   set user_name = #user_name#, 
+		   	   msisdn = #msisdn#, 
+		   	   email = #email#
+		 where user_seq = #user_seq#
+	</update>
+	
+	<update id="updateOperatorDept" parameterClass="operator">
+	    update portal_user_dept 
+		   set begin_date = #begin_date#,
+		       end_date = #end_date#
+		 where hr_id = #hr_sno#
+		   and dept_id = #sno_dept#
+		   and (end_date = '' or end_date is null or  end_date>getdate())
+	</update>
+	
+	<update id="endOperatorDept" parameterClass="operator">
+	    update portal_user_dept 
+		   set end_date = #end_date#
+		 where hr_id = #hr_sno#
+		   and dept_id = #sno_dept# 
+		   and (end_date = '' or end_date is null or  end_date>getdate())
+	</update>
+	
+	<insert id="insertOperatorDept" parameterClass="operator">
+		insert into portal_user_dept (hr_id,dept_id,begin_date,end_date)
+		values (#hr_sno#,#sno_dept#,#begin_date#,#end_date#)
+	</insert>
+	
+	<select id="queryUseRole" parameterClass="java.util.HashMap" resultClass="operRole">
+		 select t.role_id, t.role_name
+		  from portal_role t
+		 where t.sysid = #sysid#     
+		   and t.status = 1
+		   and t.role_id not in
+		       (select t1.role_id from portal_user_role t1 where t1.is_valid = 1 and t1.user_seq = #userSeq#)
+		   order by role_name asc 
+	</select>
+	
+	<update id="delOperator" parameterClass="java.util.HashMap">
+	    update portal_user 
+		   set is_valid = 0
+		 where user_seq = #userSeq#
+	</update>
+	
+	<delete id="delUserRole" parameterClass="java.util.HashMap">
+		delete from portal_user_role where user_seq=#userSeq#
+	</delete>	
+	
+	<update id="openUser" parameterClass="java.util.HashMap">
+	    update portal_user set is_valid =1,user_pswd=#password# where user_seq=#userSeq#
+	</update>
+	
+	<update id="updateOperPassword" parameterClass="java.util.HashMap">
+	    update portal_user  set user_pswd = #user_pswd# where user_seq = #user_seq#
+	</update>
+	
+	<delete id="deleteUserRoleData" parameterClass="java.util.HashMap">
+		delete from portal_user_role_data where user_seq = #userSeq# and role_id in (select r.role_id from portal_role r where r.sysid = #sysid#)
+	</delete>	
+	
+	<insert id="insertOperRoleRel" parameterClass="java.util.HashMap">
+	    insert into portal_user_role(user_seq,role_id,data_type,data_level,code,create_oper_id,create_date,is_valid)
+		values(#userSeq#,#roleId#,#dataType#,#dataLevel#,#code#,#operatorId#,getdate(),1)
+	</insert>
+	
+	<select id="queryRoleidByDataType" resultClass="java.lang.Integer" parameterClass="java.util.HashMap">
+		select distinct t.role_id
+		  from portal_role_privilege t 
+		 where t.privilege_id in
+		       (select r.privilege_id from portal_pri_data_rel r where r.data_type = #data_type#)		  
+	</select>
+	
+	<insert id="insertUserRoleData" parameterClass="java.util.HashMap">
+		insert into portal_user_role_data (user_seq,role_id,data_type,data_level,code,create_oper_id,create_date,is_valid)
+		values (#userSeq#,#roleId#,#dataType#,#dataLevel#,#code#,#operatorId#,getdate(),1)
+	</insert>
+	
+	<delete id="deleteOperRoleRel" parameterClass="java.util.HashMap">
+	    delete from portal_user_role
+		 where user_seq = #userSeq#
+		   and role_id in (select t1.role_id
+		                       from portal_user_role t1, portal_role t2
+		                      where t1.role_id = t2.role_id
+		                        and t1.user_seq = #userSeq#
+		                        and t1.is_valid = 1
+		                        and t2.sysid = #sysid#)
+	</delete>
+
+</sqlMap>

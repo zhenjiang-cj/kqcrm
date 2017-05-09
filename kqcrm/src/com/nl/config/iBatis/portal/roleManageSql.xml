@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap 	
+PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+"http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="roleManageSql">
+	<typeAlias alias="operRole" type="com.nl.portal.dt.SysOperatorRole"/>
+	<typeAlias alias="privilege" type="com.nl.portal.dt.SysPrivilege"/>
+	<typeAlias alias="roleData" type="com.nl.portal.dt.IscUserRoleData"/>
+	<typeAlias alias="dataCfg" type="com.nl.portal.dt.IscDataCfg"/>
+	<typeAlias alias="dataRel" type="com.nl.portal.dt.IscPriDataRel"/>
+	<typeAlias alias="rolePriv" type="com.nl.portal.dt.IscRolePrivilege"/>
+	
+	
+    
+    <select id='queryRoleList' parameterClass="java.util.HashMap" resultClass="operRole" >
+		 select *
+		   from (select tt.*, ROW_NUMBER() over(order by tt.createtime desc) rs, count(*) over() totalCount
+		           from (select t.role_id,
+		                        t.role_name,
+		                        t.remark,
+		                        t.status,
+		                        t.create_id createid,
+		                        t.sysid,
+		                        CONVERT(varchar(100), create_date, 20) createtime
+		                   from portal_role t
+		                  where 1 = 1 and t.status = 1
+		                  <dynamic>
+							<isNotEmpty property="sysId">
+								<isNotEqual property="sysId" compareValue="-99">
+									and t.sysid = #sysId#
+								</isNotEqual>
+							</isNotEmpty>
+							<isNotEmpty property="role_name">
+								<isNotEqual property="role_name" compareValue="">
+									and t.role_name like '%$role_name$%'
+								</isNotEqual>
+							</isNotEmpty>
+							<isNotEmpty property="menu_name">
+									and t.role_id in (
+									select distinct a.role_id
+									  from portal_role_privilege a
+									 where a.privilege_id in (select b.privilege_id
+									                            from portal_privilege b
+									                           where 1 =1 
+									                             and b.privilege_name like '%$menu_name$%'
+									                           <isNotEqual property="sysId" compareValue="-99">
+									                             and b.sysid = #sysId#
+									                           </isNotEqual>
+									                             )
+							
+							)
+							</isNotEmpty>
+						</dynamic> 
+		                  ) tt) a
+		  where a.rs > #startNum#
+		    and #endNum# >= a.rs
+	</select>
+	
+	<select id="queryRoleById" parameterClass="java.util.HashMap" resultClass="operRole">
+	    select t.role_id,
+		       t.role_name,
+		       t.remark,
+		       t.sysid,
+		       convert(varchar(20),t.create_date,20) createtime
+		  from portal_role t
+		 where t.role_id = #role_id#
+	</select>
+	
+	<select id="queryAllPrivilege" parameterClass="java.util.HashMap" resultClass="privilege">	
+		with sys_privilege(privilege_id,privilege_name,parent_id,priv_level)
+			as
+			(
+			select t.privilege_id,t.privilege_name,t.parent_id,1 as priv_level
+					          from portal_privilege t
+					         where sysid = #sysId#
+					           and isnull(t.status, 0) = 1
+					           and parent_id = '-1'
+				union all
+				select t.privilege_id,t.privilege_name,t.parent_id,b.priv_level+1
+					          from portal_privilege t inner join sys_privilege b
+					         on t.sysid = #sysId#
+					           and isnull(t.status, 0) = 1
+					           and t.parent_id = b.privilege_id
+					           )		           
+			     select * from sys_privilege;
+	</select>
+	
+	<select id="getRoleSeq" parameterClass="operRole" resultClass="operRole">
+	    select IDENT_CURRENT('portal_role') + 1 role_id 
+	</select>
+	
+	<insert id="insertRole" parameterClass="operRole">
+	    insert into portal_role
+		  (role_name,
+		   sysid,
+		   remark,
+		   create_id,
+		   create_date,
+		   status,
+		   status_date
+		   )
+		values
+		  (#role_name#,#sysid#, #remark#, #createid#, getdate(), 1,getdate())
+	</insert>
+	
+	<insert id="insertRolePriviRel" parameterClass="privilege">
+	    insert into portal_role_privilege(role_id,privilege_id,create_id,create_date,is_valid)
+		values(#role_id#,#privilege_id#,#create_id#,getdate(),1)
+	</insert>
+	
+	<select id="queryRolePrivilege" parameterClass="java.util.HashMap" resultClass="privilege">
+	    select t1.privilege_id, t1.privilege_name
+		  from portal_privilege t1,
+		       (select role_id, privilege_id
+		          from portal_role_privilege
+		         where role_id = #role_id#) t2
+		 where t1.privilege_id = t2.privilege_id
+		   and t1.sysid = #sysId#
+		   and isnull(t1.status,0) = 1
+		 order by t1.privilege_id
+	</select>
+	
+	<insert id="updateRole" parameterClass="operRole">
+	    update portal_role 
+		set role_name = #role_name#,remark = #remark#
+		where role_id = #role_id#
+	</insert>
+	
+	<delete id="deleteRolePriviRel" parameterClass="privilege">
+	    delete from portal_role_privilege 
+        where role_id = #role_id#
+	</delete>
+	
+	<delete id="deleteRole" parameterClass="privilege">
+	    update portal_role 
+		   set status = 0, status_date = getdate()
+		 where role_id = #role_id#
+	</delete>
+	
+	
+
+	
+</sqlMap>
