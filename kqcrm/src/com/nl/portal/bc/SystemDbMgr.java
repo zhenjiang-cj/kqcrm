@@ -13,6 +13,8 @@ import com.nl.portal.dt.AdmUserFc;
 import com.nl.portal.dt.AdmUserLog;
 import com.nl.portal.dt.HtzjCodeBm;
 import com.nl.portal.dt.KmDictCfg;
+import com.nl.portal.dt.SysMenu;
+import com.nl.portal.dt.SysOperator;
 
 public class SystemDbMgr extends AbstractDB
 {
@@ -99,5 +101,35 @@ public class SystemDbMgr extends AbstractDB
 			logger.error(e.getMessage());
 		}
 		return list;
+	}
+	
+	public SysOperator getOperatorById(String operatorId)
+	{
+		SysOperator operator = new SysOperator();
+		HashMap<String,String> param = new HashMap<String,String>();
+		param.put("user_id", operatorId);
+		try
+		{
+			operator = (SysOperator) smc.queryForObject("systemLoginSql.queryOperatorById",param);
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return operator;
+	}
+	public List getOperMenuList(String sno,int systemId)
+	{
+		List<SysMenu> sysOperatorMenuList = new ArrayList<SysMenu>();
+		HashMap<String,String> param = new HashMap<String,String>();
+		param.put("sno", sno);
+		param.put("sysid", String.valueOf(systemId));
+		try
+		{
+			sysOperatorMenuList = smc.queryForList("systemLoginSql.queryMenu",param);
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return sysOperatorMenuList;
 	}
 }

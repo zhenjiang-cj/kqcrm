@@ -13,6 +13,7 @@ public class UserInfo {
 	private String provinces;
 	private String city;
 	private String region;
+	private String org_level;
 	private String provinces_name;
 	private String city_name;
 	private String region_name;
@@ -32,6 +33,7 @@ public class UserInfo {
 	private String privilege_name;
 	private String parent_id;
 	private String page_id;
+	
 	
 	public String getRole_id() {
 		return role_id;
@@ -194,6 +196,12 @@ public class UserInfo {
 	}
 	public void setParent_id(String parent_id) {
 		this.parent_id = parent_id;
+	}
+	public String getOrg_level() {
+		return org_level;
+	}
+	public void setOrg_level(String org_level) {
+		this.org_level = org_level;
 	}
 
 }

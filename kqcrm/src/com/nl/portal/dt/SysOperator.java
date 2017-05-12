@@ -14,20 +14,24 @@ import java.io.Serializable;
 public class SysOperator implements Serializable
 {
 	private static final long serialVersionUID = 5454155825314635342L;
-
-	/* 员工序号 */
-	private String SNo;
-	/* 登录账户 */
+	
+	
+	private String sno ;
 	private String user_id;
-	/* 登录密码 */
-	private String userPassword;
-	/* 姓名 */
 	private String user_name;
-	/* 手机号码 */
+	private String user_pswd;
 	private String msisdn;
-	/* 电子邮箱 */
 	private String email;
-	/* 员工编号 */
+	private String provinces;
+	private String provinces_name;
+	private String city;
+	private String city_name;
+	private String region;
+	private String region_name;
+	private String org_level;
+
+	private String SNo;
+	private String userPassword;
 	private String cop_code;
 	/* 启用标志 */
 	private int en_flag;
@@ -279,6 +283,78 @@ public class SysOperator implements Serializable
 
 	public void setAccount_4A(String account_4A) {
 		this.account_4A = account_4A;
+	}
+
+	public String getSno() {
+		return sno;
+	}
+
+	public void setSno(String sno) {
+		this.sno = sno;
+	}
+
+	public String getUser_pswd() {
+		return user_pswd;
+	}
+
+	public void setUser_pswd(String user_pswd) {
+		this.user_pswd = user_pswd;
+	}
+
+	public String getProvinces() {
+		return provinces;
+	}
+
+	public void setProvinces(String provinces) {
+		this.provinces = provinces;
+	}
+
+	public String getProvinces_name() {
+		return provinces_name;
+	}
+
+	public void setProvinces_name(String provinces_name) {
+		this.provinces_name = provinces_name;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getCity_name() {
+		return city_name;
+	}
+
+	public void setCity_name(String city_name) {
+		this.city_name = city_name;
+	}
+
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	public String getRegion_name() {
+		return region_name;
+	}
+
+	public void setRegion_name(String region_name) {
+		this.region_name = region_name;
+	}
+
+	public String getOrg_level() {
+		return org_level;
+	}
+
+	public void setOrg_level(String org_level) {
+		this.org_level = org_level;
 	}
 	
 	

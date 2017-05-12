@@ -300,10 +300,10 @@ public class UserAction extends BaseAppAction {
 			String url ="";
 			if(retCode == 0){
 				url =request.getContextPath()+"/userAction.do?method=toUserManage";
-				doJump(0,url,"新增用户",request,response);
+				doJump1(0,url,"新增用户",request,response);
 			}else{
 				url =request.getContextPath()+"/userAction.do?method=toUserManage";
-				doJump(-1,url,"新增用户",request,response);
+				doJump1(-1,url,"新增用户",request,response);
 			}
 			
 		}catch(Exception e){
@@ -412,12 +412,14 @@ public class UserAction extends BaseAppAction {
 		{
 			UserForm formBean = (UserForm)form;
 			UserSc sc = new UserSc();
-			formBean.setSysid("1");
+			formBean.setSysid("99");
 			
 			List<UserInfo> userlist = sc.queryUserListBysno(formBean);
 			request.setAttribute("userlist", userlist);		
 
 			//获取所有角色
+			
+//			List<UserInfo> rolelist = sc.queryAllRolebysno(formBean);
 			List<UserInfo> rolelist = sc.queryAllRole(formBean);
 			request.setAttribute("rolelist", rolelist);		
 			
@@ -516,7 +518,7 @@ public class UserAction extends BaseAppAction {
 			//获取角色序列
 			formBean.setRole_id(sc.getRole());
 			//默认功能sysid=1
-			formBean.setSysid("1");
+			formBean.setSysid("99");
 			List<UserInfo> privilegeList = sc.getPrivilegeBySysid(formBean);
 			
 			request.setAttribute("privilegeList", privilegeList);
@@ -554,6 +556,139 @@ public class UserAction extends BaseAppAction {
 		}
 		
 		
+	}
+
+	public void doRoleAdd(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String bosscodestr = super.getBossCodeStr();
+		int retCode = 0;
+		try
+		{
+			UserForm formBean = (UserForm)form;
+			UserSc sc = new UserSc();
+			
+			retCode = sc.doRoleAdd(formBean);
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
+			
+			String url ="";
+			if(retCode == 0){
+				url =request.getContextPath()+"/userAction.do?method=toRoleManage";
+				doJump1(0,url,"新增角色",request,response);
+			}else{
+				url =request.getContextPath()+"/userAction.do?method=toRoleManage";
+				doJump1(-1,url,"新增角色",request,response);
+			}
+//			return mapping.findForward("verifiinfo");
+			
+		}catch(Exception e){
+			getLogger(bosscodestr,GlobalConst.ERROR).error("进入基本信息出错:"+e.getMessage());
+//			throw new Exception(AppConst.CENTERTASK_ERROR_INFO);
+			throw new Exception();
+		}
+	}
+	public void doRoleDel(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String bosscodestr = super.getBossCodeStr();
+		int retCode = 0;
+		try
+		{
+			UserForm formBean = (UserForm)form;
+			UserSc sc = new UserSc();
+			
+			retCode = sc.doRoleDel(formBean);
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
+			
+			String url ="";
+			if(retCode == 0){
+				url =request.getContextPath()+"/userAction.do?method=toRoleManage";
+				doJump1(0,url,"删除角色",request,response);
+			}else{
+				url =request.getContextPath()+"/userAction.do?method=toRoleManage";
+				doJump1(-1,url,"删除角色",request,response);
+			}
+//			return mapping.findForward("verifiinfo");
+			
+		}catch(Exception e){
+			getLogger(bosscodestr,GlobalConst.ERROR).error("进入基本信息出错:"+e.getMessage());
+//			throw new Exception(AppConst.CENTERTASK_ERROR_INFO);
+			throw new Exception();
+		}
+	}
+	
+	public ActionForward toRoleEdit(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String bosscodestr = super.getBossCodeStr();
+		int retCode = 0;
+		try
+		{
+			UserForm formBean = (UserForm)form;
+			UserSc sc = new UserSc();
+			//获取角色
+			List<UserInfo> rolelist = sc.queryRoleList(formBean);
+			request.setAttribute("rolelist", rolelist);
+			
+			if(rolelist!=null&&rolelist.size()>0){
+				formBean.setSysid(rolelist.get(0).getSysid());
+			}else{
+				formBean.setSysid("1");
+			}
+			List<UserInfo> privilegeList = sc.getPrivilegeBySysid(formBean);
+			request.setAttribute("privilegeList", privilegeList);
+			
+			//获取角色权限
+			List<UserInfo> privrolelist = sc.getPrivilegeByRoleid(formBean);
+			request.setAttribute("privrolelist", privrolelist);
+			
+			
+			
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
+			
+			//记录日志
+//			doLog(form,"进入欢迎页面");
+//			createLog(request,"","","进入欢迎页面","1");
+			getLogger(bosscodestr,GlobalConst.EXIT).info("进入欢迎页面。");
+			return mapping.findForward("roleedit");
+		}catch(Exception e){
+			getLogger(bosscodestr,GlobalConst.ERROR).error("进入欢迎页面出错:"+e.getMessage());
+			throw new Exception();
+		}
+	}
+	
+	public void doRoleEdit(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String bosscodestr = super.getBossCodeStr();
+		int retCode = 0;
+		try
+		{
+			UserForm formBean = (UserForm)form;
+			UserSc sc = new UserSc();
+			
+			retCode = sc.doRoleEdit(formBean);
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
+			
+			String url ="";
+			if(retCode == 0){
+				url =request.getContextPath()+"/userAction.do?method=toRoleManage";
+				doJump1(0,url,"修改角色",request,response);
+			}else{
+				url =request.getContextPath()+"/userAction.do?method=toRoleManage";
+				doJump1(-1,url,"修改角色",request,response);
+			}
+//			return mapping.findForward("verifiinfo");
+			
+		}catch(Exception e){
+			getLogger(bosscodestr,GlobalConst.ERROR).error("进入基本信息出错:"+e.getMessage());
+//			throw new Exception(AppConst.CENTERTASK_ERROR_INFO);
+			throw new Exception();
+		}
 	}
 
 }

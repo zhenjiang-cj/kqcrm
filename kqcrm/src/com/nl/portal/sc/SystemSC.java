@@ -2,18 +2,25 @@ package com.nl.portal.sc;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.nl.base.AbstractDB;
 import com.nl.base.bssp.BsspXmlMgr;
+import com.nl.base.utils.BASTree;
 import com.nl.portal.bc.SystemDbMgr;
 import com.nl.portal.dt.AdmUserFc;
 import com.nl.portal.dt.AdmUserLog;
 import com.nl.portal.dt.KmDictCfg;
+import com.nl.portal.dt.SysMenu;
+import com.nl.portal.dt.SysOperator;
 import com.nl.util.GlobalConst;
 import com.nl.util.GlobalUtil;
 import com.nl.util.SessionConst;
@@ -32,6 +39,7 @@ import com.nl.util.SessionData;
  */
 public class SystemSC extends AbstractDB
 {
+	private int[] systemId = GlobalConst.Global_SYSTEM_ID;
 	String bossCodeStr = "";
 	public SystemSC(String bossCodeStr)
 	{
@@ -316,5 +324,98 @@ public class SystemSC extends AbstractDB
         //Color co = new Color(r,g,b);
         return new Color(r,g,b);
 	} 
+	
+	public SysOperator getOperatorById(String operatorId)
+	{
+		SysOperator operator = null;
+		SqlMapClient smc = null;
+		try
+		{
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			SystemDbMgr sysDbMgr = new SystemDbMgr(smc);
+			operator = sysDbMgr.getOperatorById(operatorId);
+		} catch (Exception e)
+		{
+			getLogger(bossCodeStr,GlobalConst.ERROR).error(e.getMessage());
+		}
+		finally
+		{
+			this.endTransaction(smc);
+		}
+		return operator;
+	}
+	/**
+	 * 获取操作员的系统菜单
+	 * @param sessionData
+	 * @return int
+	 */
+	public int getOperMenu(SessionData sessionData)
+	{
+		int retCode = -1;
+		List<SysMenu> menuList;
+		BASTree tree = null;
+		BASTree tTemp = null;
+		String priv ="";
+		
+		SysMenu sysMenu;
+		Map<String, BASTree> treeMap = new HashMap<String, BASTree>();
+		List<String> privMap = new ArrayList<String>();
+		SqlMapClient smc = null;
+		try
+		{
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			SystemDbMgr sysDbMgr = new SystemDbMgr(smc);
+			
+			//循环查询操作员各个系统的菜单数据
+			for (int i = 0; i < systemId.length; i++)
+			{
+				menuList = new ArrayList<SysMenu>();
+				//查询操作员的系统菜单
+				menuList = sysDbMgr.getOperMenuList(sessionData.getSno(), systemId[i]);
+				
+				tree = null;
+				tTemp = null;
+				
+				//判断是否有菜单数据，没有则不添加到MAP中
+				if (menuList != null && menuList.size() > 0)
+				{
+					for(int j=0;j<menuList.size();j++)
+					{
+						sysMenu = menuList.get(j);
+//						if (StringUtils.isNotEmpty(sysMenu.getWebaddr())) {
+//							sysMenu.setWebaddr(sysMenu.getWebaddr() + "&menuClick=true");
+//						}
+//						if (tree == null) 
+//						{
+//							tree = new BASTree(sysMenu.getName(), sysMenu.getWebaddr(), sysMenu.getPage_id(),sysMenu.getPage_desc());
+//		                } else 
+//		                {
+//		                    tTemp = new BASTree(sysMenu.getName(), sysMenu.getWebaddr(), sysMenu.getPage_id(),sysMenu.getPage_desc());
+//		                    tree.addTreeNode(tTemp, Integer.parseInt(sysMenu.getParent_id()));
+//		                }
+						privMap.add(String.valueOf(sysMenu.getPage_id()));
+						
+					}
+//					treeMap.put(String.valueOf(systemId[i]), tree);
+				}
+				
+			}//结束for循环
+			
+			//MAP赋值到sessiondate中
+//			sessionData.setTreeMap(treeMap);
+			sessionData.setPrivMap(privMap);
+			
+		} catch (Exception e)
+		{
+			getLogger(bossCodeStr,GlobalConst.ERROR).error(e.getMessage());
+		}
+		finally
+		{
+			this.endTransaction(smc);
+		}
+		return retCode;
+	}
 	
 }

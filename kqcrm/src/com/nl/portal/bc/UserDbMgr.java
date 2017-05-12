@@ -176,6 +176,18 @@ public class UserDbMgr extends AbstractDB{
 		}
 		return list;
 	}
+	public List<UserInfo> queryAllRolebysno(HashMap param) {
+		getLogger(bossCodeStr,GlobalConst.ENTER).info("查询所有角色：");
+		List<UserInfo> list = null;
+		
+		try{
+			list = smc.queryForList("UserSql.queryAllRolebysno", param);
+			getLogger(bossCodeStr,GlobalConst.EXIT).info("查询所有角色结束。");
+		}catch(Exception e){
+			getLogger(bossCodeStr,GlobalConst.ERROR).error("::查询所有角色有错！::" + "error:"+e.getMessage());
+		}
+		return list;
+	}
 
 	public List<UserInfo> queryRoleByUser(HashMap param) {
 		getLogger(bossCodeStr,GlobalConst.ENTER).info("查询所有角色：");
@@ -236,6 +248,118 @@ public class UserDbMgr extends AbstractDB{
 			getLogger(bossCodeStr,GlobalConst.EXIT).info("查询所有角色结束。");
 		}catch(Exception e){
 			getLogger(bossCodeStr,GlobalConst.ERROR).error("::查询所有角色有错！::" + "error:"+e.getMessage());
+		}
+		return list;
+	}
+
+	public int doRoleAdd(Map<String, String> param)  throws Exception{
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try
+		{
+			smc.update("UserSql.doRoleAdd", param);
+		}catch(Exception e){
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		}
+		return retCode;
+	}
+
+	public int addRolePriv(Map<String, String> param) throws Exception{
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try
+		{
+			smc.update("UserSql.addRolePriv", param);
+		}catch(Exception e){
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		}
+		return retCode;
+	}
+
+	public int doRoleDel(Map<String, String> param) throws Exception {
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try
+		{
+			smc.update("UserSql.doRoleDel", param);
+		}catch(Exception e){
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		}
+		return retCode;
+	}
+
+	public List<UserInfo> queryRoleList(HashMap param) {
+		getLogger(bossCodeStr,GlobalConst.ENTER).info("查询所有角色：");
+		List<UserInfo> list = null;
+		
+		try{
+			list = smc.queryForList("UserSql.queryRoleList", param);
+			getLogger(bossCodeStr,GlobalConst.EXIT).info("查询所有角色结束。");
+		}catch(Exception e){
+			getLogger(bossCodeStr,GlobalConst.ERROR).error("::查询所有角色有错！::" + "error:"+e.getMessage());
+		}
+		return list;
+	}
+
+	public List<UserInfo> getPrivilegeByRoleid(HashMap param) {
+		getLogger(bossCodeStr,GlobalConst.ENTER).info("查询所有角色：");
+		List<UserInfo> list = null;
+		
+		try{
+			list = smc.queryForList("UserSql.getPrivilegeByRoleid", param);
+			getLogger(bossCodeStr,GlobalConst.EXIT).info("查询所有角色结束。");
+		}catch(Exception e){
+			getLogger(bossCodeStr,GlobalConst.ERROR).error("::查询所有角色有错！::" + "error:"+e.getMessage());
+		}
+		return list;
+	}
+
+	public int doRoleEdit(Map<String, String> param) throws Exception {
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try
+		{
+			smc.update("UserSql.doRoleEdit", param);
+		}catch(Exception e){
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		}
+		return retCode;
+	}
+
+	public int editRolePriv(Map<String, String> param) throws Exception {
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try
+		{
+			smc.update("UserSql.editRolePriv", param);
+		}catch(Exception e){
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		}
+		return retCode;
+	}
+
+	public int delRolePriv(Map<String, String> param) throws Exception  {
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try
+		{
+			smc.update("UserSql.delRolePriv", param);
+		}catch(Exception e){
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		}
+		return retCode;
+	}
+
+	public List<UserInfo> doUserRegioncheck(Map<String, String> param) throws Exception   {
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		List<UserInfo> list = null;
+		try
+		{
+			list = smc.queryForList("UserSql.doUserRegioncheck", param);
+			//smc.update("UserSql.doUserRegioncheck", param);
+		}catch(Exception e){
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
 		}
 		return list;
 	}

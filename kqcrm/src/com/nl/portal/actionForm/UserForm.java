@@ -14,32 +14,39 @@ public class UserForm extends BaseAppActionForm {
 	private String city;
 	private String region;
 	private String sysid;
-	private String chooseRole;
-	private String allRole;
+	private String[] chooseRole;
+	private String[] allRole;
 	private String role_name;
 	private String role_id;
 	private String role_remark;
 	private String checkPrivId;
+	private String chooseRoles;
 	
 	private String privilege_id;
 	private String page_id;
 	
+	public String getChooseRoles() {
+		return chooseRoles;
+	}
+	public void setChooseRoles(String chooseRoles) {
+		this.chooseRoles = chooseRoles;
+	}
 	public String getSysid() {
 		return sysid;
 	}
 	public void setSysid(String sysid) {
 		this.sysid = sysid;
 	}
-	public String getChooseRole() {
+	public String[] getChooseRole() {
 		return chooseRole;
 	}
-	public void setChooseRole(String chooseRole) {
+	public void setChooseRole(String[] chooseRole) {
 		this.chooseRole = chooseRole;
 	}
-	public String getAllRole() {
+	public String[] getAllRole() {
 		return allRole;
 	}
-	public void setAllRole(String allRole) {
+	public void setAllRole(String[] allRole) {
 		this.allRole = allRole;
 	}
 	public String getProvinces() {

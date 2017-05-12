@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.huawei.csp.bsf.pwm.service.impl.PasswordForMD5;
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.nl.base.AbstractDB;
 import com.nl.portal.actionForm.UserForm;
@@ -113,7 +114,7 @@ public class UserSc extends AbstractDB {
 			param.put("city", userform.getCity());
 //			param.put("page_num", userform.getPageNum());
 //			param.put("page_size", userform.getNumPerPage());
-			userlist = db.getCityByPro(param);
+			userlist = db.getRegionByCity(param);
 		} catch(Exception e)
 		{
 			e.printStackTrace();
@@ -133,11 +134,11 @@ public class UserSc extends AbstractDB {
 			Map<String, String> param = new HashMap<String, String>();
 			//数据访问对象
 			UserDbMgr db = new UserDbMgr(smc);
-			
+			PasswordForMD5 md5 = new PasswordForMD5();
 			param.put("sno",form.getSno());
 			param.put("user_id",form.getUser_id());
 			param.put("user_name",form.getUser_name());
-			param.put("user_pwsd",form.getUser_pswd());
+			param.put("user_pswd",md5.encode(form.getUser_pswd()));
 			param.put("msisdn",form.getMsisdn());
 			param.put("email",form.getEmail());
 			
@@ -242,7 +243,7 @@ public class UserSc extends AbstractDB {
 			param.put("sno",form.getSno());
 			param.put("user_id",form.getUser_id());
 			param.put("user_name",form.getUser_name());
-			param.put("user_pwsd",form.getUser_pswd());
+//			param.put("user_pwsd",form.getUser_pswd());
 			param.put("msisdn",form.getMsisdn());
 			param.put("email",form.getEmail());
 			
@@ -269,10 +270,16 @@ public class UserSc extends AbstractDB {
 
 			//插入基本的工单信息 (流程实例信息表 FLOW_INSTANCE,工单基本信息表 CENSUPPORT_WORKORDER_BASE_INFO)
 			retCode = db.doUserEdit(param);
-			retCode = db.doUserRegionEdit(param);
-			if(retCode == GlobalConst.GLOBAL_RESULT_FAIL)return retCode;
+			//判断是否这个用户有归属
+			List<UserInfo> userlist = db.doUserRegioncheck(param);
+			if(userlist!=null&&userlist.size()>0){
+				retCode = db.doUserRegionEdit(param);
+				if(retCode == GlobalConst.GLOBAL_RESULT_FAIL)return retCode;
+			}else{
+				retCode = db.doUserRegionAdd(param);
+				if(retCode == GlobalConst.GLOBAL_RESULT_FAIL)return retCode;
+			}
 			
-			 
 			
 			smc.commitTransaction();
 		} catch (Exception e) {
@@ -296,6 +303,29 @@ public class UserSc extends AbstractDB {
 //			param.put("page_num", userform.getPageNum());
 //			param.put("page_size", userform.getNumPerPage());
 			userlist = db.queryAllRole(param);
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			this.endTransaction(smc);
+		}
+		return userlist;
+	}
+	public List<UserInfo> queryAllRolebysno(UserForm userform) {
+		List<UserInfo> userlist = null;
+		SqlMapClient smc = null;
+		try
+		{
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			UserDbMgr db = new UserDbMgr(smc);
+			HashMap param = new HashMap(); 
+			param.put("sno", userform.getSno());
+//			param.put("page_num", userform.getPageNum());
+//			param.put("page_size", userform.getNumPerPage());
+			userlist = db.queryAllRolebysno(param);
 		} catch(Exception e)
 		{
 			e.printStackTrace();
@@ -347,7 +377,11 @@ public class UserSc extends AbstractDB {
 			
 			 
 			//先删除原先的角色关系，在添加新的角色关系
-			String[] roles = form.getChooseRole().split(",");
+			String chooseroles = form.getChooseRoles();
+			String[] roles = null;
+			if(chooseroles!=null&&!"".equals(chooseroles)){
+				roles = chooseroles.split(",");
+			}
 			if(roles!=null&&roles.length>0){
 				for(int i=0;i<roles.length;i++){
 					param.put("role_id",roles[i]);
@@ -409,5 +443,152 @@ public class UserSc extends AbstractDB {
 			this.endTransaction(smc);
 		}
 		return userlist;
+	}
+	public int doRoleAdd(UserForm form) throws Exception {
+		SqlMapClient smc = null;
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try {
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			Map<String, String> param = new HashMap<String, String>();
+			//数据访问对象
+			UserDbMgr db = new UserDbMgr(smc);
+
+			param.put("role_id",form.getRole_id());
+			param.put("role_name",form.getRole_name());
+//			param.put("chooseRole",form.getChooseRole());
+			param.put("sysid",form.getSysid());
+			param.put("role_remark",form.getRole_remark());
+			param.put("create_id",form.getOperatorId());
+			
+			retCode = db.doRoleAdd(param);
+			if(retCode == GlobalConst.GLOBAL_RESULT_FAIL)return retCode;
+			
+			String[] privids = form.getCheckPrivId().split(",");
+			 
+			if(privids!=null&&privids.length>0){
+				for(int i=0;i<privids.length;i++){
+					param.put("priv_id",privids[i]);
+					retCode = db.addRolePriv(param);
+					if(retCode == GlobalConst.GLOBAL_RESULT_FAIL)return retCode;
+				}
+			}
+			
+			smc.commitTransaction();
+		} catch (Exception e) {
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		} finally {
+			this.endTransaction(smc);
+		}
+		return retCode;
+	}
+	public int doRoleDel(UserForm form) throws Exception {
+		SqlMapClient smc = null;
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try {
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			Map<String, String> param = new HashMap<String, String>();
+			//数据访问对象
+			UserDbMgr db = new UserDbMgr(smc);
+
+			param.put("role_id",form.getRole_id());
+			
+			retCode = db.doRoleDel(param);
+			if(retCode == GlobalConst.GLOBAL_RESULT_FAIL)return retCode;
+			
+			smc.commitTransaction();
+		} catch (Exception e) {
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		} finally {
+			this.endTransaction(smc);
+		}
+		return retCode;
+	}
+	public List<UserInfo> queryRoleList(UserForm formBean) {
+		List<UserInfo> userlist = null;
+		SqlMapClient smc = null;
+		try
+		{
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			UserDbMgr db = new UserDbMgr(smc);
+			HashMap param = new HashMap(); 
+			param.put("role_id", formBean.getRole_id());
+			userlist = db.queryRoleList(param);
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			this.endTransaction(smc);
+		}
+		return userlist;
+	}
+	public List<UserInfo> getPrivilegeByRoleid(UserForm formBean) {
+		List<UserInfo> userlist = null;
+		SqlMapClient smc = null;
+		try
+		{
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			UserDbMgr db = new UserDbMgr(smc);
+			HashMap param = new HashMap(); 
+			param.put("role_id", formBean.getRole_id());
+			userlist = db.getPrivilegeByRoleid(param);
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			this.endTransaction(smc);
+		}
+		return userlist;
+	}
+	public int doRoleEdit(UserForm form) throws Exception  {
+		SqlMapClient smc = null;
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try {
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			Map<String, String> param = new HashMap<String, String>();
+			//数据访问对象
+			UserDbMgr db = new UserDbMgr(smc);
+
+			param.put("role_id",form.getRole_id());
+			param.put("role_name",form.getRole_name());
+//			param.put("chooseRole",form.getChooseRole());
+			param.put("sysid",form.getSysid());
+			param.put("role_remark",form.getRole_remark());
+			param.put("create_id",form.getOperatorId());
+			
+			retCode = db.doRoleEdit(param);
+			if(retCode == GlobalConst.GLOBAL_RESULT_FAIL)return retCode;
+			
+			//删除角色权限
+			retCode = db.delRolePriv(param);
+			if(retCode == GlobalConst.GLOBAL_RESULT_FAIL)return retCode;
+			
+			String[] privids = form.getCheckPrivId().split(",");
+			if(privids!=null&&privids.length>0){
+				for(int i=0;i<privids.length;i++){
+					param.put("priv_id",privids[i]);
+					retCode = db.addRolePriv(param);
+					if(retCode == GlobalConst.GLOBAL_RESULT_FAIL)return retCode;
+				}
+			}
+			
+			smc.commitTransaction();
+		} catch (Exception e) {
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		} finally {
+			this.endTransaction(smc);
+		}
+		return retCode;
 	}
 }
