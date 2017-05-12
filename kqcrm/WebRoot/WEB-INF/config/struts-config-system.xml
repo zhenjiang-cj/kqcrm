@@ -9,8 +9,6 @@
 
 	<form-beans>
        <form-bean name="loginForm"  type="com.nl.portal.actionForm.LoginForm"/>
-       <form-bean name="operatorForm"  type="com.nl.portal.actionForm.OperatorForm"/>
-       <form-bean name="roleForm"  type="com.nl.portal.actionForm.RoleForm"/>
        <form-bean name="userForm"  type="com.nl.portal.actionForm.UserForm"/>
     </form-beans>
 	          
@@ -25,43 +23,18 @@
 			<forward name="userrole" path="/coremain/portal/user/user_role.jsp"/>
 			<forward name="rolemanage" path="/coremain/portal/user/role_manage.jsp"/>
 			<forward name="roleadd" path="/coremain/portal/user/role_add.jsp"/>
+			<forward name="roleedit" path="/coremain/portal/user/role_edit.jsp"/>
 		</action>
 	
 		<action path="/login" type="com.nl.portal.action.LoginAction" parameter="method"
 		 name="loginForm" scope="request" validate="false">
+		    <forward name="login" path="/login.jsp"/>
 		    <forward name="index" path="/index.jsp"/>
-		    <forward name="passUpdate" path="/coremain/portal/system/operatorManage/loginPasswordUpdate.jsp"/>
-			<forward name="login" path="/coremain/portal/login.jsp"/>
+		    
+		    
 			<forward name="success" path="/coremain/portal/success.jsp"/>
 		    <forward name="check" path="/check.jsp"/>		
 		    <forward name="operatorUpdate" path="/coremain/portal/system/operatorManage/operator_update.jsp"/>
-		</action>
-		
-		<action path="/operator" type="com.nl.portal.action.OperatorManageAction" parameter="method"
-		 name="operatorForm" scope="request" validate="false">
-		    <forward name="operatorList" path="/coremain/portal/system/operatorManage/operatorManage.jsp"/>
-		    <forward name="operatorDetail" path="/coremain/portal/system/operatorManage/operatorDetail.jsp"/>
-		    <forward name="operatorUpdate" path="/coremain/portal/system/operatorManage/operatorUpdate.jsp"/>
-		    <forward name="operatorupdate" path="/coremain/portal/system/operatorManage/operator_update.jsp"/>
-		    <forward name="operRoleUpdate" path="/coremain/portal/system/operatorManage/operatorRoleUpdate.jsp"/>
-		    <forward name="operPasswordUpdate" path="/coremain/portal/system/operatorManage/passwordUpdate.jsp"/>
-		    <forward name="success" path="/coremain/portal/system/operatorManage/success.jsp"/>
-		    <forward name="privilege" path="/coremain/portal/system/operatorManage/privilegeInfo.jsp"/>
-		    <forward name="operatorAdd" path="/coremain/portal/system/operatorManage/operatorAdd.jsp"/>
-		    <forward name="operatorOpen" path="/coremain/portal/system/operatorManage/operator_open.jsp"/>
-		    <forward name="privilegeClone" path="/coremain/portal/system/operatorManage/privilegeClone.jsp"/>
-		    <forward name="toBatchSyncData" path="/coremain/portal/system/operatorManage/synchroData4A.jsp"/>
-		    <forward name="batchResult" path="/coremain/portal/system/operatorManage/batchResult.jsp"/>
-		</action>
-		
-		<action path="/role" type="com.nl.portal.action.RoleManageAction" parameter="method"
-		 name="roleForm" scope="request" validate="false">
-		    <forward name="roleList" path="/coremain/portal/system/roleManage/roleManage.jsp"/>
-		    <forward name="roleAdd" path="/coremain/portal/system/roleManage/roleAdd.jsp"/>
-		    <forward name="roleDetail" path="/coremain/portal/system/roleManage/roleDetail.jsp"/>
-		    <forward name="roleUpdate" path="/coremain/portal/system/roleManage/roleUpdate.jsp"/>
-		    <forward name="roleBatch" path="/coremain/portal/system/roleManage/roleBatch.jsp"/>
-		    <forward name="success" path="/coremain/portal/system/roleManage/success.jsp"/>
 		</action>
 		
 	</action-mappings>
