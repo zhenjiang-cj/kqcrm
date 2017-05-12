@@ -1,7 +1,18 @@
-<%@ page language="java" import="java.util.*" pageEncoding="GBK"%>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@page import="com.nl.base.utils.GlobalFunc"%>
+<%@page import="com.nl.util.GlobalUtil"%>
+<%@page import="com.nl.util.SessionConst"%>
+<%@page import="com.nl.util.GlobalConst"%>
+<%@page import="com.nl.util.SessionData"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+
+SessionData sessdata = (SessionData) request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
+List privlist = null;
+if(sessdata!=null){
+	privlist = sessdata.getPrivMap();
+}
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -9,7 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=7" />
-<title>¼òµ¥ÊµÓÃ¹ú²újQuery UI¿ò¼Ü - DWZ¸»¿Í»§¶Ë¿ò¼Ü(J-UI.com)</title>
+<title>ç®€å•å®ç”¨å›½äº§jQuery UIæ¡†æ¶ - DWZå¯Œå®¢æˆ·ç«¯æ¡†æ¶(J-UI.com)</title>
 
 <link href="<%=path%>/dwz/themes/default/style.css" rel="stylesheet" type="text/css" media="screen"/>
 <link href="<%=path%>/dwz/themes/css/core.css" rel="stylesheet" type="text/css" media="screen"/>
@@ -26,32 +37,68 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!--[if lte IE 9]>
 <script src="js/speedup.js" type="text/javascript"></script>
 <![endif]-->
-<script src="<%=path%>/dwz/js/jquery-1.7.2.min.js" type="text/javascript"></script>
-<script src="<%=path%>/dwz/js/jquery.cookie.js" type="text/javascript"></script>
-<script src="<%=path%>/dwz/js/jquery.validate.js" type="text/javascript"></script>
-<script src="<%=path%>/dwz/js/jquery.bgiframe.js" type="text/javascript"></script>
-<script src="<%=path%>/dwz/xheditor/xheditor-1.2.1.min.js" type="text/javascript"></script>
-<script src="<%=path%>/dwz/xheditor/xheditor_lang/zh-cn.js" type="text/javascript"></script>
-<script src="<%=path%>/dwz/uploadify/scripts/jquery.uploadify.min.js" type="text/javascript"></script>
-
-<script src="<%=path%>/dwz/bin/dwz.min.js" type="text/javascript"></script>
-<script src="<%=path%>/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
+	<script src="<%=path%>/dwz/js/jquery-1.7.2.js" type="text/javascript"></script>
+	<script src="<%=path%>/dwz/js/jquery.cookie.js" type="text/javascript"></script>
+	<script src="<%=path%>/dwz/js/jquery.validate.js" type="text/javascript"></script>
+	<script src="<%=path%>/dwz/js/jquery.bgiframe.js" type="text/javascript"></script>
+	<script src="<%=path%>/dwz/xheditor/xheditor-1.2.1.min.js" type="text/javascript"></script>
+	<script src="<%=path%>/dwz/xheditor/xheditor_lang/zh-cn.js" type="text/javascript"></script>
+	<script src="<%=path%>/dwz/uploadify/scripts/jquery.uploadify.js" type="text/javascript"></script>
+	
+	<!-- svgå›¾è¡¨  supports Firefox 3.0+, Safari 3.0+, Chrome 5.0+, Opera 9.5+ and Internet Explorer 6.0+ -->
+	<script type="text/javascript" src="<%=path%>/dwz/chart/raphael.js"></script>
+	<script type="text/javascript" src="<%=path%>/dwz/chart/g.raphael.js"></script>
+	<script type="text/javascript" src="<%=path%>/dwz/chart/g.bar.js"></script>
+	<script type="text/javascript" src="<%=path%>/dwz/chart/g.line.js"></script>
+	<script type="text/javascript" src="<%=path%>/dwz/chart/g.pie.js"></script>
+	<script type="text/javascript" src="<%=path%>/dwz/chart/g.dot.js"></script>
+		
+	<script src="<%=path%>/dwz/bin/dwz.min.js" type="text/javascript"></script>
+	<script src="<%=path%>/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 $(function(){
-	DWZ.init("/khcrm/dwz/dwz.frag.xml", {
-		loginUrl:"login_dialog.html", loginTitle:"µÇÂ¼",	// µ¯³öµÇÂ¼¶Ô»°¿ò
-//		loginUrl:"login.html",	// Ìøµ½µÇÂ¼Ò³Ãæ
-		statusCode:{ok:200, error:300, timeout:301}, //¡¾¿ÉÑ¡¡¿
-		pageInfo:{pageNum:"pageNum", numPerPage:"numPerPage", orderField:"orderField", orderDirection:"orderDirection"}, //¡¾¿ÉÑ¡¡¿
-		debug:false,	// µ÷ÊÔÄ£Ê½ ¡¾true|false¡¿
+	DWZ.init("/kqcrm/dwz/dwz.frag.xml", {
+		//loginUrl:"login.jsp", loginTitle:"ç™»å½•",	// å¼¹å‡ºç™»å½•å¯¹è¯æ¡†
+  		loginUrl:"login.jsp",	// è·³åˆ°ç™»å½•é¡µé¢
+		statusCode:{ok:200, error:300, timeout:301}, //ã€å¯é€‰ã€‘
+		pageInfo:{pageNum:"pageNum", numPerPage:"numPerPage", orderField:"orderField", orderDirection:"orderDirection"}, //ã€å¯é€‰ã€‘
+		debug:false,	// è°ƒè¯•æ¨¡å¼ ã€true|falseã€‘
 		callback:function(){
 			initEnv();
 			$("#themeList").theme({themeBase:"themes"});
+			//DWZ.loadLogin();
 			//setTimeout(function() {$("#sidebar .toggleCollapse div").trigger("click");}, 10);
+			setTimeout(checksession, 1000);
+			//
+			setTimeout(function() {$("#navMenu .selected a").trigger("click");}, 10);
 		}
 	});
 });
+//åˆ¤æ–­sessionæ˜¯å¦å¤±æ•ˆ
+function checksession()
+{
+	
+	try{
+		$.ajax({
+		    type:"post",
+			dataType:"json",
+			contentType:"application/json;charset=UTF-8",
+			url:'<%=path%>/sessionFile.jsp',
+		    success:function(data){
+	            if('1'!=data){
+                   DWZ.loadLogin();
+	            }
+		    },
+		    error:function (data){
+		        alert("éªŒè¯sessionå¤±è´¥ï¼");
+		    }
+		});
+	}catch(e){
+		alert(e);
+	}
+
+}
 </script>
 </head>
 
@@ -59,44 +106,60 @@ $(function(){
 	<div id="layout">
 		<div id="header">
 			<div class="headerNav">
-				<a class="logo" href="http://j-ui.com">±êÖ¾</a>
+				<a class="logo" href="http://j-ui.com">æ ‡å¿—</a>
 				<ul class="nav">
-					<li id="switchEnvBox"><a href="javascript:">£¨<span>±±¾©</span>£©ÇĞ»»³ÇÊĞ</a>
+					<li id="switchEnvBox"><a href="javascript:">ï¼ˆ<span>åŒ—äº¬</span>ï¼‰åˆ‡æ¢åŸå¸‚</a>
 						<ul>
-							<li><a href="sidebar_1.html">±±¾©</a></li>
-							<li><a href="sidebar_2.html">ÉÏº£</a></li>
-							<li><a href="sidebar_2.html">ÄÏ¾©</a></li>
-							<li><a href="sidebar_2.html">ÉîÛÚ</a></li>
-							<li><a href="sidebar_2.html">¹ãÖİ</a></li>
-							<li><a href="sidebar_2.html">Ìì½ò</a></li>
-							<li><a href="sidebar_2.html">º¼Öİ</a></li>
+							<li><a href="sidebar_1.html">åŒ—äº¬</a></li>
+							<li><a href="sidebar_2.html">ä¸Šæµ·</a></li>
+							<li><a href="sidebar_2.html">å—äº¬</a></li>
+							<li><a href="sidebar_2.html">æ·±åœ³</a></li>
+							<li><a href="sidebar_2.html">å¹¿å·</a></li>
+							<li><a href="sidebar_2.html">å¤©æ´¥</a></li>
+							<li><a href="sidebar_2.html">æ­å·</a></li>
 						</ul>
 					</li>
-					<li><a href="https://me.alipay.com/dwzteam" target="_blank">¾èÔù</a></li>
-					<li><a href="changepwd.html" target="dialog" width="600">ÉèÖÃ</a></li>
-					<li><a href="http://www.cnblogs.com/dwzjs" target="_blank">²©¿Í</a></li>
-					<li><a href="http://weibo.com/dwzui" target="_blank">Î¢²©</a></li>
-					<li><a href="http://bbs.dwzjs.com" target="_blank">ÂÛÌ³</a></li>
-					<li><a href="login.html">ÍË³ö</a></li>
+					<li><a href="https://me.alipay.com/dwzteam" target="_blank">æèµ </a></li>
+					<li><a href="changepwd.html" target="dialog" width="600">è®¾ç½®</a></li>
+					<li><a href="http://www.cnblogs.com/dwzjs" target="_blank">åšå®¢</a></li>
+					<li><a href="http://weibo.com/dwzui" target="_blank">å¾®åš</a></li>
+					<li><a href="http://bbs.dwzjs.com" target="_blank">è®ºå›</a></li>
+					<li><a href="login.html">é€€å‡º</a></li>
 				</ul>
 				<ul class="themeList" id="themeList">
-					<li theme="default"><div class="selected">À¶É«</div></li>
-					<li theme="green"><div>ÂÌÉ«</div></li>
-					<!--<li theme="red"><div>ºìÉ«</div></li>-->
-					<li theme="purple"><div>×ÏÉ«</div></li>
-					<li theme="silver"><div>ÒøÉ«</div></li>
-					<li theme="azure"><div>ÌìÀ¶</div></li>
+					<li theme="default"><div class="selected">è“è‰²</div></li>
+					<li theme="green"><div>ç»¿è‰²</div></li>
+					<!--<li theme="red"><div>çº¢è‰²</div></li>-->
+					<li theme="purple"><div>ç´«è‰²</div></li>
+					<li theme="silver"><div>é“¶è‰²</div></li>
+					<li theme="azure"><div>å¤©è“</div></li>
 				</ul>
 			</div>
 		
 			<div id="navMenu">
 				<ul>
-					<li class="selected"><a href="<%=path%>/dwz/sidebar_2.html"><span>¶©µ¥¹ÜÀí</span></a></li>
-					<li ><a href="<%=path%>/coremain/portal/user/frame.jsp"><span>ÏµÍ³¹ÜÀí</span></a></li>
-					<li><a href="<%=path%>/dwz/sidebar_1.html"><span>²úÆ·¹ÜÀí</span></a></li>
-					<li><a href="<%=path%>/dwz/sidebar_2.html"><span>»áÔ±¹ÜÀí</span></a></li>
-					<li><a href="<%=path%>/dwz/sidebar_1.html"><span>·şÎñ¹ÜÀí</span></a></li>
-					<li><a href="<%=path%>/dwz/sidebar_2.html"><span>ÏµÍ³ÉèÖÃ</span></a></li>
+				<li  class="selected"><a href="<%=path%>/coremain/portal/user/frame.jsp"><span>ç³»ç»Ÿç®¡ç†</span></a></li>
+				<%
+				if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_CRM_MANAGE)){
+					%>
+					<li class="selected"><a href="<%=path%>/coremain/portal/user/frame.jsp"><span>å®¢æˆ·ç®¡ç†</span></a></li>
+					<%
+				}
+				%>
+				<%
+				if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_CRM_BACK)){
+					%>
+					<li  ><a href="<%=path%>/coremain/portal/user/frame.jsp"><span>å®¢æˆ·å›è®¿</span></a></li>
+					<%
+				}
+				%>
+				<%
+				if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_SYS_MANAGE)){
+					%>
+					<li  ><a href="<%=path%>/coremain/portal/user/frame.jsp"><span>ç³»ç»Ÿç®¡ç†</span></a></li>
+					<%
+				}
+				%>
 				</ul>
 			</div>
 		</div>
@@ -108,89 +171,32 @@ $(function(){
 				</div>
 			</div>
 			<div id="sidebar">
-				<div class="toggleCollapse"><h2>Ö÷²Ëµ¥</h2><div>ÊÕËõ</div></div>
+				<div class="toggleCollapse"><h2>ä¸»èœå•</h2><div>æ”¶ç¼©</div></div>
 
 				<div class="accordion" fillSpace="sidebar">
 					<div class="accordionHeader">
-						<h2><span>Folder</span>½çÃæ×é¼ş</h2>
+						<h2><span>Folder</span>ç•Œé¢ç»„ä»¶</h2>
 					</div>
 					<div class="accordionContent">
 						<ul class="tree treeFolder">
-							<li><a href="tabsPage.html" target="navTab">Ö÷¿ò¼ÜÃæ°å</a>
+							<li><a href="tabsPage.html" target="navTab">ä¸»æ¡†æ¶é¢æ¿</a>
 								<ul>
-									<li><a href="main.html" target="navTab" rel="main">ÎÒµÄÖ÷Ò³</a></li>
-									<li><a href="http://www.baidu.com" target="navTab" rel="page1">Ò³ÃæÒ»(Íâ²¿Ò³Ãæ)</a></li>
-									<li><a href="demo_page2.html" target="navTab" rel="external" external="true">iframe navTabÒ³Ãæ</a></li>
-									<li><a href="demo_page1.html" target="navTab" rel="page1" fresh="false">Ìæ»»Ò³ÃæÒ»</a></li>
-									<li><a href="demo_page2.html" target="navTab" rel="page2">Ò³Ãæ¶ş</a></li>
-									<li><a href="demo_page4.html" target="navTab" rel="page3" title="Ò³ÃæÈı£¨×Ô¶¨Òå±êÇ©Ãû£©">Ò³ÃæÈı</a></li>
-									<li><a href="demo_page4.html" target="navTab" rel="page4" fresh="false">²âÊÔÒ³Ãæ£¨fresh="false"£©</a></li>
-									<li><a href="w_editor.html" target="navTab">±íµ¥Ìá½»»á»°³¬Ê±</a></li>
-									<li><a href="demo/common/ajaxTimeout.html" target="navTab">navTab»á»°³¬Ê±</a></li>
-									<li><a href="demo/common/ajaxTimeout.html" target="dialog">dialog»á»°³¬Ê±</a></li>
+									<li><a href="http://www.baidu.com" target="navTab" rel="page1">é¡µé¢ä¸€(å¤–éƒ¨é¡µé¢)</a></li>
+									<li><a href="main.html" target="navTab" rel="main">æˆ‘çš„ä¸»é¡µ</a></li>
+									<li><a href="demo_page2.html" target="navTab" rel="external" external="true">iframe navTabé¡µé¢</a></li>
+									<li><a href="demo_page1.html" target="navTab" rel="page1" fresh="false">æ›¿æ¢é¡µé¢ä¸€</a></li>
+									<li><a href="demo_page2.html" target="navTab" rel="page2">é¡µé¢äºŒ</a></li>
+									<li><a href="demo_page4.html" target="navTab" rel="page3" title="é¡µé¢ä¸‰ï¼ˆè‡ªå®šä¹‰æ ‡ç­¾åï¼‰">é¡µé¢ä¸‰</a></li>
+									<li><a href="demo_page4.html" target="navTab" rel="page4" fresh="false">æµ‹è¯•é¡µé¢ï¼ˆfresh="false"ï¼‰</a></li>
+									<li><a href="w_editor.html" target="navTab">è¡¨å•æäº¤ä¼šè¯è¶…æ—¶</a></li>
+									<li><a href="demo/common/ajaxTimeout.html" target="navTab">navTabä¼šè¯è¶…æ—¶</a></li>
+									<li><a href="demo/common/ajaxTimeout.html" target="dialog">dialogä¼šè¯è¶…æ—¶</a></li>
 								</ul>
 							</li>
 							
-							<li><a>³£ÓÃ×é¼ş</a>
-								<ul>
-									<li><a href="w_panel.html" target="navTab" rel="w_panel">Ãæ°å</a></li>
-									<li><a href="w_tabs.html" target="navTab" rel="w_tabs">Ñ¡Ïî¿¨Ãæ°å</a></li>
-									<li><a href="w_dialog.html" target="navTab" rel="w_dialog">µ¯³ö´°¿Ú</a></li>
-									<li><a href="w_alert.html" target="navTab" rel="w_alert">ÌáÊ¾´°¿Ú</a></li>
-									<li><a href="w_list.html" target="navTab" rel="w_list">CSS±í¸ñÈİÆ÷</a></li>
-									<li><a href="demo_page1.html" target="navTab" rel="w_table">±í¸ñÈİÆ÷</a></li>
-									<li><a href="w_removeSelected.html" target="navTab" rel="w_table">±í¸ñÊı¾İ¿âÅÅĞò+ÅúÁ¿É¾³ı</a></li>
-									<li><a href="w_tree.html" target="navTab" rel="w_tree">Ê÷ĞÎ²Ëµ¥</a></li>
-									<li><a href="w_accordion.html" target="navTab" rel="w_accordion">»¬¶¯²Ëµ¥</a></li>
-									<li><a href="w_editor.html" target="navTab" rel="w_editor">±à¼­Æ÷</a></li>
-									<li><a href="w_datepicker.html" target="navTab" rel="w_datepicker">ÈÕÆÚ¿Ø¼ş</a></li>
-									<li><a href="demo/database/db_widget.html" target="navTab" rel="db">suggest+lookup+Ö÷´Ó½á¹¹</a></li>
-									<li><a href="demo/sortDrag/1.html" target="navTab" rel="sortDrag">µ¥¸ösortDragÊ¾Àı</a></li>
-									<li><a href="demo/sortDrag/2.html" target="navTab" rel="sortDrag">¶à¸ösortDragÊ¾Àı</a></li>
-								</ul>
-							</li>
-							 
 						</ul>
 					</div>
-					<div class="accordionHeader">
-						<h2><span>Folder</span>µäĞÍÒ³Ãæ</h2>
-					</div>
-					<div class="accordionContent">
-						<ul class="tree treeFolder treeCheck">
-							<li><a href="demo_page1.html" target="navTab" rel="demo_page1">²éÑ¯ÎÒµÄ¿Í»§</a></li>
-							<li><a href="demo_page1.html" target="navTab" rel="demo_page2">±íµ¥²éÑ¯Ò³Ãæ</a></li>
-							<li><a href="demo_page4.html" target="navTab" rel="demo_page4">±íµ¥Â¼ÈëÒ³Ãæ</a></li>
-							<li><a href="demo_page5.html" target="navTab" rel="demo_page5">ÓĞÎÄ±¾ÊäÈëµÄ±íµ¥</a></li>
-							<li><a href="javascript:;">ÓĞÌáÊ¾µÄ±íµ¥ÊäÈëÒ³Ãæ</a>
-								<ul>
-									<li><a href="javascript:;">Ò³ÃæÒ»</a></li>
-									<li><a href="javascript:;">Ò³Ãæ¶ş</a></li>
-								</ul>
-							</li>
-							<li><a href="javascript:;">Ñ¡Ïî¿¨ºÍÍ¼ĞÎµÄÒ³Ãæ</a>
-								<ul>
-									<li><a href="javascript:;">Ò³ÃæÒ»</a></li>
-									<li><a href="javascript:;">Ò³Ãæ¶ş</a></li>
-								</ul>
-							</li>
-							<li><a href="javascript:;">Ñ¡Ïî¿¨ºÍÍ¼ĞÎÇĞ»»µÄÒ³Ãæ</a></li>
-							<li><a href="javascript:;">×óÓÒÁ½¸ö»¥¶¯µÄÒ³Ãæ</a></li>
-							<li><a href="javascript:;">ÁĞ±íÊäÈëµÄÒ³Ãæ</a></li>
-							<li><a href="javascript:;">Ë«²ãÀ¸Ä¿ÁĞ±íµÄÒ³Ãæ</a></li>
-						</ul>
-					</div>
-					<div class="accordionHeader">
-						<h2><span>Folder</span>Á÷³ÌÑİÊ¾</h2>
-					</div>
-					<div class="accordionContent">
-						<ul class="tree">
-							<li><a href="newPage1.html" target="dialog" rel="dlg_page">ÁĞ±í</a></li>
-							<li><a href="newPage1.html" target="dialog" rel="dlg_page">ÁĞ±í</a></li>
-							<li><a href="newPage1.html" target="dialog" rel="dlg_page2">ÁĞ±í</a></li>
-							<li><a href="newPage1.html" target="dialog" rel="dlg_page2">ÁĞ±í</a></li>
-							<li><a href="newPage1.html" target="dialog" rel="dlg_page2">ÁĞ±í</a></li>
-						</ul>
-					</div>
+					 
 				</div>
 
 			</div>
@@ -198,31 +204,31 @@ $(function(){
 		<div id="container">
 			<div id="navTab" class="tabsPage">
 				<div class="tabsPageHeader">
-					<div class="tabsPageHeaderContent"><!-- ÏÔÊ¾×óÓÒ¿ØÖÆÊ±Ìí¼Ó class="tabsPageHeaderMargin" -->
+					<div class="tabsPageHeaderMargin"><!-- æ˜¾ç¤ºå·¦å³æ§åˆ¶æ—¶æ·»åŠ  class="tabsPageHeaderMargin" -->
 						<ul class="navTab-tab">
-							<li tabid="main" class="main"><a href="javascript:;"><span><span class="home_icon">ÎÒµÄÖ÷Ò³</span></span></a></li>
+							<li tabid="main" class="main"><a href="javascript:;"><span><span class="home_icon">æˆ‘çš„ä¸»é¡µ</span></span></a></li>
 						</ul>
 					</div>
-					<div class="tabsLeft">left</div><!-- ½ûÓÃÖ»ĞèÒªÌí¼ÓÒ»¸öÑùÊ½ class="tabsLeft tabsLeftDisabled" -->
-					<div class="tabsRight">right</div><!-- ½ûÓÃÖ»ĞèÒªÌí¼ÓÒ»¸öÑùÊ½ class="tabsRight tabsRightDisabled" -->
+					<div class="tabsLeft">left</div><!-- ç¦ç”¨åªéœ€è¦æ·»åŠ ä¸€ä¸ªæ ·å¼ class="tabsLeft tabsLeftDisabled" -->
+					<div class="tabsRight">right</div><!-- ç¦ç”¨åªéœ€è¦æ·»åŠ ä¸€ä¸ªæ ·å¼ class="tabsRight tabsRightDisabled" -->
 					<div class="tabsMore">more</div>
 				</div>
 				<ul class="tabsMoreList">
-					<li><a href="javascript:;">ÎÒµÄÖ÷Ò³</a></li>
+					<li><a href="javascript:;">æˆ‘çš„ä¸»é¡µ</a></li>
 				</ul>
 				<div class="navTab-panel tabsPageContent layoutBox">
 					<div class="page unitBox">
 						<div class="accountInfo">
 							<div class="alertInfo">
-								<h2><a href="doc/dwz-user-guide.pdf" target="_blank">DWZ¿ò¼ÜÊ¹ÓÃÊÖ²á(PDF)</a></h2>
-								<a href="doc/dwz-user-guide.swf" target="_blank">DWZ¿ò¼ÜÑİÊ¾ÊÓÆµ</a>
+								<h2><a href="doc/dwz-user-guide.pdf" target="_blank">DWZæ¡†æ¶ä½¿ç”¨æ‰‹å†Œ(PDF)</a></h2>
+								<a href="doc/dwz-user-guide.swf" target="_blank">DWZæ¡†æ¶æ¼”ç¤ºè§†é¢‘</a>
 							</div>
 							<div class="right">
-								<p><a href="doc/dwz-user-guide.zip" target="_blank" style="line-height:19px">DWZ¿ò¼ÜÊ¹ÓÃÊÖ²á(CHM)</a></p>
-								<p><a href="doc/dwz-ajax-develop.swf" target="_blank" style="line-height:19px">DWZ¿ò¼ÜAjax¿ª·¢ÊÓÆµ½Ì²Ä</a></p>
+								<p><a href="doc/dwz-user-guide.zip" target="_blank" style="line-height:19px">DWZæ¡†æ¶ä½¿ç”¨æ‰‹å†Œ(CHM)</a></p>
+								<p><a href="doc/dwz-ajax-develop.swf" target="_blank" style="line-height:19px">DWZæ¡†æ¶Ajaxå¼€å‘è§†é¢‘æ•™æ</a></p>
 							</div>
-							<p><span>DWZ¸»¿Í»§¶Ë¿ò¼Ü</span></p>
-							<p>DWZ¹Ù·½Î¢²©:<a href="http://weibo.com/dwzui" target="_blank">http://weibo.com/dwzui</a></p>
+							<p><span>DWZå¯Œå®¢æˆ·ç«¯æ¡†æ¶</span></p>
+							<p>DWZå®˜æ–¹å¾®åš:<a href="http://weibo.com/dwzui" target="_blank">http://weibo.com/dwzui</a></p>
 						</div>
 						<div class="pageFormContent" layoutH="80">
 							<iframe width="100%" height="430" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?width=0&height=430&fansRow=2&ptype=1&speed=300&skin=1&isTitle=0&noborder=1&isWeibo=1&isFans=0&uid=1739071261&verifier=c683dfe7"></iframe>
@@ -235,20 +241,7 @@ $(function(){
 
 	</div>
 
-	<div id="footer">Copyright &copy; 2010 <a href="demo_page2.html" target="dialog">DWZÍÅ¶Ó</a></div>
-
-<!-- ×¢Òâ´Ë´¦js´úÂëÓÃÓÚgoogleÕ¾µãÍ³¼Æ£¬·ÇDWZ´úÂë£¬ÇëÉ¾³ı -->
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-16716654-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? ' https://ssl' : ' http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
+	<div id="footer">Copyright &copy; 2010 <a href="demo_page2.html" target="dialog">DWZå›¢é˜Ÿ</a></div>
 
 </body>
 </html>

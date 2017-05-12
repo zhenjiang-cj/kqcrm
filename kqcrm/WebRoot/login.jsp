@@ -14,14 +14,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
-	<link rel="shortcut icon" href="resources/images/favicon.ico" />
-	<link href="resources/style/style.css" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="resources/js/jquery.js"></script>
-	<script type="text/javascript" src="resources/js/jquery.i18n.properties-1.0.9.js" ></script>
-	<script type="text/javascript" src="resources/js/jquery-ui-1.10.3.custom.js"></script>
-	<script type="text/javascript" src="resources/js/jquery.validate.js"></script>
-	<script type="text/javascript" src="resources/js/md5.js"></script>
-	<script type="text/javascript" src="resources/js/page_login.js?lang=zh"></script>
+	<link rel="shortcut icon" href="<%=path%>/resources/images/favicon.ico" />
+	<link href="<%=path%>/resources/style/style.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="<%=path%>/resources/js/jquery.js"></script>
+	<script type="text/javascript" src="<%=path%>/resources/js/jquery.i18n.properties-1.0.9.js" ></script>
+	<script type="text/javascript" src="<%=path%>/resources/js/jquery-ui-1.10.3.custom.js"></script>
+	<script type="text/javascript" src="<%=path%>/resources/js/jquery.validate.js"></script>
+	<script type="text/javascript" src="<%=path%>/resources/js/md5.js"></script>
+	<script type="text/javascript" src="<%=path%>/resources/js/page_login.js?lang=zh"></script>
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
@@ -29,6 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body class="loginbody">
+  <form class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)" action="<%=path%>/login.do?method=login" method="post" name="userForm">
 	<div class="dataEye">
 		<div class="loginbox">
 			<div class="logo-a">
@@ -43,12 +44,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<form id="signupForm">
 				<div class="login-error"></div>
 				<div class="row">
-					<label class="field">用户名</label>
-					<input type="text" class="input-text-user input-click" name="email" id="email">
+					<!-- <label class="field">用户名</label>-->
+					<input type="text" class="input-text-user input-click" name="user_id" id="user_id">
 				</div>
 				<div class="row">
-					<label class="field">密码</label>
-					<input type="password" class="input-text-password input-click" name="password" id="password">
+					<!--<label class="field">密码</label>-->
+					<input type="password" class="input-text-password input-click" name="user_pswd" id="user_pswd">
 				</div>
 				<div class="row btnArea">
 					<a class="login-btn" id="submit">登录</a>
@@ -74,5 +75,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 		</div>
 	</div>
+	</form>
 	</body>
 </html>
