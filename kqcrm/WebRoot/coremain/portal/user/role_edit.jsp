@@ -12,7 +12,10 @@
 			+ path + "/";
 	UserForm userform = (UserForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FORM);
     List privilegeList = (List)request.getAttribute("privilegeList");
+    List privrolelist = (List)request.getAttribute("privrolelist");
     String jsonStr = GlobalFunc.getJosnStrForList(privilegeList);
+	List<UserInfo> rolelist =  (List<UserInfo>) request.getAttribute("rolelist");
+	UserInfo user = rolelist.get(0);
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -74,8 +77,7 @@
     //展开某一级
 	function expandNode() 
 	{
-	
-	    var treeNode = zTree1.getNodeByParam("priv_id", 1);
+	    var treeNode = zTree1.getNodeByParam("priv_level", 1);
 	    
 		if (treeNode) {
 		    //第一个参数treeNode为要展开的节点，第二个参数“true”表示该级展开，第三个参数“false”表示下级不展开
@@ -104,6 +106,7 @@
 	    {
 	        checkPrivId = checkPrivId.substr(0,checkPrivId.length-1);
 	    }
+
 	    $("#checkPrivId").val(checkPrivId);
 	    
 	}
@@ -148,7 +151,32 @@
 		$.fn.zTree.init($("#dropTree"), setting, zNodes);
 		zTree1 = $.fn.zTree.getZTreeObj("dropTree");
 		expandNode();
+		initSelNodes();
 	} 
+	
+	/*初始化时默认选中已经角色对应的权限*/
+	function initSelNodes()
+	{
+	    <%
+	        if (privrolelist.size()>0)
+	        {
+	            for (int i=0;i<privrolelist.size();i++)
+	            {
+	                UserInfo priv = (UserInfo)privrolelist.get(i);
+	            
+	    %>
+	    var treeNodes = zTree1.getNodeByParam("privilege_id", <%=priv.getPrivilege_id()%>);
+	    if(treeNodes){
+		     treeNodes.checked = true;
+		    zTree1.updateNode(treeNodes);
+	    }
+	   
+	    <%
+	            }
+	        }
+	    %>
+	}
+	
     <!--加载和设置树方法结束!-->
     
     
@@ -206,7 +234,6 @@
 		return false;
 	}
     
-    
 
 	</script>
 	
@@ -214,14 +241,14 @@
   
   <body>
     <div class="pageContent">
-  <form class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)" action="<%=path%>/userAction.do?method=doRoleAdd" method="post" name="userForm">
-    <input type="hidden" name="role_id" id="role_id" value="<%=userform.getRole_id() %>">
+  <form class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)" action="<%=path%>/userAction.do?method=doRoleEdit" method="post" name="userForm">
+    <input type="hidden" name="role_id" id="role_id" value="<%=user.getRole_id() %>">
     <input type="hidden" name="operatorId" id="operatorId" value="<%=userform.getOperatorId() %>">
 	<input type="hidden" id="checkPrivId" name="checkPrivId"  value="">
     
     <div class="formBar">
 			<ul>
-				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">修改</button></div></div></li>
 				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
 			</ul>
     </div>
@@ -231,16 +258,15 @@
 		 
 		<p>
 			<label>角色名称：</label>
-			<input name="role_name" type="text"   maxlength="10"  class="required"  />
+			<input name="role_name" type="text"   maxlength="10"  class="required" value="<%=user.getRole_name() %>" />
 		</p>
 		<p>
 			<label>角色描述：</label>
-			<input name="role_remark" type="text"  maxlength="20"    />
+			<input name="role_remark" type="text"  maxlength="20"  value="<%=user.getRole_remark() %>"  />
 		</p> 
 		<p>
 			<label>归属功能：</label>
 			<select id="sysid" name="sysid" class="required" onchange="changeSys()">
-					<option value="">--请选择--</option>
 			        <%=DictMgmt.getSelectObj(DictMgmt.DICT_SYS_SYSTEM_ID,"",false,false,"-1", -1, null, null, null,-1,"") %>
 		    </select> 
 		</p>

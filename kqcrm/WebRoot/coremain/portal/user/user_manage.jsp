@@ -55,7 +55,7 @@ UserForm userform = (UserForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_F
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="add" href="<%=path%>/userAction.do?method=toUserAdd" target="dialog" rel="user_add" ><span>新增</span></a></li>
+			<li><a class="add" href="<%=path%>/userAction.do?method=toUserAdd" target="dialog" rel="user_add" width="645" height="400"><span>新增</span></a></li>
 			<!-- <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" href="demo/common/ajaxDone.html" class="delete"><span>批量删除默认方式</span></a></li> -->
 			<!--<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="demo/common/ajaxDone.html" class="delete"><span>批量删除逗号分隔</span></a></li>-->
 			<!--<li><a class="edit" href="demo_page4.html?uid={sid_user}" target="navTab" warn="请选择一个用户"><span>修改</span></a></li>-->
@@ -86,9 +86,9 @@ UserForm userform = (UserForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_F
 						<td><%=user.getUser_name() %></td>
 						<td><%=user.getMsisdn() %></td>
 						<td>
-							<a title="删除" target="ajaxTodo" href="<%=path%>/userAction.do?method=doUserDel?sno=<%=user.getSno() %>" class="btnDel">删除</a>
-							<a title="编辑" target="dialog" href="<%=path%>/userAction.do?method=toUserEdit?sno=<%=user.getSno() %>" class="btnEdit">编辑</a>
-							<a title="角色" target="navTab" href="<%=path%>/userAction.do?method=toUserRole?sno=<%=user.getSno() %>" class="btnSelect">角色</a>
+							<a title="删除" target="ajaxTodo" href="<%=path%>/userAction.do?method=doUserDel&sno=<%=user.getSno() %>" class="btnDel">删除</a>
+							<a title="编辑" target="dialog" href="<%=path%>/userAction.do?method=toUserEdit&sno=<%=user.getSno() %>" width="645" height="400"   class="btnEdit">编辑</a>
+							<a title="角色" target="navTab" href="<%=path%>/userAction.do?method=toUserRole&sno=<%=user.getSno() %>" width="645" height="600" class="btnSelect">角色</a>
 						</td>
 					</tr>
 					

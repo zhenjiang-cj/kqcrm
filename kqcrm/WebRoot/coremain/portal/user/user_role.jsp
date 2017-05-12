@@ -38,38 +38,25 @@
 	<link href="<%=path%>/dwz/uploadify/css/uploadify.css" rel="stylesheet" type="text/css" media="screen"/>
 	
 	<script type="text/javascript">
-	var imgs=[];//不同类型上传的图片类型数量数组
-	imgs[0]=0;
-	function uploadifySuccess(file, data, response){  
-    //获取后台返回到前台的文件名，添加到隐藏域,多文件用";"号隔开
-	    //var files = $("#files").attr("value");  
-	//  alert(files=="");  
-	    //第一个文件  
-	    //if(files=="")  
-	    //    files = data;  
-	    //else  
-	   //     files+=";"+data  
-	//  alert(files);  
-	   // $("#files").attr("value",files);  
-	      
-	}
-	function uploadifyQueueComplete(queueData,type){  
-  
-	    var msg = "The total number of files uploaded: "+queueData.uploadsSuccessful+"<br/>"  
-	        + "The total number of errors while uploading: "+queueData.uploadsErrored+"<br/>"  
-	        + "The total number of bytes uploaded: "+queueData.queueBytesUploaded+"<br/>"  
-	        + "The average speed of all uploaded files: "+queueData.averageSpeed;  
-	     // alert(msg);
-	      imgs[type] = queueData.uploadsSuccessful;
-	     // document.getElementById("span_img_5").innerHTML='上传企业资质图片'+queueData.uploadsSuccessful;
-	      
-	    if (queueData.uploadsErrored) {  
-	//      alertMsg.error(msg);  
-	    } else {  
-	//      alertMsg.correct(msg);  
-	    }  
-	}
-	
+	 
+	$(function(){
+		var str = "";
+		jQuery("#chooseRole").children().each(function(){
+			str += jQuery(this).val()+",";
+		});
+		str = str.substring(0,str.length-1);
+		jQuery("#chooseRoles").val(str);
+		
+		jQuery("#allRole").children().each(function(){
+			var ar =  jQuery(this).val();
+			if(str.indexOf(ar)>=0){
+				jQuery(this).remove();
+			}
+			
+		});
+		
+		
+	});
 	
     function changeObject(s,t){ 
 		var objs="#"+s;  
@@ -81,6 +68,7 @@
 			str += jQuery(this).val()+",";
 		});
 		str = str.substring(0,str.length-1);
+		jQuery("#chooseRoles").val(str);
     }
     
     //将java查询到的
@@ -156,6 +144,8 @@
          jQuery("#chooseRole").html(user_option);
          
     }
+    
+      
 
 	</script>
 	
@@ -163,9 +153,10 @@
   
   <body>
     <div class="pageContent">
-  <form class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)" action="<%=path%>/userAction.do?method=doUserRole" method="post" name="userForm">
+  <form class="pageForm required-validate" onsubmit="return validateCallback(this,navTabAjaxDone)" action="<%=path%>/userAction.do?method=doUserRole" method="post" name="userForm">
     <input type="hidden" name="sno" id="sno" value="<%=user.getSno() %>">
     <input type="hidden" name="operatorId" id="operatorId" value="<%=userform.getOperatorId() %>">
+    <input type="hidden" name="chooseRoles" id="chooseRoles" value="">
     
     <div class="formBar">
 			<ul>
@@ -176,21 +167,32 @@
     <div class="panel collapse" defH="150">
 		<h1>用户信息</h1>
 		<div>
-			<p>用户帐号:<%=user.getUser_id() %></p>
-			<p>用户名称:<%=user.getUser_name() %></p>
-			<p>手机号码:<%=user.getMsisdn() %></p>
-			<p>email:<%=user.getEmail() %></p>
+		<table class="list" width="98%">
+			<tbody>
+				<tr>
+					<td>用户帐号: <%=user.getUser_id() %></td>
+				</tr>
+				<tr>
+					<td>用户名称: <%=user.getUser_name() %></td>
+				</tr>
+				<tr>
+					<td>手机号码: <%=user.getMsisdn() %></td>
+				</tr>
+				<tr>
+					<td>email: <%=user.getEmail() %></td>
+				</tr>
+			</tbody>
+		</table>
 		</div>
 	</div>
 	
-	<div class="panel collapse" defH="150">
+	<div class="panel collapse" defH="350">
 		<h1>角色信息</h1>
 		<div>
 			<table class="list" width="98%">
 				<tbody>
 					<tr>
-						<td>归属功能</td>
-						<td>
+						<td>归属功能 :
 							<select id="sysid" name="sysid" class="required" onchange="changeSys()">
 							        <%=DictMgmt.getSelectObj(DictMgmt.DICT_SYS_SYSTEM_ID,"",false,false,"-1", -1, null, null, null,-1,"") %>
 						    </select><font class="Red">*</font>
@@ -208,9 +210,10 @@
 					</tr>
 					<tr>
 					<td>
-					     <select multiple="multiple" name="allRole" id="allRole" class="selOp" style="width:300px;height:150px"   
+					     <select multiple="multiple" name="allRole" id="allRole" class="select" style="width:300px;height:150px"   
 				               ondblclick="changeObject(this.id,'chooseRole');">  
 				               <% 
+				               if (rolelist!=null&&rolelist.size()>0){
 				                   for (int i=0; i<rolelist.size(); i++)
 				                   {
 				                       UserInfo role = (UserInfo)rolelist.get(i);
@@ -220,6 +223,7 @@
 				               </option>  
 				               <%
 				                   }
+				               }
 				               %>       
 				         </select> 
 					</td>
@@ -228,7 +232,7 @@
 					    <div class="Divtr"><input name=""  type="button" value="<< 删除"  class="bntSty" onclick="changeObject('chooseRole','allRole')"/></div>
 				    </td>
 					<td>
-					   <select multiple="multiple" name="chooseRole" id="chooseRole"  class="selOp" style="width:300px;height:150px" 
+					   <select multiple="multiple" name="chooseRole" id="chooseRole"  class="select" style="width:300px;height:150px" 
                           ondblclick="changeObject(this.id,'allRole');">  
                           <% 
                           	if (userrolelist!=null&&userrolelist.size()>0){

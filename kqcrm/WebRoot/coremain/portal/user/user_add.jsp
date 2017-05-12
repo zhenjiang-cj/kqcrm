@@ -27,45 +27,10 @@
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-	<link href="<%=path%>/dwz/themes/default/style.css" rel="stylesheet" type="text/css" media="screen"/>
-	<link href="<%=path%>/dwz/themes/css/core.css" rel="stylesheet" type="text/css" media="screen"/>
-	<link href="<%=path%>/dwz/themes/css/print.css" rel="stylesheet" type="text/css" media="print"/>
-	<link href="<%=path%>/dwz/uploadify/css/uploadify.css" rel="stylesheet" type="text/css" media="screen"/>
-	
+ 
+	<script src="<%=path%>/dwz/js/jquery.validate.js" type="text/javascript"></script>
+	<script src="<%=path%>/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
 	<script type="text/javascript">
-	var imgs=[];//不同类型上传的图片类型数量数组
-	imgs[0]=0;
-	function uploadifySuccess(file, data, response){  
-    //获取后台返回到前台的文件名，添加到隐藏域,多文件用";"号隔开
-	    //var files = $("#files").attr("value");  
-	//  alert(files=="");  
-	    //第一个文件  
-	    //if(files=="")  
-	    //    files = data;  
-	    //else  
-	   //     files+=";"+data  
-	//  alert(files);  
-	   // $("#files").attr("value",files);  
-	      
-	}
-	function uploadifyQueueComplete(queueData,type){  
-  
-	    var msg = "The total number of files uploaded: "+queueData.uploadsSuccessful+"<br/>"  
-	        + "The total number of errors while uploading: "+queueData.uploadsErrored+"<br/>"  
-	        + "The total number of bytes uploaded: "+queueData.queueBytesUploaded+"<br/>"  
-	        + "The average speed of all uploaded files: "+queueData.averageSpeed;  
-	     // alert(msg);
-	      imgs[type] = queueData.uploadsSuccessful;
-	     // document.getElementById("span_img_5").innerHTML='上传企业资质图片'+queueData.uploadsSuccessful;
-	      
-	    if (queueData.uploadsErrored) {  
-	//      alertMsg.error(msg);  
-	    } else {  
-	//      alertMsg.correct(msg);  
-	    }  
-	}
-
-
 
 function provincesChange() {
     jQuery("#city").html('');
@@ -80,10 +45,10 @@ function provincesChange() {
 		    type:"post",
 			dataType:"json",
 			contentType:"application/json;charset=UTF-8",
-			url:'<%=path%>/userAction.do?method=provincesChange&provinces='+provinces,
+			url:'<%=path%>/coremain/portal/user/provincesChange.jsp?provinces='+provinces,
 		    success:function(data){
 	            if(null!=data){
-                    jQuery("#city").html(data.cityMap);
+                    jQuery("#city").html(data[0].cityMap);
 	            }else{
 	                alert("没有获取地市信息");
 	            }
@@ -112,16 +77,16 @@ function cityChange() {
 		    type:"post",
 			dataType:"json",
 			contentType:"application/json;charset=UTF-8",
-			url:'<%=path%>/userAction.do?method=cityChange&provinces='+provinces+'city='+city,
+			url:'<%=path%>/coremain/portal/user/cityChange.jsp?provinces='+provinces+'&city='+city,
 		    success:function(data){
-	            if(null!=data){
-	                jQuery("#region").html(data.regionMap);
+	             if(null!=data){
+                    jQuery("#region").html(data[0].cityMap);
 	            }else{
-	                alert("没有获取县市信息");
+	                alert("没有获取区域信息");
 	            }
 		    },
 		    error:function (data){
-		        alert("获取县市信息失败！");
+		        alert("获取区域信息失败！");
 		    }
 		});
 	}catch(e){
@@ -132,6 +97,7 @@ function cityChange() {
 
 	</script>
 	
+
   </head>
   
   <body>
@@ -152,19 +118,20 @@ function cityChange() {
 		 
 		<p>
 			<label>用户帐号：</label>
-			<input name="user_id" type="text"   maxlength="10"  class="required" remote="<%=path%>/userAction.do?method=checkUser"/>
+			<!-- <input name="user_id" type="text"   maxlength="10"  class="required" remote="<%=path%>/userAction.do?method=checkUser"/> -->
+			<input name="user_id" id="user_id" type="text"   maxlength="10"  class="required"  />
 		</p>
 		<p>
 			<label>用户名称：</label>
-			<input name="user_name" type="text"  maxlength="20"  class="required" />
+			<input name="user_name"  id="user_name" type="text"  maxlength="20"  class="required" />
 		</p>
 		<p>
 			<label>用户密码：</label>
-			<input name="user_pwsd" type="text"  maxlength="20"  class="required" />
+			<input name="user_pswd"  id="user_pswd" type="text"  maxlength="20"  class="required" />
 		</p>
 		<p>
 			<label>确认密码：</label>
-			<input name="password" type="text"  maxlength="20"  class="required" equalto="user_pwsd"/>
+			<input name="password"  id="password" type="text"  maxlength="20"  class="required" equalto="#user_pswd"/>
 		</p>
 		<p>
 			<label>省份：</label>
@@ -189,11 +156,11 @@ function cityChange() {
 		</p>
 		<p>
 			<label>手机号码：</label>
-			<input name="msisdn" type="text"  maxlength="11"  class="digits"  />
+			<input name="msisdn" id="msisdn" type="text"  maxlength="11"  class="digits"  />
 		</p>
 		<p>
 			<label>email：</label>
-			<input name="email" type="text"  maxlength="40"  class="email" />
+			<input name="email" id ="email" type="text"  maxlength="40"  class="email" />
 		</p>
 		 
 		

@@ -42,36 +42,6 @@
 		
 	});
 
-	var imgs=[];//不同类型上传的图片类型数量数组
-	imgs[0]=0;
-	function uploadifySuccess(file, data, response){  
-    //获取后台返回到前台的文件名，添加到隐藏域,多文件用";"号隔开
-	    //var files = $("#files").attr("value");  
-	//  alert(files=="");  
-	    //第一个文件  
-	    //if(files=="")  
-	    //    files = data;  
-	    //else  
-	   //     files+=";"+data  
-	//  alert(files);  
-	   // $("#files").attr("value",files);  
-	      
-	}
-	function uploadifyQueueComplete(queueData,type){  
-  
-	    var msg = "The total number of files uploaded: "+queueData.uploadsSuccessful+"<br/>"  
-	        + "The total number of errors while uploading: "+queueData.uploadsErrored+"<br/>"  
-	        + "The total number of bytes uploaded: "+queueData.queueBytesUploaded+"<br/>"  
-	        + "The average speed of all uploaded files: "+queueData.averageSpeed;  
-	     // alert(msg);
-	      imgs[type] = queueData.uploadsSuccessful;
-	      
-	    if (queueData.uploadsErrored) {  
-	//      alertMsg.error(msg);  
-	    } else {  
-	//      alertMsg.correct(msg);  
-	    }  
-	}
 
 function provincesChange() {
     jQuery("#city").html('');
@@ -86,10 +56,10 @@ function provincesChange() {
 		    type:"post",
 			dataType:"json",
 			contentType:"application/json;charset=UTF-8",
-			url:'<%=path%>/userAction.do?method=provincesChange&provinces='+provinces,
+			url:'<%=path%>/coremain/portal/user/provincesChange.jsp?provinces='+provinces,
 		    success:function(data){
 	            if(null!=data){
-                    jQuery("#city").html(data.cityMap);
+                    jQuery("#city").html(data[0].cityMap);
 	            }else{
 	                alert("没有获取地市信息");
 	            }
@@ -118,16 +88,16 @@ function cityChange() {
 		    type:"post",
 			dataType:"json",
 			contentType:"application/json;charset=UTF-8",
-			url:'<%=path%>/userAction.do?method=cityChange&provinces='+provinces+'city='+city,
+			url:'<%=path%>/coremain/portal/user/cityChange.jsp?provinces='+provinces+'&city='+city,
 		    success:function(data){
-	            if(null!=data){
-	                jQuery("#region").html(data.regionMap);
+	             if(null!=data){
+                    jQuery("#region").html(data[0].cityMap);
 	            }else{
-	                alert("没有获取县市信息");
+	                alert("没有获取区域信息");
 	            }
 		    },
 		    error:function (data){
-		        alert("获取县市信息失败！");
+		        alert("获取区域信息失败！");
 		    }
 		});
 	}catch(e){
