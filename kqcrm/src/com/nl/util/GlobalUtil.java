@@ -44,7 +44,6 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
 import com.nl.base.utils.GlobalFunc;
-import com.nl.company.util.AppConst;
 
 /**
  *
@@ -1088,6 +1087,23 @@ public class GlobalUtil {
 			
 		}
 		return strTable;
+   }
+   
+   
+   public static boolean functionCheck(List functionMap,String functionId)
+   {
+   	boolean checkrResult = false;
+   	if(functionMap!=null&&functionMap.size()>0){
+	   	for(int i=0; i < functionMap.size(); i++)
+	   	{
+	   		String priv = String.valueOf(functionMap.get(i));
+	   		if(priv.equals(functionId)){
+	   			checkrResult =true;
+	   			break;
+	   		}
+	   	}
+   	}
+   	return checkrResult;
    }
    
 }

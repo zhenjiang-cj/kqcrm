@@ -133,7 +133,7 @@ public class GlobalConst{
 	public static final String LOGIN_ILLEGAL = "非法登录，请联系管理员！";
 	
 	/*全局的系统编号，和字典表中的相同*/
-	public static final int[] Global_SYSTEM_ID = {99,98,97};
+	public static final int[] Global_SYSTEM_ID = {99,1,2,3};
 	
 	/*form保存在request中的名称*/
 	public static final String GLOBAL_CURRENT_FORM = "form";
@@ -144,9 +144,24 @@ public class GlobalConst{
 	
 	/*不同系统的system_id*/
 	public static final String SYSTEM_ID_SYSTEM = "99";//系统管理
-	public static final String SYSTEM_ID_DOCMANAGE = "97";//资料上传
-	public static final String SYSTEM_ID_PORTAL = "0";//统一登陆平台
-	public static final String SYSTEM_ID_FLOW	= "98";//工单系统
+	public static final String SYSTEM_ID_CRM = "1";//客户管理
+	public static final String SYSTEM_ID_HT = "2";//合同管理
+	public static final String SYSTEM_ID_HF = "2";//客户回访
+	
+	/*菜单*/
+	public static final String FUNCTION_SYS_MANAGE="9910";//系统管理
+	public static final String FUNCTION_SYS_USER="9920";//用户管理
+	public static final String FUNCTION_SYS_ROLE="9930";//角色管理
+	
+	
+	public static final String FUNCTION_CRM_MANAGE="110";//客户管理
+	public static final String FUNCTION_CRM_USER="120";//客户管理
+	
+	public static final String FUNCTION_HT_MANAGE="210";//合同管理
+	public static final String FUNCTION_HT_USER="220";//合同管理
+	
+	public static final String FUNCTION_HF_MANAGE="310";//客户回访
+	public static final String FUNCTION_HF_USER="320";//客户回访
 	
 	/*操作类型*/
 	public static final String OPERATION_INSERT = "1";//增加
