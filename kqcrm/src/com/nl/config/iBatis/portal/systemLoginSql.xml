@@ -3,157 +3,33 @@
 PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
 "http://www.ibatis.com/dtd/sql-map-2.dtd">
 <sqlMap namespace="systemLoginSql">
-	<typeAlias alias="operator" type="com.nl.portal.dt.SysOperator"/>
-	<typeAlias alias="operPrivilege" type="com.nl.portal.dt.SysPrivilege"/>
+	<typeAlias alias="operator" type="com.nl.portal.dt.SysOperator"/> 
 	<typeAlias alias="sysMenu" type="com.nl.portal.dt.SysMenu"/>
-	<typeAlias alias="operatingLog" type="com.nl.portal.dt.SysOperatingLog"/>
-	<typeAlias alias="operDept" type="com.nl.portal.dt.SysDept"/>
-	
-	<select id='queryOperDeptBySNo' parameterClass="java.util.HashMap" resultClass="operDept" >
-		select t2.dept_id as sno_dept,t2.dept_name  as sno_dept_name
-		from portal_user_dept t1,portal_dept_info t2 
-		where (t1.end_date is null or t1.end_date = '' or t1.end_date > GETDATE())
-		 and t1.dept_id = t2.dept_id
-		 and t1.hr_id = #userId#
-	</select>
+	 
 	
 	<select id='queryOperatorById' parameterClass="java.util.HashMap" resultClass="operator" >	   
-			select SNo,user_id,user_name,userPassword,msisdn,email,cop_code,sno_dept,sno_dept_name from 
-				  (select a.user_seq as SNo,
-								   a.user_id,
-								   a.user_name,
-								   a.user_pswd as userPassword,
-								   a.msisdn,
-								   a.email,
-								   a.hr_id as cop_code,
-								   b.dept_id as sno_dept,
-								   b.dept_name as sno_dept_name,
-								   ROW_NUMBER() over(order by b.dept_id asc) as rm
-								    from (select * from portal_user where user_id = #operatorId#) a 
-							              left join 
-							              (select t1.hr_id,t2.dept_id,t2.dept_name from portal_user_dept t1,portal_dept_info t2 
-							                        where (t1.end_date is null or t1.end_date = '' or t1.end_date > GETDATE())
-							                          and t1.dept_id = t2.dept_id
-							                          <dynamic>
-														<isNotEmpty property="deptId">
-															and t1.dept_id = #deptId#
-														</isNotEmpty>
-													  </dynamic>
-							                         ) b
-							on a.hr_id = b.hr_id) t
-							where t.rm = 1
+	
+	
+	select a.sno,a.user_id,a.user_name,a.user_pswd,a.msisdn,a.email,
+		b.provinces,b.city,b.region,b.org_level,
+		(select c.org_name from kq_region_relation c where c.org_id=b.provinces) provinces_name,
+		(select c.org_name from kq_region_relation c where c.org_id=b.city) city_name,
+		(select c.org_name from kq_region_relation c where c.org_id=b.region) region_name 
+		from kq_isc_user a ,kq_user_region b  
+		where a.is_valid =1 
+		  and a.sno =b.sno 
+		  and a.user_id = #user_id#
+  
 	</select>
 	
-	<select id='queryOperPrivilegeBySNo' parameterClass="java.util.HashMap" resultClass="operPrivilege" > 
-		 select t1.role_id,
-		       t1.data_type,
-		       t1.data_level,
-		       t1.code,
-		       t.privilege_id,
-		       t.component_id,
-		       t.privilege_name,
-		       t.plat_label,
-		       t.status,
-		       t.description,
-		       t.proviceall,
-		       t.tool_type,
-		       t.create_date,
-		       t.type,
-		       t.sysid
-		  from portal_privilege      t,
-		       portal_user_role      t1,
-		       portal_role           t2,
-		       portal_role_privilege t3
-		 where t1.role_id = t2.role_id
-		   and t2.role_id = t3.role_id
-		   and t.privilege_id = t3.privilege_id
-		   and t.status = 1
-		   and t1.user_seq = #sNo#
-		   and t.sysid = #sysid#
-		   and t2.sysid = #sysid#
-		   and t2.status = 1
-		   order by t.privilege_id
+	<select id='queryMenu' parameterClass="java.util.HashMap" resultClass="sysMenu" >
+		 
+		           select distinct t3.privilege_id page_id
+		                  from kq_isc_user_role t1, kq_isc_role t2, kq_isc_role_privilege t3
+		                 where t1.role_id = t2.role_id
+		                   and t2.role_id = t3.role_id 
+							 and (t2.sysid = #sysid# or t2.sysid = -1)
+		                   and t1.sno = #sno# 
 	</select>
-	
-	<select id='queryMenu' parameterClass="java.util.HashMap" resultClass="sysMenu" >	 
-		 with sys_menu(page_id,type,name,webaddr,parent_id,page_desc,sortid)
-			as
-			(
-			select t.page_id, t.type, t.name, t.webaddr, t.parent_id,t.page_desc,t.sortid
-					          from portal_menu t
-					         where sysid = #sysid#
-					           and page_id in
-					               (select t3.privilege_id
-					                  from portal_user_role t1, portal_role t2, portal_role_privilege t3
-					                 where t1.role_id = t2.role_id
-					                   and t2.role_id = t3.role_id
-					                   and t2.sysid = #sysid#
-					                   and t1.user_seq = #sNo#)
-					           and parent_id = '-1'
-				union all
-				select t.page_id, t.type, t.name, t.webaddr, t.parent_id,t.page_desc,t.sortid
-					          from portal_menu t inner join sys_menu b
-					         on t.sysid = #sysid#
-					           and t.page_id in
-					               (select t3.privilege_id
-					                  from portal_user_role t1, portal_role t2, portal_role_privilege t3
-					                 where t1.role_id = t2.role_id
-					                   and t2.role_id = t3.role_id
-					                   and t2.sysid = #sysid#
-					                   and t1.user_seq = #sNo#)
-					           and t.parent_id = b.page_id
-					           )		           
-			     select * from sys_menu order by sortid asc
-	</select>		
-	
-	<insert id='insertSysOperatingLog' parameterClass='operatingLog'>
-		insert into portal_operating_log(
-			operating_oper_id,
-			operating_date,
-			operating_time,
-			operating_type,
-			function_id,
-			operating_object,
-			sys_id,
-			operating_result,
-			remark
-		)values(
-			#operating_oper_id#,
-			CONVERT(varchar(100), GETDATE(), 112),
-			CONVERT(varchar(100), GETDATE(), 20),
-			#operating_type#,
-			#function_id#,
-			#operating_object#,
-			#sys_id#,
-			#operating_result#,
-			#remark#
-		)
-	</insert>
-	
-	<insert id='insertSysOperatingFlowLog' parameterClass='operatingLog'>
-		insert into portal_operating_log(
-			operating_oper_id,
-			operating_date,
-			operating_time,
-			operating_type,
-			function_id,
-			operating_object,
-			sys_id,
-			operating_result,
-			remark,
-			reserved1
-		)values(
-			#operating_oper_id#,
-			CONVERT(varchar(100), GETDATE(), 112),
-			CONVERT(varchar(100), GETDATE(), 20),
-			#operating_type#,
-			#function_id#,
-			#operating_object#,
-			#sys_id#,
-			#operating_result#,
-			#remark#,
-			#reserved1#
-		)
-	</insert>
 	
 </sqlMap>

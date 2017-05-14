@@ -12,13 +12,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sq
 	<!-- alias 文档  所有的 typeAlias 最好有一个统一管理的地方 -->
 	
 	<!-- portal开始 -->
-	<sqlMap resource="com/nl/config/iBatis/AliasConfig.xml" />
-	<sqlMap resource="com/nl/config/iBatis/portal/systemLoginSql.xml" />
-	<sqlMap resource="com/nl/config/iBatis/portal/SystemSql.xml" />
-	
-	<sqlMap resource="com/nl/config/iBatis/portal/operatorManageSql.xml" />
 
-	<sqlMap resource="com/nl/config/iBatis/portal/roleManageSql.xml" /> 
 	 
 	<!-- portal结束-->
 	  
@@ -27,5 +21,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sq
 	
 	
 	<sqlMap resource="com/nl/config/iBatis/portal/UserSql.xml" />
+	<sqlMap resource="com/nl/config/iBatis/portal/CrmSql.xml" />
+	<sqlMap resource="com/nl/config/iBatis/portal/systemLoginSql.xml" />
 	
 </sqlMapConfig>

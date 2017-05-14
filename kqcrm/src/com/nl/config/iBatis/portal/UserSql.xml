@@ -40,40 +40,40 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	
 	
 	<select id='getCityByPro' parameterClass="java.util.HashMap" resultClass="user" >
-        with cte_child(org_id,parent_org_id,org_name,data_level,order_num )
+        with cte_child(org_id,parent_org_id,org_name,data_level )
 			as
 			(
-			   select org_id ,parent_org_id,org_name,data_level,order_num
-			    from org_tree_data_type_3 
+			   select org_id ,parent_org_id,org_name,data_level
+			    from kq_region_relation 
 			    where  (   
 				 org_id = #provinces#
 				  
 			    )
 			    union all
-			    select a.org_id ,a.parent_org_id,a.org_name,a.data_level,a.order_num  
-			    from org_tree_data_type_3 a, cte_child b
+			    select a.org_id ,a.parent_org_id,a.org_name,a.data_level
+			    from kq_region_relation a, cte_child b
 			    where a.parent_org_id=b.org_id
 			)  
-			select * from cte_child where  1=1
-			order by data_level,order_num
+			select * from cte_child where  data_level = 3
+			order by data_level,org_id
 	</select>
-	<select id='getCityByPro' parameterClass="java.util.HashMap" resultClass="user" >
-        with cte_child(org_id,parent_org_id,org_name,data_level,order_num )
+	<select id='getRegionByCity' parameterClass="java.util.HashMap" resultClass="user" >
+        with cte_child(org_id,parent_org_id,org_name,data_level )
 			as
 			(
-			   select org_id ,parent_org_id,org_name,data_level,order_num
-			    from org_tree_data_type_3 
+			   select org_id ,parent_org_id,org_name,data_level
+			    from kq_region_relation 
 			    where  (   
 				 org_id = #city#
 				  
 			    )
 			    union all
-			    select a.org_id ,a.parent_org_id,a.org_name,a.data_level,a.order_num  
-			    from org_tree_data_type_3 a, cte_child b
+			    select a.org_id ,a.parent_org_id,a.org_name,a.data_level
+			    from kq_region_relation a, cte_child b
 			    where a.parent_org_id=b.org_id
 			)  
-			select * from cte_child where  1=1
-			order by data_level,order_num
+			select * from cte_child where  data_level = 4
+			order by data_level,org_id
 	</select>
 	
 	<insert id="doUserAdd" parameterClass="java.util.HashMap">
@@ -102,14 +102,13 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	</insert>
 	<insert id="doUserRegionAdd" parameterClass="java.util.HashMap">
 		
-		insert into kq_isc_user_region
+		insert into kq_user_region
 		( 
 			sno,
-			user_level,
+			org_level,
 			provinces,
 			city,
-			region,
-			is_valid
+			region 
 
 		)
 		values
@@ -117,13 +116,12 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			#level#,
 			#provinces#,
 			#city#,
-			#region#,
-			1
+			#region# 
 		)
 		
 	</insert>
 	
-	<update id="delVerifi" parameterClass="java.util.HashMap">
+	<update id="doUserDel" parameterClass="java.util.HashMap">
 	  UPDATE kq_isc_user set is_valid=0 where is_valid =1 and sno = #sno#
 	</update>
 	
@@ -133,11 +131,10 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		  from (select a.*, row_number() over(order by a.sno) rn, count(*) over() totalCount
 		          from (
 		          select a.sno,a.user_id,a.user_name,a.msisdn,a.email ,
-		          		 b.user_level,b.provinces,b.city,b.region
-		          from kq_isc_user a,kq_isc_user_region b
-		           where a.is_valid =1
-		             and b.is_valid=1
-		             and a.sno = b.sno
+		          		 b.org_level,b.provinces,b.city,b.region
+		          from kq_isc_user a
+		          LEFT JOIN  kq_user_region b on a.sno = b.sno 
+		           where a.is_valid =1  
 		           <dynamic>
 					<isNotEmpty property="sno">
 							and a.sno =  #sno#
@@ -155,18 +152,26 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	  and sno = #sno#
 	</update>
 	
-	<update id="doUserEdit" parameterClass="java.util.HashMap">
-	  UPDATE kq_isc_user_region 
-	  set level=#level#,
+	<select id='doUserRegioncheck' parameterClass="java.util.HashMap" resultClass="user" >
+        select *  from kq_user_region a where sno =#sno# 
+	</select>
+	
+	<update id="doUserRegionEdit" parameterClass="java.util.HashMap">
+	  UPDATE kq_user_region 
+	  set org_level=#level#,
 			provinces=#provinces#,
 			city=#city#,
 			region=#region# 
-	  where is_valid =1 
-	  and sno = #sno#
+	  where  sno = #sno#
 	</update>
 	
 	<select id='queryAllRole' parameterClass="java.util.HashMap" resultClass="user" >
         select a.ROLE_ID,a.ROLE_NAME,a.REMARK,a.SYSID from kq_isc_role a where ENFLAG=1 
+	</select>
+	<select id='queryAllRolebysno' parameterClass="java.util.HashMap" resultClass="user" >
+        select a.ROLE_ID,a.ROLE_NAME,a.REMARK,a.SYSID from kq_isc_role a 
+        where ENFLAG=1 
+        and not exists (select 1 from kq_ISC_USER_ROLE b where a.ROLE_ID=b.ROLE_ID and b.SNO=#sno#)
 	</select>
 	
 	<select id='queryRoleByUser' parameterClass="java.util.HashMap" resultClass="user" >
@@ -177,10 +182,10 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	</select>
 	
 	<update id="delUserRole" parameterClass="java.util.HashMap">
-	  delete kq_isc_user_role where sno = #sno# and role_id =#role_id#
+	  delete kq_isc_user_role where sno = #sno#  
 	</update>
 	
-	<insert id="doUserRegionAdd" parameterClass="java.util.HashMap">
+	<insert id="addUserRole" parameterClass="java.util.HashMap">
 		
 		insert into kq_isc_user_role
 		( 
@@ -196,7 +201,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	</insert>
 	<select id='queryRole' parameterClass="java.util.HashMap" resultClass="user" >
        select *
-		  from (select a.*, row_number() over(order by a.sno) rn, count(*) over() totalCount
+		  from (select a.*, row_number() over(order by a.role_id) rn, count(*) over() totalCount
 		          from (
 		          select a.role_id,a.role_name,a.remark as role_remark,a.sysid from kq_isc_role a where enflag =1 
 		           <dynamic>
@@ -207,6 +212,13 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		                   ) a) t
 		 where t.rn>(#page_num#-1)*#page_size# and #page_num#*#page_size# >= t.rn
 	</select>
+	<select id='queryRoleList' parameterClass="java.util.HashMap" resultClass="user" >
+	          select a.role_id,a.role_name,a.remark as role_remark,a.sysid 
+	          from kq_isc_role a 
+	          where enflag =1 
+	            and role_id = #role_id#
+	</select>
+	
 	
 	 <select id="queryAllprivilege" parameterClass="java.util.HashMap" resultClass="user">
 		  
@@ -216,117 +228,103 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			   select t.privilege_id,t.privilege_name, t.parent_id,t.sysid
 			    from kq_isc_privilege t
 			    where  t.status =1
-			      and t.sysid =#sysid#
+			     <dynamic>
+					<isNotEmpty property="sysid">
+						<isNotEqual property="sysid" compareValue="-1">
+							and t.sysid =#sysid#
+						</isNotEqual>
+					</isNotEmpty>
+				  </dynamic>  
+			      
 			    union all
 			    select a.privilege_id ,a.privilege_name,a.parent_id,a.sysid
 			    from kq_isc_privilege a, cte_child b
 			    where a.parent_id=b.privilege_id
 			)  
-			select * from cte_child where  1=1
+			select distinct * from cte_child where  1=1
 			order by privilege_id,sysid
 	</select>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<insert id='insertAdmUserLog' parameterClass='AdmUserLog'>
-		insert into AdmUserLog(
-			lgUserID,
-			lgOptrType,
-			lgObjType,
-			lgNotes,
-			lgStatus,
-			lgDate,
-			lgUserType,
-			lgpcIP,
-			lgpcName
-		)values(
-			#lgUserID#,
-			#lgOptrType#,
-			#lgObjType#,
-			#lgNotes#,
-			#lgStatus#,
-			CONVERT(varchar(100), GETDATE(), 120),
-			#lgUserType#,
-			#lgpcIP#,
-			#lgpcName#
+	<insert id="doRoleAdd" parameterClass="java.util.HashMap">
+		
+		insert into kq_isc_role
+		( 
+			role_id,
+			role_name,
+			remark,
+			enflag,
+			createid,
+			createtime,
+			sysid
 		)
-	</insert>		
+		values
+		(    
+			#role_id#,
+			#role_name#,
+			#role_remark#,
+			1,
+			#create_id#,
+			GETDATE(),
+			#sysid# 
+		)
+		
+	</insert>
 	
-	<select id='queryLogList' parameterClass="java.util.HashMap" resultClass="AdmUserLog" >
-        select *
-		  from (select a.*, row_number() over(order by a.lgDate) rn, count(*) over() totalCount
-		          from (select t.lgID,
-		          			   t.lgUserID,
-		                       t.lgOptrType,
-		                       t.lgObjType,
-		                       t.lgNotes,
-		                       t.lgStatus,
-		                       CONVERT(varchar(100), t.lgDate, 120) as lgDate,
-		                       t.lgUserType,
-		                       t.lgpcIP,
-		                       t.lgpcName
-		                  from AdmUserLog t
-		           where 1=1
-		           <dynamic>
-					<isNotEmpty property="user_id">
-							and t.lgUserID = #user_id#
-					</isNotEmpty>
-				  </dynamic>         
-		                   ) a) t
-		 where t.rn>(#page_num#-1)*#page_size# and #page_num#*#page_size# >= t.rn
+	<insert id="addRolePriv" parameterClass="java.util.HashMap">
+		
+		insert into kq_ISC_ROLE_PRIVILEGE
+		( 
+			role_id,
+			privilege_id
+		)
+		values
+		(    
+			#role_id#,
+			#priv_id#
+		)
+		
+	</insert>
+	
+	<update id="doRoleDel" parameterClass="java.util.HashMap">
+	  UPDATE kq_isc_role 
+	  set enflag=0, 
+	  where enflag =1 
+	  and role_id = #role_id#
+	</update>
+	
+	 <select id="getPrivilegeByRoleid" parameterClass="java.util.HashMap" resultClass="user">
+		 select role_id,privilege_id from kq_ISC_ROLE_PRIVILEGE a 
+		 where role_id = #role_id#
 	</select>
 	
-	<select id='queryDictCfg' parameterClass="java.util.HashMap" resultClass="KmDictCfg" >
-        select dict_id,
-        	   dict_name,
-        	   value,
-        	   value_name,
-        	   parent_id,
-        	   sort_id,
-        	   remark,
-        	   is_modify,
-        	   is_recursion
-		  from km_dict_cfg
-		 where dict_id = #dict_id#
-		   and is_valid = 1
-		order by sort_id asc
-	</select>
+	<update id="doRoleEdit" parameterClass="java.util.HashMap">
+	  UPDATE kq_isc_role 
+	    set role_name=#role_name#,
+			remark=#role_remark#,
+			sysid=#sysid# 
+	  where enflag =1 
+	  and role_id = #role_id#
+	</update>
 	
-	<select id='queryUserInfo' parameterClass="java.util.HashMap" resultClass="AdmUserFc" >
-        select auID,auName,auPwd,auType,auOrgId,auOrgName,auBeginDate,auEndDate,auSetUser,auSetDate,auState
-		  from AdmUserFc
-		 where auID = #auID#
-		   and auState = 1
-	</select>
+	<update id="delRolePriv" parameterClass="java.util.HashMap">
+	  delete kq_ISC_ROLE_PRIVILEGE
+	  where   role_id = #role_id#
+	</update> 
 	
-	<select id='queryUserDept' parameterClass="java.util.HashMap" resultClass="HtzjCodeBm" >
-        select bmdm,bmmc,bmxh,bmlx,bmdz,bmdh,bmfzr,bz from htzj_code_bm where bmdm = #bmdm#
-	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 </sqlMap>
