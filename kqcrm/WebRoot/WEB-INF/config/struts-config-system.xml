@@ -10,6 +10,7 @@
 	<form-beans>
        <form-bean name="loginForm"  type="com.nl.portal.actionForm.LoginForm"/>
        <form-bean name="userForm"  type="com.nl.portal.actionForm.UserForm"/>
+       <form-bean name="crmForm"  type="com.nl.portal.actionForm.CrmForm"/>
     </form-beans>
 	          
 	<action-mappings>
@@ -31,10 +32,24 @@
 		    <forward name="login" path="/login.jsp"/>
 		    <forward name="index" path="/index.jsp"/>
 		    
-		    
-			<forward name="success" path="/coremain/portal/success.jsp"/>
-		    <forward name="check" path="/check.jsp"/>		
-		    <forward name="operatorUpdate" path="/coremain/portal/system/operatorManage/operator_update.jsp"/>
+		</action>
+		
+		
+		<action path="/crmAction" type="com.nl.portal.action.CrmAction" parameter="method"
+		 name="crmForm" scope="request" validate="false"> 
+			<forward name="frame" path="/coremain/crm/frame.jsp"/>
+			<forward name="khmanage" path="/coremain/crm/kh_manage.jsp"/>
+			<forward name="khadd" path="/coremain/crm/kh_add.jsp"/>
+			<forward name="khedit" path="/coremain/crm/kh_edit.jsp"/>
+			<forward name="htframe" path="/coremain/crm/htframe.jsp"/>
+			<forward name="htmanage" path="/coremain/crm/ht_manage.jsp"/>
+			<forward name="htmanage1" path="/coremain/crm/ht_manage1.jsp"/>
+			<forward name="htadd" path="/coremain/crm/ht_add.jsp"/>
+			<forward name="htedit" path="/coremain/crm/ht_edit.jsp"/>
+			<forward name="htedit1" path="/coremain/crm/ht_edit1.jsp"/>
+			<forward name="hfframe" path="/coremain/crm/hfframe.jsp"/>
+			<forward name="hfmanage" path="/coremain/crm/hf_manage.jsp"/>
+			<forward name="hfedit" path="/coremain/crm/hf_edit.jsp"/>
 		</action>
 		
 	</action-mappings>
