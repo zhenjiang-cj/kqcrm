@@ -14,6 +14,7 @@
 
 <%
 HashMap<String,String> resultMap = new HashMap<String,String>();
+SessionData sessionData = (SessionData)request.getAttribute(SessionConst.LOGIN_SESSION);
 
 try
 {
@@ -24,6 +25,7 @@ try
 	UserSc sc = new UserSc();
 	formBean.setProvinces(provinces);
 	formBean.setCity(city);
+	//formBean.setRegion(sessionData.getRegion());
 
 	List<UserInfo> userlist = sc.getRegionByCity(formBean);
 	

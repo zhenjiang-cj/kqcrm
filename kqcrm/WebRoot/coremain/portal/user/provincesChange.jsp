@@ -14,14 +14,16 @@
 
 <%
 HashMap<String,String> resultMap = new HashMap<String,String>();
-
+SessionData sessionData = (SessionData)request.getAttribute(SessionConst.LOGIN_SESSION);
 try
 {
 	String provinces = request.getParameter("provinces");
 	UserForm formBean = new UserForm();
 	
+	
 	UserSc sc = new UserSc();
 	formBean.setProvinces(provinces);
+	//formBean.setCity(sessionData.getCity());
 
 	List<UserInfo> userlist = sc.getCityByPro(formBean);
 	

@@ -41,7 +41,8 @@
 	<script type="text/javascript">
 	$(function(){
 		jQuery("#sysid").val("<%=userform.getSysid()%>");
-        reloadTree();  
+        //reloadTree(); 
+        changeSys(); 
 	});
 
 	 
@@ -147,7 +148,7 @@
 	    setting.check.chkboxType = { "Y" : "ps", "N" : "s" };
 		$.fn.zTree.init($("#dropTree"), setting, zNodes);
 		zTree1 = $.fn.zTree.getZTreeObj("dropTree");
-		expandNode();
+		//expandNode();
 	} 
     <!--加载和设置树方法结束!-->
     
@@ -240,7 +241,6 @@
 		<p>
 			<label>归属功能：</label>
 			<select id="sysid" name="sysid" class="required" onchange="changeSys()">
-					<option value="">--请选择--</option>
 			        <%=DictMgmt.getSelectObj(DictMgmt.DICT_SYS_SYSTEM_ID,"",false,false,"-1", -1, null, null, null,-1,"") %>
 		    </select> 
 		</p>
