@@ -24,7 +24,7 @@ public class DictMgmt extends AbstractDB{
     private Connection conn = null;
 
     /*系统字典*/
-    public static final int DICT_SYS_SYSTEM_ID = 1000;//系统编号             
+    public static final int DICT_SYS_SYSTEM_ID = 1009;//系统编号             
     public static final int DICT_SYS_VALID_FLAG = 1001;//有效状态
     public static final int DICT_DOC_TYPE = 1005;//资料类型
     
@@ -32,97 +32,7 @@ public class DictMgmt extends AbstractDB{
     public static final int DICT_KQ_PROVINCES=1010;//省份
     public static final int DICT_KQ_CITY=1011;//地市
     public static final int DICT_kq_REGION=1012;//区域
-    
-    
-    
-//    1.所属区域字典，取字典1000
-    public static final int DICT_COMPANY_COUNTY=999;
-//
-//    2.公司类型字典，取字典1001
-    public static final int DICT_COMPANY_TYPE=1001;
-//
-//    3.法人类型字典，取字典1002
-    public static final int DICT_COMPANY_LEGAL=1002;
-//
-//    4.主管部门字典，取字典1003
-    public static final int DICT_COMPANY_PARENT_DEPT = 1003;
-//
-//    5.批准单位字典，取字典1004
-    public static final int DICT_COMPANY_APPROVE_DEPT=1004;
-//
-//    5.人员类型，取字典1005 人员类型，取字典1005;1为企业法人，2为总经理，3为普通员工
-    public static final int DICT_COMPANY_USER_TYPE=1005;
-//
-//    6.人员性别，取字典1006
-    public static final int DICT_COMPANY_USER_SEX=1006;
-//
-//    7.证件类型，取字典1007
-    public static final int DICT_COMPANY_USER_CARD=1007;
-//
-//    8.国籍，取字典1008
-    public static final int DICT_COMPANY_USER_NATION=1008;
-//
-//    9.专业，取字典1009
-    public static final int DICT_COMPANY_USER_SPECIALTY=1009;
-//
-//    10.人员学历，取字典1010
-    public static final int DICT_COMPANY_USER_EDU=1010;
-//
-//    11.职务，取字典1011
-    public static final int DICT_COMPANY_USER_POST=1011;
-    public static final int DICT_COMPANY_USER_POST_CHILD=1036;
-    
-//    12.岗位，取字典1012 
-    public static final int DICT_COMPANY_USER_STATION=1012; 
-//
-//    13.职称等级，取字典1013
-    public static final int DICT_COMPANY_USER_STA_GRADE=1013;
-//
-//    14.资格类别，取字典1014
-    public static final int DICT_COMPANY_QUALIFICATIONS_TYPE=1014;
-    
-    //资格级别 1032
-    public static final int DICT_COMPANY_QUALIFICATIONS_GRADE = 1032;
-    
-//    15.物业类型，取字典1015
-    public static final int DICT_COMPANY_WUYE_TYPE=1015;
-//
-//    16.项目区域，同所属区域，取字典1000
-//
-//    17.项目类型，取字典1016（多层、高层、别墅、其他）
-    public static final int DICT_COMPANY_PRO_TYPE=1016;
-//
-//    18.投资者类型，取字典1017
-    public static final int DICT_COMPANY_INVESTOR_TYPE = 1017;
-    public static final int DICT_COMPANY_INVESTOR_TYPE_OTHER=1034;
-//
-//    19.出资类型/出资方式，取字典1018
-    public static final int DICT_COMPANY_INVESTMENT_WAY = 1018;
-    
-//
-//    20.申请事项，取字典1019（初次申请、核定等级、资质延续、资质变更）
-    public static final int DICT_COMPANY_APPLY_TYPE = 1019;
-//
-//    21.申请等级，取字典1020（暂定三级、三级），资质等级，也取这个字典
-    public static final int DICT_COMPANY_APTITUDE_GRADE = 1020;
-//
-//    22.文件类型，取字典1021（1为企业资质图片，2为营业执照图片，3为企业章程图片，4为企业服务质量/服务收费制度图片，5为企业人员身份证图片，6为企业人员劳动合同图片，7为企业人员任职文件图片，8为企业人员社保证明图片，9为企业人员职称证书图片，10为物业服务项目合同材料图片，11为物业服务项目项目合同备案证明图片，12为企业上报申报表扫描件图片，13证书变更申请报告图片，14为工商变更核准通知书）
-//
-//    23.图片文件状态，取字典1022
-//
-//    24.文件生成方式，取字典2023（1为人工上传，2为系统生成）
-//
-//    25.证书文件序号，取字典1024（1为证书编号，2为证书正本，3为证书副本）
-//
-//    26.证书生成方式，取字典1025（1为系统根据模板生成，2为人工修改上传）
-//
-//    27.资质类别，取字典1026
-    public static final int DICT_COMPANY_APTITUDE_TYPE = 1026;
-//
-//    1，2,3,4为企业信息编号；5,6,7,8,9为企业人员编号；10,11物业项目代码；12，13，14为企业信息编号
-    
-    //资质备案等级
-    public static final int DICT_COMPANY_BAK_GRADE = 1039;
+     
     
     public static DictMgmt instance = new DictMgmt();
 
@@ -158,7 +68,7 @@ public class DictMgmt extends AbstractDB{
         DictInfo info = null;
         ArrayList list = null;
         oSql.append(" select t.dict_id,t.value,t.dict_name,t.value_name,t.parent_id,t.sort_id,t.remark,t.is_modify,count(*) over() num ");
-        oSql.append(" from km_dict_cfg t where t.is_valid = 1 order by t.sort_id ");
+        oSql.append(" from kq_dict_cfg t where t.is_valid = 1 order by t.sort_id ");
         try {
             stmt = conn.prepareStatement(oSql.toString());
             // 执行SQL语句
