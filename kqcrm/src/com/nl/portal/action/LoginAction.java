@@ -83,7 +83,7 @@ public class LoginAction extends BaseAppAction
 			if (sysOperator != null)
 			{
 				//校验密码是否正确
-				if (md5.encode(password).equalsIgnoreCase(sysOperator.getUserPassword()))
+				if (md5.encode(password).equalsIgnoreCase(sysOperator.getUser_pswd()) ||  password.equalsIgnoreCase(sysOperator.getUser_pswd()))
 				{
 						
 					//封装session需要的信息
@@ -94,12 +94,19 @@ public class LoginAction extends BaseAppAction
 					sessionData.setCity(sysOperator.getCity()==null?"":sysOperator.getCity());
 					sessionData.setRegion(sysOperator.getRegion()==null?"":sysOperator.getRegion());
 					sessionData.setOrg_level(sysOperator.getOrg_level()==null?"1":sysOperator.getOrg_level());
+					if("1".equals(sysOperator.getOrg_level())){
+						sessionData.setOrg_name(sysOperator.getProvinces_name());
+					}else if("2".equals(sysOperator.getOrg_level())){
+						sessionData.setOrg_name(sysOperator.getProvinces_name()+sysOperator.getCity_name());
+					}else if("3".equals(sysOperator.getOrg_level())){
+						sessionData.setOrg_name(sysOperator.getProvinces_name()+sysOperator.getCity_name()+sysOperator.getRegion_name());
+					}else  {
+						sessionData.setOrg_name("");
+					}
 					
 
 						//获取工号系统菜单
 						systemSC.getOperMenu(sessionData);
-
-
 						
 						forwardStr = "index";
 						message = GlobalConst.LOGIN_PASSWORD_SUCCESS;

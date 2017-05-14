@@ -30,7 +30,6 @@ public class SysOperator implements Serializable
 	private String region_name;
 	private String org_level;
 
-	private String SNo;
 	private String userPassword;
 	private String cop_code;
 	/* ∆Ù”√±Í÷æ */
@@ -129,15 +128,7 @@ public class SysOperator implements Serializable
 		return serialVersionUID;
 	}
 
-	public String getSNo()
-	{
-		return SNo;
-	}
-
-	public void setSNo(String no)
-	{
-		SNo = no;
-	}
+	 
 
 	public String getUser_id()
 	{

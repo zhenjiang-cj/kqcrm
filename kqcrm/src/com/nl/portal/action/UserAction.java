@@ -517,8 +517,8 @@ public class UserAction extends BaseAppAction {
 			UserSc sc = new UserSc();
 			//获取角色序列
 			formBean.setRole_id(sc.getRole());
-			//默认功能sysid=1
-			formBean.setSysid("99");
+			//默认功能sysid=-1
+			formBean.setSysid("");
 			List<UserInfo> privilegeList = sc.getPrivilegeBySysid(formBean);
 			
 			request.setAttribute("privilegeList", privilegeList);
@@ -636,7 +636,7 @@ public class UserAction extends BaseAppAction {
 			if(rolelist!=null&&rolelist.size()>0){
 				formBean.setSysid(rolelist.get(0).getSysid());
 			}else{
-				formBean.setSysid("1");
+				formBean.setSysid("");
 			}
 			List<UserInfo> privilegeList = sc.getPrivilegeBySysid(formBean);
 			request.setAttribute("privilegeList", privilegeList);

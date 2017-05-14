@@ -7,6 +7,7 @@ import java.util.Map;
 import com.huawei.csp.bsf.pwm.service.impl.PasswordForMD5;
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.nl.base.AbstractDB;
+import com.nl.portal.actionForm.CrmForm;
 import com.nl.portal.actionForm.UserForm;
 import com.nl.portal.bc.UserDbMgr;
 import com.nl.portal.dt.*;
@@ -87,6 +88,7 @@ public class UserSc extends AbstractDB {
 			UserDbMgr db = new UserDbMgr(smc);
 			HashMap param = new HashMap(); 
 			param.put("provinces", userform.getProvinces());
+			//param.put("city", userform.getCity());
 //			param.put("page_num", userform.getPageNum());
 //			param.put("page_size", userform.getNumPerPage());
 			userlist = db.getCityByPro(param);
@@ -112,6 +114,7 @@ public class UserSc extends AbstractDB {
 			HashMap param = new HashMap(); 
 			param.put("provinces", userform.getProvinces());
 			param.put("city", userform.getCity());
+			//param.put("region", userform.getRegion());
 //			param.put("page_num", userform.getPageNum());
 //			param.put("page_size", userform.getNumPerPage());
 			userlist = db.getRegionByCity(param);
@@ -377,15 +380,17 @@ public class UserSc extends AbstractDB {
 			
 			 
 			//先删除原先的角色关系，在添加新的角色关系
+			retCode = db.delUserRole(param);
 			String chooseroles = form.getChooseRoles();
+//			System.out.println("%%%%%%%"+chooseroles);
 			String[] roles = null;
 			if(chooseroles!=null&&!"".equals(chooseroles)){
 				roles = chooseroles.split(",");
 			}
+			
 			if(roles!=null&&roles.length>0){
 				for(int i=0;i<roles.length;i++){
 					param.put("role_id",roles[i]);
-					retCode = db.delUserRole(param);
 					retCode = db.addUserRole(param);
 					if(retCode == GlobalConst.GLOBAL_RESULT_FAIL)return retCode;
 				}

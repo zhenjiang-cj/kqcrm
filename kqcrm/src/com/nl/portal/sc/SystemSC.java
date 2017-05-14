@@ -367,7 +367,6 @@ public class SystemSC extends AbstractDB
 			smc = getSqlMapClient();
 			smc.startTransaction();
 			SystemDbMgr sysDbMgr = new SystemDbMgr(smc);
-			
 			//循环查询操作员各个系统的菜单数据
 			for (int i = 0; i < systemId.length; i++)
 			{
