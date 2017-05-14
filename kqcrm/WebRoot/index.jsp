@@ -60,7 +60,7 @@ if(sessdata!=null){
 $(function(){
 	DWZ.init("/kqcrm/dwz/dwz.frag.xml", {
 		//loginUrl:"login.jsp", loginTitle:"登录",	// 弹出登录对话框
-  		loginUrl:"login.jsp",	// 跳到登录页面
+  		loginUrl:"/kqcrm/login.jsp",	// 跳到登录页面
 		statusCode:{ok:200, error:300, timeout:301}, //【可选】
 		pageInfo:{pageNum:"pageNum", numPerPage:"numPerPage", orderField:"orderField", orderDirection:"orderDirection"}, //【可选】
 		debug:false,	// 调试模式 【true|false】
@@ -69,8 +69,8 @@ $(function(){
 			$("#themeList").theme({themeBase:"themes"});
 			//DWZ.loadLogin();
 			//setTimeout(function() {$("#sidebar .toggleCollapse div").trigger("click");}, 10);
-			setTimeout(checksession, 1000);
-			//
+			setInterval(checksession, 60*10*1000);
+			$("#navMenu>:first>:first").addClass("selected");
 			setTimeout(function() {$("#navMenu .selected a").trigger("click");}, 10);
 		}
 	});
@@ -78,7 +78,6 @@ $(function(){
 //判断session是否失效
 function checksession()
 {
-	
 	try{
 		$.ajax({
 		    type:"post",
@@ -108,55 +107,40 @@ function checksession()
 			<div class="headerNav">
 				<a class="logo" href="http://j-ui.com">标志</a>
 				<ul class="nav">
-					<li id="switchEnvBox"><a href="javascript:">（<span>北京</span>）切换城市</a>
-						<ul>
-							<li><a href="sidebar_1.html">北京</a></li>
-							<li><a href="sidebar_2.html">上海</a></li>
-							<li><a href="sidebar_2.html">南京</a></li>
-							<li><a href="sidebar_2.html">深圳</a></li>
-							<li><a href="sidebar_2.html">广州</a></li>
-							<li><a href="sidebar_2.html">天津</a></li>
-							<li><a href="sidebar_2.html">杭州</a></li>
-						</ul>
-					</li>
-					<li><a href="https://me.alipay.com/dwzteam" target="_blank">捐赠</a></li>
-					<li><a href="changepwd.html" target="dialog" width="600">设置</a></li>
-					<li><a href="http://www.cnblogs.com/dwzjs" target="_blank">博客</a></li>
-					<li><a href="http://weibo.com/dwzui" target="_blank">微博</a></li>
-					<li><a href="http://bbs.dwzjs.com" target="_blank">论坛</a></li>
-					<li><a href="login.html">退出</a></li>
-				</ul>
-				<ul class="themeList" id="themeList">
-					<li theme="default"><div class="selected">蓝色</div></li>
-					<li theme="green"><div>绿色</div></li>
-					<!--<li theme="red"><div>红色</div></li>-->
-					<li theme="purple"><div>紫色</div></li>
-					<li theme="silver"><div>银色</div></li>
-					<li theme="azure"><div>天蓝</div></li>
+					<li><a>用户名称：<%=sessdata.getUser_name() %></a></li>
+					<li><a>用户工号：<%=sessdata.getUser_id() %></a></li>
+					<li><a>用户归属：<%=sessdata.getOrg_name() %></a></li>
+					<li><a href="<%=path%>/login.jsp">退出</a></li>
 				</ul>
 			</div>
 		
 			<div id="navMenu">
 				<ul>
-				<li  class="selected"><a href="<%=path%>/coremain/portal/user/frame.jsp"><span>系统管理</span></a></li>
 				<%
 				if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_CRM_MANAGE)){
 					%>
-					<li class="selected"><a href="<%=path%>/coremain/portal/user/frame.jsp"><span>客户管理</span></a></li>
+					<li><a href="<%=path%>/coremain/crm/frame.jsp"><span>客户管理</span></a></li>
 					<%
 				}
 				%>
 				<%
-				if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_CRM_BACK)){
+				if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_HT_MANAGE)){
 					%>
-					<li  ><a href="<%=path%>/coremain/portal/user/frame.jsp"><span>客户回访</span></a></li>
+					<li  ><a href="<%=path%>/coremain/crm/htframe.jsp"><span>合同管理</span></a></li>
+					<%
+				}
+				%>
+				<%
+				if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_HF_MANAGE)){
+					%>
+					<li  ><a href="<%=path%>/coremain/crm/hfframe.jsp"><span>客户回访</span></a></li>
 					<%
 				}
 				%>
 				<%
 				if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_SYS_MANAGE)){
 					%>
-					<li  ><a href="<%=path%>/coremain/portal/user/frame.jsp"><span>系统管理</span></a></li>
+					<li ><a href="<%=path%>/coremain/portal/user/frame.jsp"><span>系统管理</span></a></li>
 					<%
 				}
 				%>

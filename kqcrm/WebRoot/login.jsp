@@ -25,11 +25,82 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-
+<script type="text/javascript">
+    //页面增加键盘监听事件
+    document.onkeydown = keyDown;
+    document.all.operatorId.focus();
+    function keyDown(e)
+    {
+        if (event.keyCode == 13)
+        {
+            doSubmit();
+        }
+    }
+    
+    function doSubmit()
+    {
+            var userForm = this.document.forms[0];
+	        if (userForm.user_id.value == "")
+	        {
+	            alert("请输入用户号！"); 
+	            userForm.user_id.focus();
+	            return false;
+	        }
+	
+	        if (userForm.user_pswd.value == "")
+	        {
+	            alert("请输入密码！");
+	            userForm.user_pswd.focus();
+	            return false;
+	        }
+	
+	        showLoadding();
+	        userForm.submit();
+    }
+    
+    function reset()
+    {
+        document.all.user_id.value="";
+        document.all.user_pswd.value="";
+        this.document.forms[0].user_id.focus();
+    }
+    
+    function showLoadding()
+    {
+	    var targetDiv=document.getElementById("loaddingDiv");
+		if (targetDiv!=null){
+		    var x=event.clientX //获取鼠标指针位置相对于触发事件的对象的X坐标 
+	        var y=event.clientY //获取鼠标指针位置相对于触发事件的对象的Y坐标 
+	        targetDiv.style.top=document.body.clientHeight/2;
+	        targetDiv.style.left=document.body.clientWidth/2 + 230	;
+	        
+			targetDiv.style.display="block";
+		}
+	}
+	
+	function doReset()
+    {
+        showD("./coremain/portal/find_password.jsp",400,300,"重置密码",200);
+    }
+    
+    IMGFOLDERPATH = './plugins/jquery/plugins/dialog/images/';
+    function showD(url1,w,h,tit,top)
+	{
+	    var diag = new Dialog("Diag1");
+		diag.Width = w;
+		diag.Height = h;
+		diag.Title = tit;
+		diag.URL = url1;
+		diag.Top = top;
+		diag.show();
+    }
+    
+    
+</script>
   </head>
   
   <body class="loginbody">
-  <form class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)" action="<%=path%>/login.do?method=login" method="post" name="userForm">
+  <form   action="<%=path%>/login.do?method=login" method="post" name="userForm">
 	<div class="dataEye">
 		<div class="loginbox">
 			<div class="logo-a">
@@ -52,7 +123,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<input type="password" class="input-text-password input-click" name="user_pswd" id="user_pswd">
 				</div>
 				<div class="row btnArea">
-					<a class="login-btn" id="submit">登录</a>
+					<a class="login-btn" id="submit" onclick="doSubmit();">登录</a>
 				</div>
 				</form>
 			</div>
