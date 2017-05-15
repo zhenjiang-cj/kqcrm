@@ -69,6 +69,7 @@ $(function(){
 			$("#themeList").theme({themeBase:"themes"});
 			//DWZ.loadLogin();
 			//setTimeout(function() {$("#sidebar .toggleCollapse div").trigger("click");}, 10);
+			checksession();
 			setInterval(checksession, 60*10*1000);
 			$("#navMenu>:first>:first").addClass("selected");
 			setTimeout(function() {$("#navMenu .selected a").trigger("click");}, 10);
@@ -107,9 +108,15 @@ function checksession()
 			<div class="headerNav">
 				<a class="logo" href="http://j-ui.com">标志</a>
 				<ul class="nav">
+				<%
+				if(sessdata!=null){
+					%>
 					<li><a>用户名称：<%=sessdata.getUser_name() %></a></li>
 					<li><a>用户工号：<%=sessdata.getUser_id() %></a></li>
-					<li><a>用户归属：<%=sessdata.getOrg_name() %></a></li>
+					<li><a>用户归属：<%=sessdata.getOrg_name() %></a></li>				
+					<%
+				}
+				%>
 					<li><a href="<%=path%>/login.jsp">退出</a></li>
 				</ul>
 			</div>
