@@ -9,7 +9,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         select *
 		  from (select a.*, row_number() over(order by a.kh_id) rn, count(*) over() totalCount
 		          from (
-		          select a.kh_id,a.kh_name,a.provinces,a.city,a.region,a.kh_addr,a.kh_card,a.kh_phone1,a.kh_phone2,a.introduce_name
+		          select  distinct a.kh_id,a.kh_name,a.provinces,a.city,a.region,a.kh_addr,a.kh_card,a.kh_phone1,a.kh_phone2,a.introduce_name
 		          from kq_kh_info a  where is_valid =1 
 		           <dynamic>
 					<isNotEmpty property="kh_name">
@@ -96,12 +96,26 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         select *
 		  from (select a.*, row_number() over(order by a.kh_id) rn, count(*) over() totalCount
 		          from (
-		          select a.kh_id,a.kh_name,a.provinces,a.city,a.region,a.kh_addr,a.kh_card,a.kh_phone1,a.kh_phone2,a.introduce_name
+		          select distinct a.kh_id,a.kh_name,a.provinces,a.city,a.region,a.kh_addr,a.kh_card,a.kh_phone1,a.kh_phone2,a.introduce_name
 		          from kq_kh_info a 
 		           where a.is_valid =1  
 		           <dynamic>
 					<isNotEmpty property="kh_id">
 							and a.kh_id =  #kh_id#
+					</isNotEmpty>
+				  </dynamic>         
+		                   ) a) t 
+	</select>
+	<select id='queryKhIntroduce' parameterClass="java.util.HashMap" resultClass="crminfo" >
+        select *
+		  from (select a.*, row_number() over(order by a.kh_id) rn, count(*) over() totalCount
+		          from (
+		          select distinct a.kh_id,a.kh_name,a.provinces,a.city,a.region,a.kh_addr,a.kh_card,a.kh_phone1,a.kh_phone2,a.introduce_name
+		          from kq_kh_info a 
+		           where a.is_valid =1  
+		           <dynamic>
+					<isNotEmpty property="kh_id">
+							and a.introduce_name =  #kh_id#
 					</isNotEmpty>
 				  </dynamic>         
 		                   ) a) t 
@@ -129,7 +143,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         select *
 		  from (select a.*, row_number() over(order by a.ht_date_current) rn, count(*) over() totalCount
 		          from (
-		          select a.kh_addr,a.kh_id,a.kh_name,a.kh_card,a.kh_phone1,a.kh_phone2,a.introduce_name,
+		          select distinct a.kh_addr,a.kh_id,a.kh_name,a.kh_card,a.kh_phone1,a.kh_phone2,a.introduce_name,
 							b.ht_id,b.ht_date_first,b.ht_date_current,b.ht_pledge,b.ht_rent,b.prod_name,b.prod_code,b.ht_year,b.remark  
 					 from kq_kh_info a ,kq_ht_info b 
 					where a.kh_id = b.kh_id
@@ -173,7 +187,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
   where a.is_valid =1 
     and b.is_valid=1
     and a.kh_id = b.kh_id
-    and a.introduce_name = (select t.kh_id from kq_ht_info t  where t.is_valid =1   and t.ht_id = #ht_id#  )
+    and a.introduce_name = (select distinct t.kh_id from kq_ht_info t  where t.is_valid =1   and t.ht_id = #ht_id#  )
      order by b.ht_date_first desc
 	</select>
 	
@@ -240,7 +254,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         select *
 		  from (select a.*, row_number() over(order by a.ht_date_current) rn, count(*) over() totalCount
 		          from (
-		          select a.kh_addr,a.kh_id,a.kh_name,a.kh_card,a.kh_phone1,a.kh_phone2,a.introduce_name,
+		          select distinct a.kh_addr,a.kh_id,a.kh_name,a.kh_card,a.kh_phone1,a.kh_phone2,a.introduce_name,
 							b.ht_id,b.ht_code,b.ht_date_first,b.ht_date_current,b.ht_pledge,b.ht_rent,b.prod_name,b.prod_code,b.ht_year,b.remark  
 					 from kq_kh_info a ,kq_ht_info b 
 					where a.kh_id = b.kh_id
@@ -282,7 +296,8 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         select *
 		  from (select a.*, row_number() over(order by a.ht_date_current) rn, count(*) over() totalCount
 		          from (
-		          select a.kh_addr,a.kh_id,a.kh_name,a.kh_card,a.kh_phone1,a.kh_phone2,a.introduce_name,
+		          select distinct 
+		          		a.kh_addr,a.kh_id,a.kh_name,a.kh_card,a.kh_phone1,a.kh_phone2,a.introduce_name,
 							b.ht_id,b.ht_date_first,b.ht_date_current,b.ht_pledge,b.ht_rent,b.prod_name,b.prod_code,b.ht_year,b.remark  
 					 from kq_kh_info a ,kq_ht_info b 
 					where a.kh_id = b.kh_id
@@ -332,7 +347,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         select *
 		  from (select a.*, row_number() over(order by a.kh_id,a.hf_date_must) rn, count(*) over() totalCount
 		          from (
-			          select   a.ht_id,hf_id,hf_date_must,hf_date_fact,hf_status,hf_user_name,hf_remark,
+			          select  distinct a.ht_id,hf_id,hf_date_must,hf_date_fact,hf_status,hf_user_name,hf_remark,
 								ht_date_current,ht_year,b.kh_id,kh_name,kh_phone1,kh_addr,kh_phone2,kh_card
 						from kq_hf_info a ,kq_ht_info b,kq_kh_info c
 						where a.ht_id = b.ht_id
