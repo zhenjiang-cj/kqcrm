@@ -117,7 +117,8 @@ function checksession()
 					<%
 				}
 				%>
-					<li><a href="<%=path%>/login.jsp">退出</a></li>
+					<li><a href="<%=path%>/login.do?method=loginout">退出</a></li>
+					
 				</ul>
 			</div>
 		
