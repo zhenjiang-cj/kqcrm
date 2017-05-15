@@ -101,6 +101,11 @@
 		</dl> 
 		
 	</div>
+	
+	
+	</form>
+	</div>
+	<h1>介绍人合同</h1>
 	<div class="pageContent">
 		 
 		<table class="table" width="1200" layoutH="138"   style="table-layout:fixed">
@@ -138,9 +143,6 @@
 		</table>
 		 
   
-	</div>
-	
-	</form>
 	</div>
   </body>
 </html>

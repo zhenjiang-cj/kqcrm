@@ -101,12 +101,17 @@
 		</dl> 
 		
 	</div>
+	
+	
+	</form>
+	</div>
+	<h1>介绍人合同</h1>
 	<div class="pageContent">
 		 
 		<table class="table" width="1200" layoutH="138"   style="table-layout:fixed">
 			<thead>
 				<tr>
-					<th width="120" orderField="accountNo" class="asc">客户编号</th>
+					<th width="120" orderField="accountNo"  >客户编号</th>
 					<th width="220" orderField="accountName">客户名称</th>
 					<th orderField="accountType">地址</th>  
 					<th width="150"  >号码</th>  
@@ -138,9 +143,6 @@
 		</table>
 		 
   
-	</div>
-	
-	</form>
 	</div>
   </body>
 </html>

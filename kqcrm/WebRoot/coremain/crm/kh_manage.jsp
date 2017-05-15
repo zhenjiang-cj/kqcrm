@@ -23,6 +23,7 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page"> 
+	<link href="<%=path%>/css/content.css" rel="stylesheet" type="text/css"  />
 
   </head>
   
@@ -69,10 +70,10 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 			<li><a class="icon" href="demo/common/dwz-team.xls" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
 		</ul>
 	</div>
-	<table class="table" width="1200" layoutH="138"  style="table-layout:fixed">
+	<table class="TabList" width="1200" layoutH="138"  style="table-layout:fixed">
 		<thead>
 			<tr>
-				<th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+				<th width="120"  >编号</th>
 				<th width="120" >名称</th>
 				<th >地址</th>
 				<th width="100"  >号码1</th>  
@@ -89,15 +90,16 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 					
 					%>
 					<tr target="sid_user" rel="1">
-						<td><input name="ids" value="xxx" type="checkbox"></td>
+						<td><%=user.getKh_id() %></td>
 						<td><%=user.getKh_name() %></td>
 						<td title="<%=user.getKh_addr() %>" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><%=user.getKh_addr() %></td>
 						<td><%=user.getKh_phone1() %></td>
 						<td><%=user.getKh_phone2() %></td>
+						<td><%=user.getIntroduce_name() %></td>
 						<td>
 							<a title="删除" target="ajaxTodo" href="<%=path%>/crmAction.do?method=doKhDel&kh_id=<%=user.getKh_id() %>" class="btnDel">删除</a>
 							<a title="编辑" target="dialog" href="<%=path%>/crmAction.do?method=toKhEdit&kh_id=<%=user.getKh_id() %>" width="645" height="400"   class="btnEdit">编辑</a>
-							<a title="合同管理" target="navTab" href="<%=path%>/crmAction.do?method=toHtManage&kh_id=<%=user.getKh_id() %>" width="645" height="600" class="btnAttach">客户合同</a>
+							<a title="合同新增" target="navTab" href="<%=path%>/crmAction.do?method=toHtAdd&kh_id=<%=user.getKh_id() %>"  rel="ht_add"  class="btnAttach">客户合同</a>
 						</td>
 					</tr>
 					

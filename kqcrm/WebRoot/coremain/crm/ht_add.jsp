@@ -17,10 +17,6 @@
 		kh = khlist.get(0);
 	}
 	List<CrmInfo> introducelist = (List<CrmInfo>) request.getAttribute("introducelist");//
-	CrmInfo khintroduce = null;
-	if(introducelist!=null){
-		khintroduce = introducelist.get(0);
-	}
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -53,7 +49,7 @@
   <body>
   
    <h1>客户明细</h1>
-	<div class="pageContent"  style="height:100px">
+	<div class="pageFormContent"  style="height:80px">
 		  <p> <label>客户编号：</label> <%=kh.getKh_id() %> </p>
 		  <p> <label>客户名称：</label> <%=kh.getKh_name() %> </p>
 		  <p> <label>客户身份证：</label> <%=kh.getKh_card() %> </p>
@@ -76,7 +72,7 @@
 			</ul>
     </div>
     
-    <div class="pageFormContent nowrap"   style="height:300px">
+    <div class="pageFormContent nowrap"   style="height:200px">
     <h1>合同新增</h1>
 		<p>
 			<label>合同编号：</label>
@@ -114,7 +110,7 @@
 		<dl>
 		<dt>备注：</dt>
 			<dd>
-				<textarea   name="remark" id="remark" rows="10" cols="100"  ></textarea>
+				<textarea   name="remark" id="remark" rows="5" cols="100"  ></textarea>
 			</dd>
 		</dl>
 		
@@ -122,19 +118,48 @@
 	</form>
 	</div>
 	
-	 <h1>客户介绍人情况</h1>
-	<div class="pageContent"  style="height:100px">
-		  <p> <label>客户编号：</label> <%=kh.getKh_id() %> </p>
-		  <p> <label>客户名称：</label> <%=kh.getKh_name() %> </p>
-		  <p> <label>客户身份证：</label> <%=kh.getKh_card() %> </p>
-		  <p> <label>客户归属：</label> <%=DictMgmt.getValueDescs(DictMgmt.DICT_kq_REGION,kh.getRegion(),"" )%>  </p>
-		  <p> <label>客户地址：</label> <%=kh.getKh_addr() %> </p>
-		  <p> <label>客户号码1：</label> <%=kh.getKh_phone1() %> </p>
-		  <p> <label>客户号码2：</label> <%=kh.getKh_phone2() %> </p>
+	 <h1>介绍人情况</h1>
+	<div class="pageContent"  style="height:200px;">
+		 
+		<table class="table" width="1200"  style="table-layout:fixed;height:200px;">
+			<thead>
+				<tr>
+					<th width="120" orderField="accountNo"  >客户编号</th>
+					<th width="220" orderField="accountName">客户名称</th>
+					<th orderField="accountType">地址</th>  
+					<th width="150"  >号码1</th>  
+					<th width="150">号码2</th>
+				</tr>
+			</thead>
+			<tbody>
+			
+				<% if(introducelist!=null&&introducelist.size()>0){
+					for(int i=0;i<introducelist.size();i++){
+						CrmInfo user = introducelist.get(i);
+						
+						%>
+						<tr target="sid_user" rel="1">
+							<td><%=user.getKh_id() %></td>
+							<td><%=user.getKh_name() %></td>
+							<td  title="<%=user.getKh_addr() %>" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><%=user.getKh_addr() %></td>
+							<td><%=user.getKh_phone1() %></td>
+							<td><%=user.getKh_phone2()==null?"":user.getKh_phone2() %></td>
+						</tr>
+						
+						<%
+					}
+				}
+				%>
+				
+				
+			</tbody>
+		</table>
+		 
+  
 	</div>
 	
 	<h1>历史合同</h1>
-	<div class="pageContent">
+	<div class="pageContent"  style="height:300px;">
 		 
 		<table class="table" width="1200" layoutH="138"  style="table-layout:fixed">
 			<thead>

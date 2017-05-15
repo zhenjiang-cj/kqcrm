@@ -203,7 +203,7 @@ function cityChange() {
 		</p>
 		<p>
 			<label>转介绍人：</label>
-			<input name="introduce_name" id="introduce_name" type="text"  maxlength="11"     />
+			<input name="introduce_name" id="introduce_name" type="text"  maxlength="14"     />
 		</p>
 		 
 		
