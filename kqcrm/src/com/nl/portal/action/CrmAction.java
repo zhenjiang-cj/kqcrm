@@ -363,9 +363,6 @@ public class CrmAction extends BaseAppAction {
 			List<CrmInfo> khlist = sc.queryKhListById(formBean);
 			request.setAttribute("khlist", khlist);	
 			//查询介绍人信息
-			
-			formBean.setIntroduce_name(khlist.get(0).getIntroduce_name());
-			
 			List<CrmInfo> introducelist = sc.queryKhIntroduce(formBean);
 			request.setAttribute("introducelist", introducelist);	
 			
@@ -403,11 +400,11 @@ public class CrmAction extends BaseAppAction {
 
 			String url ="";
 			if(retCode == 0){
-				url =request.getContextPath()+"/crmAction.do?method=toHtManage";
-				doJump(0,url,"新增合同",request,response);
+				url =request.getContextPath()+"/crmAction.do?method=toKhManage";
+				doJump1(0,url,"新增合同",request,response);
 			}else{
-				url =request.getContextPath()+"/crmAction.do?method=toHtManage";
-				doJump(-1,url,"新增合同",request,response);
+				url =request.getContextPath()+"/crmAction.do?method=toKhManage";
+				doJump1(-1,url,"新增合同",request,response);
 			}
 			
 		}catch(Exception e){

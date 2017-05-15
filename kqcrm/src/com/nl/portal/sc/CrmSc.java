@@ -190,10 +190,10 @@ public class CrmSc extends AbstractDB {
 			smc.startTransaction();
 			CrmDb db = new CrmDb(smc);
 			HashMap param = new HashMap(); 
-			param.put("kh_id", userform.getIntroduce_name());
+			param.put("kh_id", userform.getKh_id());
 //			param.put("page_num", userform.getPageNum());
 //			param.put("page_size", userform.getNumPerPage());
-			userlist = db.queryKhListById(param);
+			userlist = db.queryKhIntroduce(param);
 		} catch(Exception e)
 		{
 			e.printStackTrace();
