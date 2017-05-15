@@ -40,21 +40,21 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 		<table class="searchContent">
 			<tr>
 				<td>
-					客户名称： <input type="text" name="kh_name" id="kh_name"  />
+					客户名称： <input type="text" name="kh_name" id="kh_name" value="<%=userform.getKh_name()==null?"":userform.getKh_name() %>"  />
 				</td>
 				<td>
 					回访状态： 
 					<select name="hf_status" id="hf_status">
 					<option value="">--请选择--</option>
-					<option value="1">已回访</option>
-					<option value="0">未回访</option>
+					<option value="1" <%if("1".equals(userform.getHf_status())){%>selected<%} %>  >已回访</option>
+					<option value="0" <%if("0".equals(userform.getHf_status())){%>selected<%} %> >未回访</option>
 					</select>
 				</td>
 				<td>
-					工作统计开始日期：<input type="text" name="hf_begin_date" id="hf_begin_date" class="date"  />
+					工作统计开始日期：<input type="text" name="hf_begin_date" id="hf_begin_date" class="date" value="<%=userform.getHf_begin_date()==null?"":userform.getHf_begin_date() %>" />
 				</td>
 				<td>
-					工作统计结束日期：<input type="text" name="hf_end_date" id="hf_end_date" class="date"  />
+					工作统计结束日期：<input type="text" name="hf_end_date" id="hf_end_date" class="date" value="<%=userform.getHf_end_date()==null?"":userform.getHf_end_date() %>" />
 				</td>
 			</tr>
 		</table>
@@ -75,7 +75,7 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 	<table class="table" width="1200" layoutH="138"  style="table-layout:fixed">
 		<thead>
 			<tr>
-				<th width="120" orderField="accountNo" class="asc">客户编码</th>
+				<th width="120" orderField="accountNo" >客户编码</th>
 				<th width="120" orderField="accountName">客户姓名</th>
 				<th width="100" orderField="accountType">签约年度</th>  
 				<th width="120" orderField="accountName">身份证号</th>
@@ -109,7 +109,7 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 						<td  title="<%=user.getHf_remark() %>" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><%=user.getHf_remark() %></td>
 						<td><%=user.getHf_user_name() %></td>
 						<td>
-							<a title="回访" target="dialog" href="<%=path%>/crmAction.do?method=toHfEdit&ht_id=<%=user.getHt_id() %>" width="645" height="400"   class="btnEdit">回访</a>
+							<a title="回访" target="dialog" href="<%=path%>/crmAction.do?method=toHfEdit&hf_id=<%=user.getHf_id() %>" width="645" height="400"   class="btnEdit">回访</a>
 						</td>
 					</tr>
 					
@@ -124,11 +124,7 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 		<div class="panelBar">
 			<div class="pages">
 				<span>显示</span>
-				<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
-					<option value="20">20</option>
-					<option value="50">50</option>
-				</select>
-				<span>条，共${pager.totalCount}条</span>
+				<span>20条，共${pager.totalCount}条</span>
 			</div>
 			
 			<div class="pagination" targetType="navTab" totalCount="${pager.totalCount}" numPerPage="${pager.numPerPage}" pageNumShown="10" currentPage="${pager.pageNum}"></div>

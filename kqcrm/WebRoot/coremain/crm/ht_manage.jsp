@@ -44,10 +44,10 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 					<input type="hidden" name="ht_id" id="ht_id" value="<%=userform.getKh_id()==null?"":userform.getKh_id() %>" />
 				</td>
 				<td>
-					签约开始日期：<input type="text" name="ht_begin_date" id="ht_begin_date" class="date"  />
+					签约开始日期：<input type="text" name="ht_begin_date" id="ht_begin_date" class="date" value="<%=userform.getHt_begin_date()==null?"":userform.getHt_begin_date() %>"  />
 				</td>
 				<td>
-					签约结束日期：<input type="text" name="ht_end_date" id="ht_end_date" class="date"  />
+					签约结束日期：<input type="text" name="ht_end_date" id="ht_end_date" class="date" value="<%=userform.getHt_end_date()==null?"":userform.getHt_end_date() %>" />
 				</td>
 			</tr>
 		</table>
@@ -119,11 +119,7 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 		<div class="panelBar">
 			<div class="pages">
 				<span>显示</span>
-				<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
-					<option value="20">20</option>
-					<option value="50">50</option>
-				</select>
-				<span>条，共${pager.totalCount}条</span>
+				<span>20条，共${pager.totalCount}条</span>
 			</div>
 			
 			<div class="pagination" targetType="navTab" totalCount="${pager.totalCount}" numPerPage="${pager.numPerPage}" pageNumShown="10" currentPage="${pager.pageNum}"></div>

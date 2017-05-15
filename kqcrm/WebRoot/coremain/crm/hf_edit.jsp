@@ -11,10 +11,7 @@
 			+ path + "/";
 	CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FORM);
 	List<CrmInfo> hflist =  (List<CrmInfo>) request.getAttribute("hflist");
-	CrmInfo hf1 = hflist.get(0);
-	CrmInfo hf2 = hflist.get(1);
-	CrmInfo hf3 = hflist.get(2);
-	CrmInfo hf4 = hflist.get(3);
+	CrmInfo hf = hflist.get(0);
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -51,11 +48,7 @@
   
     <div class="pageContent">
   <form class="pageForm required-validate" onsubmit="return validateCallback(this,navTabAjaxDone)" action="<%=path%>/crmAction.do?method=doHfEdit" method="post" name="userForm">
-    <input type="hidden" name="ht_id" id="ht_id" value="<%=hf1.getHt_id() %>">
-    <input type="hidden" name="hf_id1" id="hf_id1" value="<%=hf1.getHf_id() %>">
-    <input type="hidden" name="hf_id2" id="hf_id2" value="<%=hf2.getHf_id() %>">
-    <input type="hidden" name="hf_id3" id="hf_id3" value="<%=hf3.getHf_id() %>">
-    <input type="hidden" name="hf_id4" id="hf_id4" value="<%=hf4.getHf_id() %>">
+    <input type="hidden" name="hf_id" id="hf_id" value="<%=hf.getHf_id() %>"> 
     <input type="hidden" name="operatorId" id="operatorId" value="<%=userform.getOperatorId() %>">
     
     <div class="formBar">
@@ -66,24 +59,27 @@
     </div>
     
     <div class="pageFormContent nowrap" layoutH="56" style="height:100px">
-    	<h1>回访工作1</h1>
+    	<h1>回访工作</h1>
 		<p>
-			<label>应回访日期1：</label>
-			<input name="hf_date_must1"  id="hf_date_must1" type="text" class="date" value="<%=hf1.getHf_date_must()==null?"":hf1.getHf_date_must() %>" readonly />
+			<label>应回访日期：</label>
+			<input name="hf_date_must"  id="hf_date_must" type="text" class="date" value="<%=hf.getHf_date_must()==null?"":hf.getHf_date_must() %>" readonly />
 		</p>
 		<p>
-			<label>实际回访日期1：</label>
-			<input name="hf_date_fact1"  id="hf_date_fact1" type="text"   class="date" value="<%=hf1.getHf_date_fact()==null?"":hf1.getHf_date_fact() %>" />
+			<label>实际回访日期：</label>
+			<input name="hf_date_fact"  id="hf_date_fact" type="text"   class="date" value="<%=hf.getHf_date_fact()==null?"":hf.getHf_date_fact() %>" />
 		</p>
 		<p>
-			<label>回访情况1：</label>
-			<input name="hf_remark1" id ="hf_remark1" type="text"   value="<%=hf1.getHf_remark()==null?"":hf1.getHf_remark() %>" />
-		</p> 
-		<p>
-			<label>回访人1：</label>
-			<input name="hf_user_name1" id="hf_user_name1" type="text"     value="<%=hf1.getHf_user_name()==null?"":hf1.getHf_user_name() %>" />
+			<label>回访人：</label>
+			<input name="hf_user_name" id="hf_user_name" type="text"     value="<%=hf.getHf_user_name()==null?"":hf.getHf_user_name() %>" />
 		</p>
+		<dl>
+		<dt>回访情况：</dt>
+			<dd>
+			<textarea   name="hf_remark" id="hf_remark" rows="10" cols="100"  ><%=hf.getHf_remark()==null?"":hf.getHf_remark() %></textarea>
+			</dd>
+		</dl> 
 		<div class="divider"></div>	
+		<!-- 
 		<h1>回访工作2</h1>
 		<p>
 			<label>应回访日期2：</label>
@@ -136,6 +132,7 @@
 			<label>回访人4：</label>
 			<input name="hf_user_name4" id="hf_user_name4" type="text"     value="<%=hf4.getHf_user_name()==null?"":hf1.getHf_user_name() %>" />
 		</p>
+		 -->
 	</div>
 	
 	</form>
