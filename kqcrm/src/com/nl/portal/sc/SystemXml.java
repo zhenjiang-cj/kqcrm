@@ -8,10 +8,7 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.dom4j.Element;
-
-import cn.com.just.webservice.IceAuth;
-import cn.com.just.webservice.impl.IceAuthImplServiceLocator;
-import cn.com.just.webservice.impl.IceAuthImplServiceSoapBindingStub;
+ 
 
 import com.nl.base.bssp.BsspBaseMgr;
 import com.nl.base.bssp.BsspXmlMgr;
@@ -81,10 +78,10 @@ public class SystemXml extends BsspBaseMgr
 	      String reXml = "";
 	      try{
 				//IceAuth authser = new IceAuthImplServiceSoapBindingStub(new URL("http://218.3.124.236:9080/iceAuth/services/iceAuth"),new IceAuthImplServiceLocator());
-	    	  IceAuth authser = new IceAuthImplServiceSoapBindingStub(new URL(AppConfigPropertyUtil.getMsg("struts-config_res","kd_webservice_addr")),new IceAuthImplServiceLocator());
-				//String reXml = authser.authToken("<?xml version=\"1.0\" encoding=\"utf-8\"?><operation_in><service_name>checkUserLogin</service_name><sysfunc_id>10011909</sysfunc_id><request_type>1001</request_type><operator_id>test111</operator_id><request_time>201610221830</request_time><content><StrToken>j6DZdZH33D9WxpL4Uiv4Kuirjpcjfzy8qSXhxWVzsHrZQn6v1cO/IRsZjlXxLS6xK0qkRWsJTHgy%20%20mowSxcFXuh+IsotlwgBOvc6zeiEvSvE=</StrToken></content></operation_in>");
-	    	  reXml = authser.authToken(xml.outputXMLStr());
-	    	  logger.info("返回xml为："+reXml);
+//	    	  IceAuth authser = new IceAuthImplServiceSoapBindingStub(new URL(AppConfigPropertyUtil.getMsg("struts-config_res","kd_webservice_addr")),new IceAuthImplServiceLocator());
+//				//String reXml = authser.authToken("<?xml version=\"1.0\" encoding=\"utf-8\"?><operation_in><service_name>checkUserLogin</service_name><sysfunc_id>10011909</sysfunc_id><request_type>1001</request_type><operator_id>test111</operator_id><request_time>201610221830</request_time><content><StrToken>j6DZdZH33D9WxpL4Uiv4Kuirjpcjfzy8qSXhxWVzsHrZQn6v1cO/IRsZjlXxLS6xK0qkRWsJTHgy%20%20mowSxcFXuh+IsotlwgBOvc6zeiEvSvE=</StrToken></content></operation_in>");
+//	    	  reXml = authser.authToken(xml.outputXMLStr());
+//	    	  logger.info("返回xml为："+reXml);
 	    	  
 	    	  //<?xml version="1.0" encoding="utf-8"?><operation_out><service_name>checkuser</service_name><sysfunc_id>10000</sysfunc_id><request_type>1</request_type><operator_id>null</operator_id><request_time>20163010103057</request_time><response><resp_type>1</resp_type><resp_code>1</resp_code><resp_desc>成功</resp_desc></response><content><Result><ResultCode>1</ResultCode><ResultMessage>用户正常登陆</ResultMessage></Result><userid>1</userid></content></operation_out>
 //	    	  reXml = "<?xml version=\"1.0\" encoding=\"utf-8\"?><operation_out><service_name>checkuser</service_name><sysfunc_id>10000</sysfunc_id><request_type>1</request_type><operator_id>null</operator_id><request_time>20163010103057</request_time><response><resp_type>1</resp_type><resp_code>1</resp_code><resp_desc>成功</resp_desc></response><content><Result><ResultCode>1</ResultCode><ResultMessage>用户正常登陆</ResultMessage></Result><userid>1</userid></content></operation_out>";

@@ -29,7 +29,6 @@ import com.nl.portal.dt.KmCompanyUser;
 import com.nl.portal.dt.RemindUserOrgCfg;
 import com.nl.portal.dt.SysMenu;
 import com.nl.portal.dt.SysOperator;
-import com.nl.portal.sc.OperatorManageSC;
 import com.nl.portal.sc.SystemSC;
 import com.nl.portal.vo.PortalDeptInfoVo;
 import com.nl.util.Base64;
