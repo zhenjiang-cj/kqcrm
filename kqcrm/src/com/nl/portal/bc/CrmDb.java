@@ -286,6 +286,17 @@ public class CrmDb extends AbstractDB {
 		return list;
 	}
 
+	public int doHfEdit(Map<String, String> param) throws Exception {
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try
+		{
+			smc.insert("CrmSql.doHfEdit", param);
+		}catch(Exception e){
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		}
+		return retCode;
+	}
 	public int doHfEdit1(Map<String, String> param) throws Exception {
 		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
 		try

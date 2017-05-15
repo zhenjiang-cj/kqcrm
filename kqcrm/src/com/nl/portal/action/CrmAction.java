@@ -359,8 +359,17 @@ public class CrmAction extends BaseAppAction {
 			CrmForm formBean = (CrmForm)form;
 			CrmSc sc = new CrmSc();
 			
+			//查询客户信息
+			List<CrmInfo> khlist = sc.queryKhListById(formBean);
+			request.setAttribute("khlist", khlist);	
+			//查询介绍人信息
 			
-			//新增合同的时候，查询出我这个客户，在上一个合同期间内，介绍的所有客户。
+			formBean.setIntroduce_name(khlist.get(0).getIntroduce_name());
+			
+			List<CrmInfo> introducelist = sc.queryKhIntroduce(formBean);
+			request.setAttribute("introducelist", introducelist);	
+			
+			//新增合同的时候，查询出我这个客户，介绍的所有客户。
 			List<CrmInfo> userlist = sc.queryIntroduce(formBean);
 			request.setAttribute("userlist", userlist);	
 			
@@ -425,7 +434,7 @@ public class CrmAction extends BaseAppAction {
 			List<CrmInfo> htlist = sc.queryhtByid(formBean);
 			request.setAttribute("htlist", htlist);	
 			
-			//新增合同的时候，查询出我这个客户，在上一个合同期间内，介绍的所有客户。
+			//新增合同的时候，查询出我这个客户， 介绍的所有客户。
 			List<CrmInfo> userlist = sc.queryIntroduceByht(formBean);
 			request.setAttribute("userlist", userlist);	
 			

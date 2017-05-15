@@ -29,8 +29,10 @@ public class CrmSc extends AbstractDB {
 			param.put("org_ids", userform.getOrg_ids());
 			param.put("kh_id", userform.getKh_id());
 			param.put("kh_name", userform.getKh_name());
+			param.put("introduce_name", userform.getIntroduce_name());
 			param.put("page_num", userform.getPageNum());
 			param.put("page_size", userform.getNumPerPage());
+			
 			userlist = db.queryKh(param);
 		} catch(Exception e)
 		{
@@ -165,6 +167,30 @@ public class CrmSc extends AbstractDB {
 			CrmDb db = new CrmDb(smc);
 			HashMap param = new HashMap(); 
 			param.put("kh_id", userform.getKh_id());
+//			param.put("page_num", userform.getPageNum());
+//			param.put("page_size", userform.getNumPerPage());
+			userlist = db.queryKhListById(param);
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			this.endTransaction(smc);
+		}
+		return userlist;
+	}
+	public List<CrmInfo> queryKhIntroduce(CrmForm userform)
+	{
+		List<CrmInfo> userlist = null;
+		SqlMapClient smc = null;
+		try
+		{
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			CrmDb db = new CrmDb(smc);
+			HashMap param = new HashMap(); 
+			param.put("kh_id", userform.getIntroduce_name());
 //			param.put("page_num", userform.getPageNum());
 //			param.put("page_size", userform.getNumPerPage());
 			userlist = db.queryKhListById(param);
@@ -470,6 +496,7 @@ public class CrmSc extends AbstractDB {
 			CrmDb db = new CrmDb(smc);
 			HashMap param = new HashMap(); 
 			param.put("ht_id", userform.getHt_id());
+			param.put("hf_id", userform.getHf_id());
 			userlist = db.queryhfByid(param);
 		} catch(Exception e)
 		{
@@ -491,33 +518,19 @@ public class CrmSc extends AbstractDB {
 			//数据访问对象
 			//数据访问对象
 			CrmDb db = new CrmDb(smc);
-			param.put("ht_id",form.getHt_id());
-			param.put("hf_id1",form.getHf_id1());
-			param.put("hf_id2",form.getHf_id2());
-			param.put("hf_id3",form.getHf_id3());
-			param.put("hf_id4",form.getHf_id4());
+			//param.put("ht_id",form.getHt_id());
+			param.put("hf_id",form.getHf_id1());
 
-			param.put("hf_date_must1",form.getHf_date_must1());
-			param.put("hf_date_must2",form.getHf_date_must2());
-			param.put("hf_date_must3",form.getHf_date_must3());
-			param.put("hf_date_must4",form.getHf_date_must4());
-			param.put("hf_date_fact1",form.getHf_date_fact1());
-			param.put("hf_date_fact2",form.getHf_date_fact2());
-			param.put("hf_date_fact3",form.getHf_date_fact3());
-			param.put("hf_date_fact4",form.getHf_date_fact4());
-			param.put("hf_remark1",form.getHf_remark1());
-			param.put("hf_remark2",form.getHf_remark2());
-			param.put("hf_remark3",form.getHf_remark3());
-			param.put("hf_remark4",form.getHf_remark4());
-			param.put("hf_user_name1",form.getHf_user_name1());
-			param.put("hf_user_name2",form.getHf_user_name2());
-			param.put("hf_user_name3",form.getHf_user_name3());
-			param.put("hf_user_name4",form.getHf_user_name4());
-			
-			retCode = db.doHfEdit1(param);
-			retCode = db.doHfEdit2(param);
-			retCode = db.doHfEdit3(param);
-			retCode = db.doHfEdit4(param);
+			param.put("hf_date_must",form.getHf_date_must());
+			param.put("hf_date_fact",form.getHf_date_fact());
+			param.put("hf_remark",form.getHf_remark());
+			param.put("hf_user_name",form.getHf_user_name());
+
+			retCode = db.doHfEdit(param);
+//			retCode = db.doHfEdit1(param);
+//			retCode = db.doHfEdit2(param);
+//			retCode = db.doHfEdit3(param);
+//			retCode = db.doHfEdit4(param);
 			
 			smc.commitTransaction();
 		} catch (Exception e) {

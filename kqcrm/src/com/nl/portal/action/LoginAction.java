@@ -150,6 +150,20 @@ public class LoginAction extends BaseAppAction
 		return mapping.findForward(forwardStr);
 	}
 	
+	public ActionForward loginout(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception
+	{
+		LoginForm loginForm = (LoginForm)form;
+		HttpSession session = request.getSession();
+		String message = "";
+		String forwardStr = "login";
+		
+		request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, loginForm);
+		session.setAttribute(SessionConst.LOGIN_SESSION, null);
+	
+		return mapping.findForward(forwardStr);
+	}
+	
 	
 	public ActionForward queryLogList(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)

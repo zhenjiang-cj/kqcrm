@@ -18,6 +18,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 					<isNotEmpty property="org_ids">
 							 and charindex(a.region,#org_ids#) >0
 					</isNotEmpty>
+					<isNotEmpty property="introduce_name">
+							 and  introduce_name = #introduce_name#
+					</isNotEmpty>
 				  </dynamic>         
 		                   ) a) t
 		 where t.rn>(#page_num#-1)*#page_size# and #page_num#*#page_size# >= t.rn
@@ -160,8 +163,8 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
   where a.is_valid =1 
     and b.is_valid=1
     and a.introduce_name = #kh_id#
-    and a.kh_id = b.kh_id
-    and b.ht_date_first > (select MAX(t.ht_date_current) from kq_ht_info t where t.is_valid =1  and t.kh_id = #kh_id#)
+    and a.kh_id = b.kh_id 
+    order by b.ht_date_first desc
 	</select>
 	
 	<select id='queryIntroduceByht' parameterClass="java.util.HashMap" resultClass="crminfo" >
@@ -170,13 +173,8 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
   where a.is_valid =1 
     and b.is_valid=1
     and a.kh_id = b.kh_id
-    and exists (select * from kq_ht_info t 
-    	where t.is_valid =1  
-    	and t.ht_id = #ht_id# 
-    	and a.introduce_name = t.kh_id 
-    	and b.ht_date_first > t.ht_date_current
-    	)
-    
+    and a.introduce_name = (select t.kh_id from kq_ht_info t  where t.is_valid =1   and t.ht_id = #ht_id#  )
+     order by b.ht_date_first desc
 	</select>
 	
 	
@@ -365,11 +363,20 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		             
 				select a.ht_id,a.hf_id,a.hf_date_must,a.hf_date_fact,a.hf_status,a.hf_user_name,a.hf_remark
 				 from 	 kq_hf_info a 
-				 where ht_id = #ht_id#
-				   and a.is_valid=1
+				 where a.is_valid=1
+				   and hf_id = #hf_id#
 	</select>
 	
-	
+	<update id="doHfEdit" parameterClass="java.util.HashMap">
+		update kq_hf_info set
+			hf_date_fact=#hf_date_fact1#,
+			hf_remark=#hf_remark1#,
+			hf_user_name=#hf_user_name1# ,
+			hf_status=1
+		where hf_id=#hf_id# 
+		  and is_valid=1
+		
+	</update>
 	
 	<update id="doHfEdit1" parameterClass="java.util.HashMap">
 		update kq_hf_info set
