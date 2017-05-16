@@ -39,7 +39,8 @@
 		jQuery("#provinces").val('<%=sessionData.getProvinces()  %>');
 		jQuery("#city").val('<%=sessionData.getCity()  %>');
 		jQuery("#region").val('<%=sessionData.getRegion()  %>');
-		checkuser();
+		//checkuser();
+		setTimeout(checkuser, 1000);
 		
 	});
 	//根据用户归属，确定能新增客户的归属
