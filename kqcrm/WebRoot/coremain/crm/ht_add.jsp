@@ -70,7 +70,7 @@
 	</div>
  
 <div class="pageContent">
-	<div class="panelBar" style="height:350px;">
+	<div class="panelBar" style="height:220px;">
 	<ul class="toolBar"><li><span>被介绍人合同</span></li></ul>	 
 		 
 		<table class="table" width="1200"  layoutH="138" style="table-layout:fixed;height:300px">
@@ -119,7 +119,7 @@
     <input type="hidden" name="operatorId" id="operatorId" value="<%=userform.getOperatorId() %>">
     
     
-    <div class="pageFormContent nowrap"   style="height:180px">
+    <div class="pageFormContent nowrap"   style="height:200px">
     <h1>合同新增</h1>
 		<p>
 			<label>合同编号：</label>
