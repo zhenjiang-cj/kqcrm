@@ -170,7 +170,7 @@ function checksession()
 						<h2><span>Folder</span>界面组件</h2>
 					</div>
 					<div class="accordionContent">
-						<ul class="tree treeFolder">
+						<!-- <ul class="tree treeFolder">
 							<li><a href="tabsPage.html" target="navTab">主框架面板</a>
 								<ul>
 									<li><a href="http://www.baidu.com" target="navTab" rel="page1">页面一(外部页面)</a></li>
@@ -186,7 +186,7 @@ function checksession()
 								</ul>
 							</li>
 							
-						</ul>
+						</ul> -->
 					</div>
 					 
 				</div>
