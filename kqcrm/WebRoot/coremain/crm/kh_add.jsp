@@ -186,10 +186,12 @@ function cityChange() {
 				<%=DictMgmt.getSelectObj(DictMgmt.DICT_kq_REGION,"",false,false,"-1", -1, null, null, null,-1,"") %>
 			</select>
 		</p>
-		<p>
-			<label>家庭住址：</label>
-			<input name="kh_addr" id ="kh_addr" type="text"  maxlength="100"  class="required" />
-		</p>
+		<dl>
+		<dt>家庭住址：</dt>
+			<dd>
+			<input name="kh_addr" id ="kh_addr" type="text"  maxlength="100"  class="required" size="60"/>
+			</dd>
+		</dl> 
 		<p>
 			<label>手机号码1：</label>
 			<input name="kh_phone1" id="kh_phone1" type="text"  maxlength="11"  class="required digits"  />

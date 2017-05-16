@@ -47,7 +47,7 @@
   
   
     <div class="pageContent">
-  <form class="pageForm required-validate" onsubmit="return validateCallback(this,navTabAjaxDone)" action="<%=path%>/crmAction.do?method=doHfEdit" method="post" name="userForm">
+  <form class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)" action="<%=path%>/crmAction.do?method=doHfEdit" method="post" name="userForm">
     <input type="hidden" name="hf_id" id="hf_id" value="<%=hf.getHf_id() %>"> 
     <input type="hidden" name="operatorId" id="operatorId" value="<%=userform.getOperatorId() %>">
     
@@ -66,11 +66,11 @@
 		</p>
 		<p>
 			<label>实际回访日期：</label>
-			<input name="hf_date_fact"  id="hf_date_fact" type="text"   class="date" value="<%=hf.getHf_date_fact()==null?"":hf.getHf_date_fact() %>" />
+			<input name="hf_date_fact"  id="hf_date_fact" type="text"   class="required date" value="<%=hf.getHf_date_fact()==null?"":hf.getHf_date_fact() %>" />
 		</p>
 		<p>
 			<label>回访人：</label>
-			<input name="hf_user_name" id="hf_user_name" type="text"     value="<%=hf.getHf_user_name()==null?"":hf.getHf_user_name() %>" />
+			<input name="hf_user_name" id="hf_user_name" type="text"  class="required"   value="<%=hf.getHf_user_name()==null?"":hf.getHf_user_name() %>" />
 		</p>
 		<dl>
 		<dt>回访情况：</dt>

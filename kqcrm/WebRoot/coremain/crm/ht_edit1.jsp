@@ -30,6 +30,7 @@
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+	<link href="<%=path%>/css/content.css" rel="stylesheet" type="text/css"  />
  
 	<script src="<%=path%>/dwz/js/jquery.validate.js" type="text/javascript"></script>
 	<script src="<%=path%>/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
@@ -44,8 +45,43 @@
   
   <body>
   
-   
-  
+    <div class="panel" style="height:300px;">
+	<h1>历史合同</h1>
+		 
+		<table class="TabList" width="1200"   style="table-layout:fixed">
+			<thead>
+				<tr>
+					<th width="120" orderField="accountNo"  >客户编号</th>
+					<th width="220" orderField="accountName">客户名称</th>
+					<th orderField="accountType">地址</th>  
+					<th width="150"  >号码</th>  
+					<th width="150">首次签约日期</th>
+				</tr>
+			</thead>
+			<tbody>
+			
+				<% if(userlist!=null&&userlist.size()>0){
+					for(int i=0;i<userlist.size();i++){
+						CrmInfo crm = userlist.get(i);
+						
+						%>
+						<tr  style="margin-top:20px;">
+							<td class="tit02" ><%=user.getKh_id() %></td>
+							<td class="tit02" ><%=user.getKh_name() %></td>
+							<td class="tit02"  title="<%=user.getKh_addr() %>" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><%=user.getKh_addr() %></td>
+							<td class="tit02" ><%=user.getKh_phone1() %></td>
+							<td class="tit02" ><%=user.getHt_date_first() %></td>
+						</tr>
+						
+						<%
+					}
+				} 
+				%>
+				
+				
+			</tbody>
+		</table>
+	</div>
   
     <div class="pageContent">
   <form class="pageForm required-validate" onsubmit="return validateCallback(this,navTabAjaxDone)" action="<%=path%>/crmAction.do?method=doHtEdit1" method="post" name="userForm">
@@ -105,44 +141,6 @@
 	
 	</form>
 	</div>
-	<h1>介绍人合同</h1>
-	<div class="pageContent">
-		 
-		<table class="table" width="1200" layoutH="138"   style="table-layout:fixed">
-			<thead>
-				<tr>
-					<th width="120" orderField="accountNo"  >客户编号</th>
-					<th width="220" orderField="accountName">客户名称</th>
-					<th orderField="accountType">地址</th>  
-					<th width="150"  >号码</th>  
-					<th width="150">首次签约日期</th>
-				</tr>
-			</thead>
-			<tbody>
-			
-				<% if(userlist!=null&&userlist.size()>0){
-					for(int i=0;i<userlist.size();i++){
-						CrmInfo crm = userlist.get(i);
-						
-						%>
-						<tr target="sid_user" rel="1">
-							<td><%=crm.getKh_id() %></td>
-							<td><%=crm.getKh_name() %></td>
-							<td  title="<%=crm.getKh_addr() %>" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><%=crm.getKh_addr() %></td>
-							<td><%=crm.getKh_phone1() %></td>
-							<td><%=crm.getHt_date_first() %></td>
-						</tr>
-						
-						<%
-					}
-				}
-				%>
-				
-				
-			</tbody>
-		</table>
-		 
-  
-	</div>
+	
   </body>
 </html>
