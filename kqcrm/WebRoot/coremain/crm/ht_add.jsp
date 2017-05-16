@@ -49,9 +49,9 @@
   <body>
   
 <div class="pageContent" selector="h1" >
-	<div class="panelBar"  style="height:140px">
+	<div class="panelBar"  style="height:100px">
 	<ul class="toolBar"><li><span>客户明细</span></li></ul>
-	    <table class="table" width="1200" layoutH="138" style="table-layout:fixed;height:110px;">
+	    <table class="table" width="1200"   style="table-layout:fixed;height:100px;">
 	    	<tr style="margin-top:20px;">
 	    		<td class="tit02">客户编号：<%=kh.getKh_id() %></td>
 	    		<td class="tit02">客户名称：<%=kh.getKh_name() %></td>
@@ -71,55 +71,11 @@
 	</div>
 </div>  
   
-    
-	
 <div class="pageContent" selector="h1" >
-	<div class="panelBar"  style="height:200px;">
-	<ul class="toolBar"><li><span>介绍人情况</span></li></ul>	 
-		<table class="table" width="1200" layoutH="138" style="table-layout:fixed;height:200px;">
-			<thead>
-				<tr>
-					<th width="120" orderField="accountNo"  >客户编号</th>
-					<th width="220" orderField="accountName">客户名称</th>
-					<th orderField="accountType">地址</th>  
-					<th width="150"  >号码1</th>  
-					<th width="150">号码2</th>
-				</tr>
-			</thead>
-			<tbody>
-			
-				<% if(introducelist!=null&&introducelist.size()>0){
-					for(int i=0;i<introducelist.size();i++){
-						CrmInfo user = introducelist.get(i);
-						
-						%>
-						<tr style="margin-top:20px;">
-							<td  ><%=user.getKh_id() %></td>
-							<td  ><%=user.getKh_name() %></td>
-							<td   title="<%=user.getKh_addr() %>" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><%=user.getKh_addr() %></td>
-							<td  ><%=user.getKh_phone1() %></td>
-							<td  ><%=user.getKh_phone2()==null?"":user.getKh_phone2() %></td>
-						</tr>
-						
-						<%
-					}
-				}
-				%>
-				
-				
-			</tbody>
-		</table>
+	<div class="panelBar" style="height:300px;">
+	<ul class="toolBar"><li><span>被介绍人合同</span></li></ul>	 
 		 
-  
-	</div>
-</div>
-
-
-<div class="pageContent" selector="h1" >
-	<div class="panelBar" style="height:200px;">
-	<ul class="toolBar"><li><span>历史合同</span></li></ul>	 
-		 
-		<table class="table" width="1200" layoutH="138"  style="table-layout:fixed">
+		<table class="table" width="1200"   style="table-layout:fixed;height:300px">
 			<thead>
 				<tr>
 					<th width="120" orderField="accountNo"  >客户编号</th>
@@ -127,6 +83,7 @@
 					<th orderField="accountType">地址</th>  
 					<th width="150"  >号码</th>  
 					<th width="150">首次签约日期</th>
+					<th width="150">本次签约日期</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -142,6 +99,7 @@
 							<td   title="<%=user.getKh_addr() %>" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><%=user.getKh_addr() %></td>
 							<td  ><%=user.getKh_phone1() %></td>
 							<td  ><%=user.getHt_date_first() %></td>
+							<td  ><%=user.getHt_date_current() %></td>
 						</tr>
 						
 						<%
