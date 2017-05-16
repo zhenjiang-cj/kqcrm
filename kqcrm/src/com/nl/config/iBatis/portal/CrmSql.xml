@@ -241,10 +241,10 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			is_valid
 		)
 		values
-		(   #ht_id#,#hf_id1#,CONVERT(varchar(12) , dateadd(MONTH,3,#ht_date_current#), 23 ),1,1),
-		(   #ht_id#,#hf_id2#,CONVERT(varchar(12) , dateadd(MONTH,6,#ht_date_current#), 23 ),1,1),
-		(   #ht_id#,#hf_id3#,CONVERT(varchar(12) , dateadd(MONTH,9,#ht_date_current#), 23 ),1,1),
-		(   #ht_id#,#hf_id4#,CONVERT(varchar(12) , dateadd(MONTH,12,#ht_date_current#), 23 ),1,1)
+		(   #ht_id#,#hf_id1#,CONVERT(varchar(12) , dateadd(MONTH,3,#ht_date_current#), 23 ),0,1),
+		(   #ht_id#,#hf_id2#,CONVERT(varchar(12) , dateadd(MONTH,6,#ht_date_current#), 23 ),0,1),
+		(   #ht_id#,#hf_id3#,CONVERT(varchar(12) , dateadd(MONTH,9,#ht_date_current#), 23 ),0,1),
+		(   #ht_id#,#hf_id4#,CONVERT(varchar(12) , dateadd(MONTH,12,#ht_date_current#), 23 ),0,1)
 			 
 		
 	</insert>
@@ -384,9 +384,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	
 	<update id="doHfEdit" parameterClass="java.util.HashMap">
 		update kq_hf_info set
-			hf_date_fact=#hf_date_fact1#,
-			hf_remark=#hf_remark1#,
-			hf_user_name=#hf_user_name1# ,
+			hf_date_fact=#hf_date_fact#,
+			hf_remark=#hf_remark#,
+			hf_user_name=#hf_user_name# ,
 			hf_status=1
 		where hf_id=#hf_id# 
 		  and is_valid=1
