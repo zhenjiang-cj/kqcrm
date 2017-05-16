@@ -70,7 +70,7 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 			<li><a class="icon" href="demo/common/dwz-team.xls" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
 		</ul>
 	</div>
-	<table class="TabList" width="1200" layoutH="138"  style="table-layout:fixed">
+	<table class="table" width="1200" layoutH="138"  style="table-layout:fixed">
 		<thead>
 			<tr>
 				<th width="120"  >编号</th>
@@ -90,7 +90,7 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 					
 					%>
 					<tr target="sid_user" rel="1">
-						<td><%=user.getKh_id() %></td>
+						<td ><%=user.getKh_id() %></td>
 						<td><%=user.getKh_name() %></td>
 						<td title="<%=user.getKh_addr() %>" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><%=user.getKh_addr() %></td>
 						<td><%=user.getKh_phone1() %></td>
