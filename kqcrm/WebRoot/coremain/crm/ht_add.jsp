@@ -33,11 +33,7 @@
 	<meta http-equiv="description" content="This is my page">
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
-	<link href="<%=path%>/css/content.css" rel="stylesheet" type="text/css"  />
-	<style type="">
-	
-	</style>
+	--> 
  
 	<script src="<%=path%>/dwz/js/jquery.validate.js" type="text/javascript"></script>
 	<script src="<%=path%>/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
@@ -52,9 +48,10 @@
   
   <body>
   
-	<div class="panel"  style="height:140px">
-    <h1>客户明细</h1>
-	    <table class="TabList" width="1200"  style="table-layout:fixed;height:110px;">
+<div class="pageContent" selector="h1" >
+	<div class="panelBar"  style="height:140px">
+	<ul class="toolBar"><li><span>客户明细</span></li></ul>
+	    <table class="table" width="1200" layoutH="138" style="table-layout:fixed;height:110px;">
 	    	<tr style="margin-top:20px;">
 	    		<td class="tit02">客户编号：<%=kh.getKh_id() %></td>
 	    		<td class="tit02">客户名称：<%=kh.getKh_name() %></td>
@@ -72,14 +69,14 @@
 	    </table>
 		 
 	</div>
-  
+</div>  
   
     
 	
-	<div class="panel"  style="height:200px;">
-	 <h1>介绍人情况</h1>
-		 
-		<table class="TabList" width="1200"  style="table-layout:fixed;height:200px;">
+<div class="pageContent" selector="h1" >
+	<div class="panelBar"  style="height:200px;">
+	<ul class="toolBar"><li><span>介绍人情况</span></li></ul>	 
+		<table class="table" width="1200" layoutH="138" style="table-layout:fixed;height:200px;">
 			<thead>
 				<tr>
 					<th width="120" orderField="accountNo"  >客户编号</th>
@@ -115,11 +112,14 @@
 		 
   
 	</div>
-	
-	<div class="panel" style="height:300px;">
-	<h1>历史合同</h1>
+</div>
+
+
+<div class="pageContent" selector="h1" >
+	<div class="panelBar" style="height:300px;">
+	<ul class="toolBar"><li><span>历史合同</span></li></ul>	 
 		 
-		<table class="TabList" width="1200"   style="table-layout:fixed">
+		<table class="table" width="1200" layoutH="138"  style="table-layout:fixed">
 			<thead>
 				<tr>
 					<th width="120" orderField="accountNo"  >客户编号</th>
@@ -155,7 +155,7 @@
 		 
   
 	</div>
-	
+</div>
 	
 	
 	<div class="pageFormContent">
@@ -164,7 +164,7 @@
     <input type="hidden" name="operatorId" id="operatorId" value="<%=userform.getOperatorId() %>">
     
     
-    <div class="pageFormContent nowrap"   style="height:200px">
+    <div class="pageFormContent nowrap"   style="height:180px">
     <h1>合同新增</h1>
 		<p>
 			<label>合同编号：</label>
