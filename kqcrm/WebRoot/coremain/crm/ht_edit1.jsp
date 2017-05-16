@@ -45,58 +45,16 @@
   
   <body>
   
-    <div class="panel" style="height:300px;">
-	<h1>历史合同</h1>
-		 
-		<table class="TabList" width="1200"   style="table-layout:fixed">
-			<thead>
-				<tr>
-					<th width="120" orderField="accountNo"  >客户编号</th>
-					<th width="220" orderField="accountName">客户名称</th>
-					<th orderField="accountType">地址</th>  
-					<th width="150"  >号码</th>  
-					<th width="150">首次签约日期</th>
-				</tr>
-			</thead>
-			<tbody>
-			
-				<% if(userlist!=null&&userlist.size()>0){
-					for(int i=0;i<userlist.size();i++){
-						CrmInfo crm = userlist.get(i);
-						
-						%>
-						<tr  style="margin-top:20px;">
-							<td class="tit02" ><%=user.getKh_id() %></td>
-							<td class="tit02" ><%=user.getKh_name() %></td>
-							<td class="tit02"  title="<%=user.getKh_addr() %>" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><%=user.getKh_addr() %></td>
-							<td class="tit02" ><%=user.getKh_phone1() %></td>
-							<td class="tit02" ><%=user.getHt_date_first() %></td>
-						</tr>
-						
-						<%
-					}
-				} 
-				%>
-				
-				
-			</tbody>
-		</table>
-	</div>
+   
   
     <div class="pageContent">
   <form class="pageForm required-validate" onsubmit="return validateCallback(this,navTabAjaxDone)" action="<%=path%>/crmAction.do?method=doHtEdit1" method="post" name="userForm">
     <input type="hidden" name="ht_id" id="ht_id" value="<%=user.getHt_id() %>">
     <input type="hidden" name="operatorId" id="operatorId" value="<%=userform.getOperatorId() %>">
     
-    <div class="formBar">
-			<ul>
-				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
-				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
-			</ul>
-    </div>
     
     <div class="pageFormContent nowrap"   style="height:300px">
-    <h1>合同新增</h1>
+    <h1>合同修改</h1>
 		<p>
 			<label>合同编号：</label>
 			<input name="ht_code"  id="ht_code" type="text" value="<%=user.getHt_code() %>"  />
@@ -139,6 +97,12 @@
 	</div>
 	
 	
+    <div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+    </div>
 	</form>
 	</div>
 	
