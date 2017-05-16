@@ -5,7 +5,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
 	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
   <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
   
   	<context-param>
@@ -79,48 +79,5 @@
         <url-pattern>*.action</url-pattern>
     </filter-mapping>
      -->
-    <taglib>
-		<taglib-uri>/WEB-INF/struts-bean.tld</taglib-uri>
-		<taglib-location>/WEB-INF/tlds/struts-bean.tld</taglib-location>
-	</taglib>
 
-	<taglib>
-		<taglib-uri>/WEB-INF/struts-html.tld</taglib-uri>
-		<taglib-location>/WEB-INF/tlds/struts-html.tld</taglib-location>
-	</taglib>
-
-	<taglib>
-		<taglib-uri>/WEB-INF/struts-logic.tld</taglib-uri>
-		<taglib-location>/WEB-INF/tlds/struts-logic.tld</taglib-location>
-	</taglib>
-	
-	<taglib>
-		<taglib-uri>/WEB-INF/struts-nested.tld</taglib-uri>
-		<taglib-location>/WEB-INF/tlds/struts-nested.tld</taglib-location>
-	</taglib>
-	
-	<taglib>
-		<taglib-uri>/WEB-INF/taglibs-log.tld</taglib-uri>
-		<taglib-location>/WEB-INF/tlds/taglibs-log.tld</taglib-location>
-	</taglib>
-	
-	<taglib>
-		<taglib-uri>/WEB-INF/c.tld</taglib-uri>
-		<taglib-location>/WEB-INF/tlds/c.tld</taglib-location>
-	</taglib>
-	
-	<taglib>
-		<taglib-uri>/WEB-INF/c-rt.tld</taglib-uri>
-		<taglib-location>/WEB-INF/tlds/c-rt.tld</taglib-location>
-	</taglib>
-	
-	<taglib>
-		<taglib-uri>/pageListTag.tld</taglib-uri>
-		<taglib-location>/WEB-INF/tlds/pageListTag.tld</taglib-location>
-	</taglib>
-
-	<taglib>
-		<taglib-uri>/fn.tld</taglib-uri>
-		<taglib-location>/WEB-INF/tlds/fn.tld</taglib-location>
-	</taglib>
 </web-app>
