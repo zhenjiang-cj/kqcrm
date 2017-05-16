@@ -519,7 +519,7 @@ public class CrmSc extends AbstractDB {
 			//数据访问对象
 			CrmDb db = new CrmDb(smc);
 			//param.put("ht_id",form.getHt_id());
-			param.put("hf_id",form.getHf_id1());
+			param.put("hf_id",form.getHf_id());
 
 			param.put("hf_date_must",form.getHf_date_must());
 			param.put("hf_date_fact",form.getHf_date_fact());

@@ -740,10 +740,10 @@ public class CrmAction extends BaseAppAction {
 			String url ="";
 			if(retCode == 0){
 				url =request.getContextPath()+"/crmAction.do?method=toHfManage";
-				doJump(0,url,"工作回访",request,response);
+				doJump1(0,url,"工作回访",request,response);
 			}else{
 				url =request.getContextPath()+"/crmAction.do?method=toHfManage";
-				doJump(-1,url,"工作回访",request,response);
+				doJump1(-1,url,"工作回访",request,response);
 			}
 		}catch(Exception e){
 			getLogger(bosscodestr,GlobalConst.ERROR).error("工作回访出错:"+e.getMessage());
