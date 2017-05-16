@@ -75,64 +75,10 @@
 		<dl>
 		<dt>回访情况：</dt>
 			<dd>
-			<textarea   name="hf_remark" id="hf_remark" rows="10" cols="100"  ><%=hf.getHf_remark()==null?"":hf.getHf_remark() %></textarea>
+			<textarea   name="hf_remark" id="hf_remark" rows="10" cols="70"  ><%=hf.getHf_remark()==null?"":hf.getHf_remark() %></textarea>
 			</dd>
 		</dl> 
 		<div class="divider"></div>	
-		<!-- 
-		<h1>回访工作2</h1>
-		<p>
-			<label>应回访日期2：</label>
-			<input name="hf_date_must2"  id="hf_date_must2" type="text" class="date" value="<%=hf2.getHf_date_must()==null?"":hf1.getHf_date_must() %>" readonly />
-		</p>
-		<p>
-			<label>实际回访日期2：</label>
-			<input name="hf_date_fact2"  id="hf_date_fact2" type="text"  class="date"  value="<%=hf2.getHf_date_fact()==null?"":hf1.getHf_date_fact() %>" />
-		</p>
-		<p>
-			<label>回访情况2：</label>
-			<input name="hf_remark2" id ="hf_remark2" type="text"   value="<%=hf2.getHf_remark()==null?"":hf1.getHf_remark() %>" />
-		</p> 
-		<p>
-			<label>回访人2：</label>
-			<input name="hf_user_name2" id="hf_user_name2" type="text"     value="<%=hf2.getHf_user_name()==null?"":hf1.getHf_user_name() %>" />
-		</p>
-		<div class="divider"></div>	
-		<h1>回访工作3</h1>
-		<p>
-			<label>应回访日期3：</label>
-			<input name="hf_date_must3"  id="hf_date_must3" type="text" class="date" value="<%=hf3.getHf_date_must()==null?"":hf1.getHf_date_must() %>"  readonly/>
-		</p>
-		<p>
-			<label>实际回访日期3：</label>
-			<input name="hf_date_fact3"  id="hf_date_fact3" type="text"  class="date"  value="<%=hf3.getHf_date_fact()==null?"":hf1.getHf_date_fact() %>" />
-		</p>
-		<p>
-			<label>回访情况3：</label>
-			<input name="hf_remark3" id ="hf_remark3" type="text"   value="<%=hf3.getHf_remark()==null?"":hf1.getHf_remark() %>" />
-		</p> 
-		<p>
-			<label>回访人3：</label>
-			<input name="hf_user_name3" id="hf_user_name3" type="text"     value="<%=hf3.getHf_user_name()==null?"":hf1.getHf_user_name() %>" />
-		</p>
-		<div class="divider"></div>	
-		<p>
-			<label>应回访日期4：</label>
-			<input name="hf_date_must4"  id="hf_date_must4" type="text" class="date" value="<%=hf4.getHf_date_must()==null?"":hf1.getHf_date_must() %>"  readonly/>
-		</p>
-		<p>
-			<label>实际回访日期4：</label>
-			<input name="hf_date_fact4"  id="hf_date_fact4" type="text" class="date"   value="<%=hf4.getHf_date_fact()==null?"":hf1.getHf_date_fact() %>" />
-		</p>
-		<p>
-			<label>回访情况4：</label>
-			<input name="hf_remark4" id ="hf_remark4" type="text"   value="<%=hf4.getHf_remark()==null?"":hf1.getHf_remark() %>" />
-		</p> 
-		<p>
-			<label>回访人4：</label>
-			<input name="hf_user_name4" id="hf_user_name4" type="text"     value="<%=hf4.getHf_user_name()==null?"":hf1.getHf_user_name() %>" />
-		</p>
-		 -->
 	</div>
 	
 	</form>
