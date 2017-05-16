@@ -172,7 +172,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		 where t.rn>(#page_num#-1)*#page_size# and #page_num#*#page_size# >= t.rn
 	</select>
 	<select id='queryIntroduce' parameterClass="java.util.HashMap" resultClass="crminfo" >
-       select distinct a.kh_id,a.kh_name,a.kh_addr,a.kh_phone1,a.kh_phone2,b.ht_date_first
+       select distinct a.kh_id,a.kh_name,a.kh_addr,a.kh_phone1,a.kh_phone2,b.ht_date_first,b.ht_date_current
   from kq_kh_info a ,kq_ht_info b 
   where a.is_valid =1 
     and b.is_valid=1
