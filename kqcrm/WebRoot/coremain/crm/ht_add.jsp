@@ -116,7 +116,7 @@
 
 
 <div class="pageContent" selector="h1" >
-	<div class="panelBar" style="height:300px;">
+	<div class="panelBar" style="height:200px;">
 	<ul class="toolBar"><li><span>历史合同</span></li></ul>	 
 		 
 		<table class="table" width="1200" layoutH="138"  style="table-layout:fixed">
