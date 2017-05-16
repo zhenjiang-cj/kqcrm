@@ -31,9 +31,7 @@
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	--> 
+	
  
 	<script src="<%=path%>/dwz/js/jquery.validate.js" type="text/javascript"></script>
 	<script src="<%=path%>/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
@@ -47,11 +45,11 @@
   </head>
   
   <body>
-  
-<div class="pageContent" selector="h1" >
-	<div class="panelBar"  style="height:100px">
+   
+<div class="pageContent">
+	<div class="panelBar"  style="height:130px">
 	<ul class="toolBar"><li><span>客户明细</span></li></ul>
-	    <table class="table" width="1200"   style="table-layout:fixed;height:100px;">
+	    <table class="table" width="1200" layoutH="138"  style="table-layout:fixed;height:120px;">
 	    	<tr style="margin-top:20px;">
 	    		<td class="tit02">客户编号：<%=kh.getKh_id() %></td>
 	    		<td class="tit02">客户名称：<%=kh.getKh_name() %></td>
@@ -69,13 +67,13 @@
 	    </table>
 		 
 	</div>
-</div>  
-  
-<div class="pageContent" selector="h1" >
-	<div class="panelBar" style="height:300px;">
+	</div>
+ 
+<div class="pageContent">
+	<div class="panelBar" style="height:350px;">
 	<ul class="toolBar"><li><span>被介绍人合同</span></li></ul>	 
 		 
-		<table class="table" width="1200"   style="table-layout:fixed;height:300px">
+		<table class="table" width="1200"  layoutH="138" style="table-layout:fixed;height:300px">
 			<thead>
 				<tr>
 					<th width="120" orderField="accountNo"  >客户编号</th>
@@ -112,9 +110,8 @@
 		</table>
 		 
   
+	</div> 
 	</div>
-</div>
-	
 	
 	<div class="pageFormContent">
   <form class="pageForm required-validate" onsubmit="return validateCallback(this,navTabAjaxDone)" action="<%=path%>/crmAction.do?method=doHtAdd" method="post" name="userForm">
