@@ -226,13 +226,7 @@ public class SystemSC extends AbstractDB
 		return true;
 	}
 	
-	public boolean testCheckUser(StringBuffer userid,String strtoken,AdmUserFc dtUserInfo){
-		
-		SystemXml sxml = new SystemXml(dtUserInfo);
-		boolean rsCheck = sxml.checkUser(userid, strtoken);
-		
-		return rsCheck;
-	}
+
 	
 	/*
 	 --科大应答报文
