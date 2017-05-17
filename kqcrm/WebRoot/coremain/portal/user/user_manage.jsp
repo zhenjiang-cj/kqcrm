@@ -88,7 +88,7 @@ UserForm userform = (UserForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_F
 						<td>
 							<a title="删除" target="ajaxTodo" href="<%=path%>/userAction.do?method=doUserDel&sno=<%=user.getSno() %>" class="btnDel">删除</a>
 							<a title="编辑" target="dialog" href="<%=path%>/userAction.do?method=toUserEdit&sno=<%=user.getSno() %>" width="645" height="400"   class="btnEdit">编辑</a>
-							<a title="角色" target="navTab" href="<%=path%>/userAction.do?method=toUserRole&sno=<%=user.getSno() %>" width="645" height="600" class="btnSelect">角色</a>
+							<a title="角色" target="navTab" href="<%=path%>/userAction.do?method=toUserRole&sno=<%=user.getSno() %>" width="645" height="600" class="btnAssign">角色</a>
 						</td>
 					</tr>
 					

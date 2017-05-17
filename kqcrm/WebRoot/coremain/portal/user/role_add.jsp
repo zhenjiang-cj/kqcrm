@@ -41,7 +41,7 @@
 	<script type="text/javascript">
 	$(function(){
 		jQuery("#sysid").val("<%=userform.getSysid()%>");
-        reloadTree(); 
+        //reloadTree(); 
         changeSys(); 
 	});
 
