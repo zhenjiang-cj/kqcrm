@@ -212,8 +212,7 @@ public class GlobalUtil {
             response.reset();
             response.setContentType("application/vnd.ms-excel; charset=GBK");
             response.setHeader("Content-Disposition", "attachment; filename="
-                    + new String(xlsName.getBytes("gb2312"), "iso8859-1")
-                    + "\"");
+                    + new String(xlsName.getBytes("gb2312"), "iso8859-1") );
             OutputStream out = new BufferedOutputStream(response.getOutputStream());
             FileInputStream in= new java.io.FileInputStream(file);
             byte[] b = new byte[1024];
