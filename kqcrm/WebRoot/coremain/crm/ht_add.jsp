@@ -69,7 +69,7 @@
 		<ul class="tabsPageHeader"><li><span>被介绍人合同</span></li></ul>
 	</div>
 	<div class="pageContent"  >
-	<div class=tabsPage style="height:200px;">
+	<div class=tabsPage style="height:120px;">
 		<table class="table" width="1200"   style="table-layout:fixed;height:200px">
 			<thead>
 				<tr>
