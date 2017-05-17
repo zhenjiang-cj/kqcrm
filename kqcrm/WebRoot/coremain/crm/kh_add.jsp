@@ -202,7 +202,7 @@ function cityChange() {
 		</p>
 		<p>
 			<label>身份证号：</label>
-			<input name="kh_card" id="kh_card" type="text"  maxlength="18"  class="required alphanumeric"  />
+			<input name="kh_card" id="kh_card" type="text"  maxlength="18"  class="alphanumeric"  />
 		</p>
 		<p>
 			<label>转介绍人：</label>
