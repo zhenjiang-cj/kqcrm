@@ -37,7 +37,9 @@ if(sessdata!=null){
 <!--[if lte IE 9]>
 <script src="js/speedup.js" type="text/javascript"></script>
 <![endif]-->
-	<script src="<%=path%>/dwz/js/jquery-1.7.2.js" type="text/javascript"></script>
+	<!--<script src="<%=path%>/dwz/js/jquery-1.7.2.min.js" type="text/javascript"></script>-->
+	<!-- <script src="<%=path%>/dwz/js/jquery-1.7.2.js" type="text/javascript"></script> -->
+	 <script src="<%=path%>/plugins/jquery/jquery-1.4.4.js" type="text/javascript"></script> 
 	<script src="<%=path%>/dwz/js/jquery.cookie.js" type="text/javascript"></script>
 	<script src="<%=path%>/dwz/js/jquery.validate.js" type="text/javascript"></script>
 	<script src="<%=path%>/dwz/js/jquery.bgiframe.js" type="text/javascript"></script>
@@ -92,6 +94,7 @@ function checksession()
 		    },
 		    error:function (data){
 		        alert("验证session失败！");
+                   DWZ.loadLogin();
 		    }
 		});
 	}catch(e){
