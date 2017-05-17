@@ -45,35 +45,32 @@
   </head>
   
   <body>
-   
-<div class="pageContent">
-	<div class="panelBar"  style="height:130px">
-	<ul class="toolBar"><li><span>客户明细</span></li></ul>
-	    <table class="table" width="1200" layoutH="138"  style="table-layout:fixed;height:120px;">
-	    	<tr style="margin-top:20px;">
-	    		<td class="tit02">客户编号：<%=kh.getKh_id() %></td>
-	    		<td class="tit02">客户名称：<%=kh.getKh_name() %></td>
-	    		<td class="tit02">客户身份证：<%=kh.getKh_card() %></td>
-	    		<td class="tit02">客户归属：<%=DictMgmt.getValueDescs(DictMgmt.DICT_kq_REGION,kh.getRegion(),"" )%> </td>
-	    	</tr>
-	    	<tr style="margin-top:20px;">
-	    		<td class="tit02">客户号码1：<%=kh.getKh_phone1() %></td>
-	    		<td class="tit02">客户号码2：<%=kh.getKh_phone2() %></td>
-	    		<td class="tit02" colspan="2"></td>
-	    	</tr>
-	    	<tr style="margin-top:20px;">
-	    		<td class="tit02" colspan="4">客户地址：<%=kh.getKh_addr() %></td>
-	    	</tr>
-	    </table>
-		 
+  
+  
+	<div class="tabsPage"  >
+		<ul class="tabsPageHeader"><li><span>客户明细</span></li></ul>
 	</div>
+	<div class="pageFormContent nowrap"   style="height:120px">
+		<p> <label>客户编号：</label><%=kh.getKh_id() %> </p>
+		<p> <label>客户名称：</label><%=kh.getKh_name() %> </p>
+		<p> <label>客户身份证：</label><%=kh.getKh_card() %> </p>
+		<p> <label>客户归属：</label><%=DictMgmt.getValueDescs(DictMgmt.DICT_kq_REGION,kh.getRegion(),"" ) %> </p>
+		<p> <label>客户号码1：</label><%=kh.getKh_phone1() %> </p>
+		<p> <label>客户号码2：</label><%=kh.getKh_phone2() %> </p>
+		<dl>
+		<dt>客户地址：</dt>
+			<dd>
+				<%=kh.getKh_addr() %>
+			</dd>
+		</dl>
 	</div>
  
-<div class="pageContent">
-	<div class="panelBar" style="height:220px;">
-	<ul class="toolBar"><li><span>被介绍人合同</span></li></ul>	 
-		 
-		<table class="table" width="1200"  layoutH="138" style="table-layout:fixed;height:300px">
+    <div class="tabsPage"  >
+		<ul class="tabsPageHeader"><li><span>被介绍人合同</span></li></ul>
+	</div>
+	<div class="pageContent"  >
+	<div class=tabsPage style="height:200px;">
+		<table class="table" width="1200"   style="table-layout:fixed;height:200px">
 			<thead>
 				<tr>
 					<th width="120" orderField="accountNo"  >客户编号</th>
@@ -107,12 +104,13 @@
 				
 				
 			</tbody>
-		</table>
-		 
-  
-	</div> 
+		</table> 
+	</div>
 	</div>
 	
+	<div class="tabsPage"  >
+		<ul class="tabsPageHeader"><li><span>合同新增</span></li></ul>
+	</div>
 	<div class="pageFormContent">
   <form class="pageForm required-validate" onsubmit="return validateCallback(this,navTabAjaxDone)" action="<%=path%>/crmAction.do?method=doHtAdd" method="post" name="userForm">
     <input type="hidden" name="kh_id" id="kh_id" value="<%=userform.getKh_id() %>">
@@ -120,7 +118,6 @@
     
     
     <div class="pageFormContent nowrap"   style="height:200px">
-    <h1>合同新增</h1>
 		<p>
 			<label>合同编号：</label>
 			<input name="ht_code"  id="ht_code" type="text"   />
