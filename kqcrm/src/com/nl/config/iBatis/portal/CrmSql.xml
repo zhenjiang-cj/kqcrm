@@ -25,7 +25,25 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		                   ) a) t
 		 where t.rn>(#page_num#-1)*#page_size# and #page_num#*#page_size# >= t.rn
 	</select>
-	
+	<select id='queryExpKh' parameterClass="java.util.HashMap" resultClass="crminfo" >
+        select *
+		  from (select a.*, row_number() over(order by a.kh_id) rn, count(*) over() totalCount
+		          from (
+		          select  distinct a.kh_id,a.kh_name,a.provinces,a.city,a.region,a.kh_addr,a.kh_card,a.kh_phone1,a.kh_phone2,a.introduce_name
+		          from kq_kh_info a  where is_valid =1 
+		           <dynamic>
+					<isNotEmpty property="kh_name">
+							and a.kh_name  like '%$kh_name$%'
+					</isNotEmpty>
+					<isNotEmpty property="org_ids">
+							 and charindex(a.region,#org_ids#) >0
+					</isNotEmpty>
+					<isNotEmpty property="introduce_name">
+							 and  introduce_name = #introduce_name#
+					</isNotEmpty>
+				  </dynamic>         
+		                   ) a) t 
+	</select>
 	<select id="getKhid" resultClass="java.lang.String">
 		select seq_value from kq_seq_kh_id
 	</select>
@@ -321,6 +339,36 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 				  </dynamic>          
 		                   ) a) t
 		 where t.rn>(#page_num#-1)*#page_size# and #page_num#*#page_size# >= t.rn
+	</select>
+	
+	<select id='queryHtExp' parameterClass="java.util.HashMap" resultClass="crminfo" >
+        select *
+		  from (select a.*, row_number() over(order by a.ht_date_current) rn, count(*) over() totalCount
+		          from (
+		          select distinct 
+		          		a.kh_addr,a.kh_id,a.kh_name,a.kh_card,a.kh_phone1,a.kh_phone2,a.introduce_name,
+							b.ht_id,b.ht_date_first,b.ht_date_current,b.ht_pledge,b.ht_rent,b.prod_name,b.prod_code,b.ht_year,b.remark  
+					 from kq_kh_info a ,kq_ht_info b 
+					where a.kh_id = b.kh_id
+					  and b.is_valid =1 
+					  and a.is_valid =1
+		           <dynamic>
+					<isNotEmpty property="org_ids">
+							 and charindex(a.region,#org_ids#) >0
+					</isNotEmpty>
+					<isNotEmpty property="kh_name">
+							and a.kh_name  like '%$kh_name$%'
+					</isNotEmpty>
+					
+					<isNotEmpty property="ht_begin_date">
+							and b.ht_date_current  >= #ht_begin_date#
+					</isNotEmpty>
+					<isNotEmpty property="ht_end_date">
+							and   #ht_end_date# >= b.ht_date_current 
+					</isNotEmpty>
+					
+				  </dynamic>          
+		                   ) a) t 
 	</select>
 	
 	<select id='queryOrgByUser' parameterClass="java.util.HashMap" resultClass="crminfo" >
