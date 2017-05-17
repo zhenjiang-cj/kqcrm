@@ -46,6 +46,9 @@
   <body>
   
    
+    <div class="tabsPage"  >
+		<ul class="tabsPageHeader"><li><span>合同修改</span></li></ul>
+	</div>
   
     <div class="pageContent">
   <form class="pageForm required-validate" onsubmit="return validateCallback(this,navTabAjaxDone)" action="<%=path%>/crmAction.do?method=doHtEdit1" method="post" name="userForm">
@@ -54,7 +57,6 @@
     
     
     <div class="pageFormContent nowrap"   style="height:300px">
-    <h1>合同修改</h1>
 		<p>
 			<label>合同编号：</label>
 			<input name="ht_code"  id="ht_code" type="text" value="<%=user.getHt_code() %>"  />
