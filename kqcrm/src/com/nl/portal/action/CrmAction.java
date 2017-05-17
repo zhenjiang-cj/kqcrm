@@ -2,7 +2,9 @@ package com.nl.portal.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +23,7 @@ import com.nl.portal.dt.UserInfo;
 import com.nl.portal.sc.CrmSc;
 import com.nl.portal.sc.UserSc;
 import com.nl.util.GlobalConst;
+import com.nl.util.GlobalUtil;
 import com.nl.util.SessionConst;
 import com.nl.util.SessionData;
 
@@ -161,6 +164,68 @@ public class CrmAction extends BaseAppAction {
 			getLogger(bosscodestr,GlobalConst.ERROR).error("进入欢迎页面出错:"+e.getMessage());
 			throw new Exception();
 		}
+	}
+	public ActionForward toKhExp(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String bosscodestr = super.getBossCodeStr();
+		int retCode = 0;
+		try
+		{
+			CrmForm formBean = (CrmForm)form;
+			CrmSc sc = new CrmSc();
+			//查询用户管辖的区域
+			SessionData sessionData =(SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
+			formBean.setOperatorId(sessionData.getSno());
+			List<CrmInfo> orglist = sc.queryOrgByUser(formBean);
+			String org_id="";
+			if(orglist!=null&&orglist.size()>0){
+				for(int i=0;i<orglist.size();i++){
+					CrmInfo org = orglist.get(i);
+					org_id = org_id+org.getOrg_id()+",";
+				}
+			}
+			formBean.setOrg_ids(org_id);
+			List<CrmInfo> userlist = sc.queryExpKh(formBean);
+
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
+			
+			String[] titles ={"编号","名称","身份证号","地址","号码1","号码2","转介绍人"};
+
+			List alist = getExpList(userlist);
+			
+			GlobalUtil.AllDataToExcel("客户导出.xls","客户清单",titles,alist,response); 
+			//记录日志
+//			doLog(form,"进入欢迎页面");
+//			createLog(request,"","","进入欢迎页面","1");
+			getLogger(bosscodestr,GlobalConst.EXIT).info("进入欢迎页面。");
+			return null;
+		}catch(Exception e){
+			getLogger(bosscodestr,GlobalConst.ERROR).error("进入欢迎页面出错:"+e.getMessage());
+			throw new Exception();
+		}
+	}
+	private List getExpList(List<CrmInfo> list) {
+		// TODO Auto-generated method stub
+		List ls = new ArrayList();
+    	List tmp_ls = null;
+    	for(int i=0;i<list.size();i++){
+    		tmp_ls = new ArrayList(); 
+    		CrmInfo user =   list.get(i);
+			
+			tmp_ls.add(user.getKh_id());
+			tmp_ls.add(user.getKh_name());
+			tmp_ls.add(user.getKh_card());
+			tmp_ls.add(user.getKh_addr());
+			tmp_ls.add(user.getKh_phone1());
+			tmp_ls.add(user.getKh_phone2());
+			tmp_ls.add(user.getIntroduce_name());
+         
+			ls.add(tmp_ls);
+    	}
+    	 
+		return ls;
 	}
 	public ActionForward toKhAdd(ActionMapping mapping,
 			ActionForm form,
@@ -647,6 +712,74 @@ public class CrmAction extends BaseAppAction {
 			throw new Exception();
 		}
 	}
+
+	public ActionForward toHtExp(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String bosscodestr = super.getBossCodeStr();
+		int retCode = 0;
+		try
+		{
+			CrmForm formBean = (CrmForm)form;
+			CrmSc sc = new CrmSc();
+			//查询用户管辖的区域
+			SessionData sessionData =(SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
+			formBean.setOperatorId(sessionData.getSno());
+			List<CrmInfo> orglist = sc.queryOrgByUser(formBean);
+			String org_id="";
+			if(orglist!=null&&orglist.size()>0){
+				for(int i=0;i<orglist.size();i++){
+					CrmInfo org = orglist.get(i);
+					org_id = org_id+org.getOrg_id()+",";
+				}
+			}
+			formBean.setOrg_ids(org_id);
+			List<CrmInfo> userlist = sc.queryHtExp(formBean);
+			
+
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
+			
+			String[] titles ={"客户名称","地址","首次签约日期","本次签约日期","押金","租金","产品名","签约年度","备注"};
+
+			List alist = getHtExpList(userlist);
+			
+			GlobalUtil.AllDataToExcel("合同导出.xls","合同清单",titles,alist,response); 
+			
+			
+			getLogger(bosscodestr,GlobalConst.EXIT).info("进入欢迎页面。");
+			return null;
+		}catch(Exception e){
+			getLogger(bosscodestr,GlobalConst.ERROR).error("进入欢迎页面出错:"+e.getMessage());
+			throw new Exception();
+		}
+	}
+
+	private List getHtExpList(List<CrmInfo> list) {
+		// TODO Auto-generated method stub
+		List ls = new ArrayList();
+    	List tmp_ls = null;
+    	for(int i=0;i<list.size();i++){
+    		tmp_ls = new ArrayList(); 
+    		CrmInfo user =   list.get(i);
+			
+			tmp_ls.add(user.getKh_name());
+			tmp_ls.add(user.getKh_addr());
+			tmp_ls.add(user.getHt_date_first());
+			tmp_ls.add(user.getHt_date_current());
+			tmp_ls.add(user.getHt_pledge());
+			tmp_ls.add(user.getHt_rent());
+			tmp_ls.add(user.getHt_rent());
+			tmp_ls.add(user.getProd_name());
+			tmp_ls.add(user.getProd_code());
+			tmp_ls.add(user.getHt_year());
+			tmp_ls.add(user.getRemark());
+         
+			ls.add(tmp_ls);
+    	}
+    	 
+		return ls;
+	}
 	public ActionForward toHfManage(ActionMapping mapping,
 			ActionForm form,
 			HttpServletRequest request,
@@ -694,7 +827,76 @@ public class CrmAction extends BaseAppAction {
 			throw new Exception();
 		}
 	}
-	
+	public ActionForward toHfExp(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String bosscodestr = super.getBossCodeStr();
+		int retCode = 0;
+		try
+		{
+			CrmForm formBean = (CrmForm)form;
+			CrmSc sc = new CrmSc();
+			//查询用户管辖的区域
+			SessionData sessionData =(SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
+			formBean.setOperatorId(sessionData.getSno());
+			List<CrmInfo> orglist = sc.queryOrgByUser(formBean);
+			String org_id="";
+			if(orglist!=null&&orglist.size()>0){
+				for(int i=0;i<orglist.size();i++){
+					CrmInfo org = orglist.get(i);
+					org_id = org_id+org.getOrg_id()+",";
+				}
+			}
+			formBean.setOrg_ids(org_id);
+			
+			List<CrmInfo> userlist = sc.queryHfExp(formBean);
+			
+			
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
+			
+			String[] titles ={"客户编码","客户姓名","签约年度","身份证号","电话号码","地址","回访状态","应访日期","实际日期","访问情况","回访人"};
+
+			List alist = getHfExpList(userlist);
+			
+			GlobalUtil.AllDataToExcel("回访导出.xls","回访清单",titles,alist,response); 
+			
+			//记录日志
+//			doLog(form,"进入欢迎页面");
+//			createLog(request,"","","进入欢迎页面","1");
+			getLogger(bosscodestr,GlobalConst.EXIT).info("进入欢迎页面。");
+			return null;
+		}catch(Exception e){
+			getLogger(bosscodestr,GlobalConst.ERROR).error("进入欢迎页面出错:"+e.getMessage());
+			throw new Exception();
+		}
+	}
+
+	private List getHfExpList(List<CrmInfo> list) {
+		// TODO Auto-generated method stub
+		List ls = new ArrayList();
+    	List tmp_ls = null;
+    	for(int i=0;i<list.size();i++){
+    		tmp_ls = new ArrayList(); 
+    		CrmInfo user =   list.get(i);
+
+			tmp_ls.add(user.getKh_id());
+			tmp_ls.add(user.getKh_name());
+			tmp_ls.add(user.getHt_year());
+			tmp_ls.add(user.getKh_card());
+			tmp_ls.add(user.getKh_phone1());
+			tmp_ls.add(user.getKh_addr());
+			tmp_ls.add(user.getHf_status().equals("1")?"已回访":"未回访");
+			tmp_ls.add(user.getHf_date_must());
+			tmp_ls.add(user.getHf_date_fact());
+			tmp_ls.add(user.getHf_remark());
+			tmp_ls.add(user.getHf_user_name());
+         
+			ls.add(tmp_ls);
+    	}
+    	 
+		return ls;
+	}
 	public ActionForward toHfEdit(ActionMapping mapping,
 			ActionForm form,
 			HttpServletRequest request,

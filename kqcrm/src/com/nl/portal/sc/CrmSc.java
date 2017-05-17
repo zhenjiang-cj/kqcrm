@@ -44,6 +44,32 @@ public class CrmSc extends AbstractDB {
 		}
 		return userlist;
 	}
+	public List<CrmInfo> queryExpKh(CrmForm userform)
+	{
+		List<CrmInfo> userlist = null;
+		SqlMapClient smc = null;
+		try
+		{
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			CrmDb db = new CrmDb(smc);
+			HashMap param = new HashMap(); 
+			param.put("org_ids", userform.getOrg_ids());
+			param.put("kh_id", userform.getKh_id());
+			param.put("kh_name", userform.getKh_name());
+			param.put("introduce_name", userform.getIntroduce_name());
+			
+			userlist = db.queryExpKh(param);
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			this.endTransaction(smc);
+		}
+		return userlist;
+	}
 	public String getSno() throws Exception {
 		SqlMapClient smc = null;
 		String sno="";
@@ -435,6 +461,30 @@ public class CrmSc extends AbstractDB {
 		}
 		return userlist;
 	}
+	public List<CrmInfo> queryHtExp(CrmForm userform) {
+		List<CrmInfo> userlist = null;
+		SqlMapClient smc = null;
+		try
+		{
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			CrmDb db = new CrmDb(smc);
+			HashMap param = new HashMap(); 
+			param.put("org_ids", userform.getOrg_ids());
+			param.put("kh_name", userform.getKh_name());
+			param.put("ht_begin_date", userform.getHt_begin_date());
+			param.put("ht_end_date", userform.getHt_end_date());
+			userlist = db.queryHtExp(param);
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			this.endTransaction(smc);
+		}
+		return userlist;
+	}
 	public List<CrmInfo> queryOrgByUser(CrmForm userform) {
 		List<CrmInfo> userlist = null;
 		SqlMapClient smc = null;
@@ -475,6 +525,34 @@ public class CrmSc extends AbstractDB {
 			
 			param.put("page_num", userform.getPageNum());
 			param.put("page_size", userform.getNumPerPage());
+			userlist = db.queryHf(param);
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			this.endTransaction(smc);
+		}
+		return userlist;
+	}
+	public List<CrmInfo> queryHfExp(CrmForm userform) {
+		List<CrmInfo> userlist = null;
+		SqlMapClient smc = null;
+		try
+		{
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			CrmDb db = new CrmDb(smc);
+			HashMap param = new HashMap(); 
+			param.put("org_ids", userform.getOrg_ids());
+			param.put("kh_name", userform.getKh_name());
+			param.put("hf_status", userform.getHf_status());
+			param.put("hf_begin_date", userform.getHf_begin_date());
+			param.put("hf_end_date", userform.getHf_end_date());
+			
+			
+			
 			userlist = db.queryHf(param);
 		} catch(Exception e)
 		{

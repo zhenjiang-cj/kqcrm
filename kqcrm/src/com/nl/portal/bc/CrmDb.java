@@ -41,6 +41,18 @@ public class CrmDb extends AbstractDB {
 		}
 		return list;
 	}
+	public List<CrmInfo> queryExpKh(HashMap param) {
+		getLogger(bossCodeStr,GlobalConst.ENTER).info("查询用户：");
+		List<CrmInfo> list = null;
+		
+		try{
+			list = smc.queryForList("CrmSql.queryExpKh", param);
+			getLogger(bossCodeStr,GlobalConst.EXIT).info("查询用户结束。");
+		}catch(Exception e){
+			getLogger(bossCodeStr,GlobalConst.ERROR).error("::查询用户有错！::" + "error:"+e.getMessage());
+		}
+		return list;
+	}
 	public String getSno() throws Exception {
 		String flowSql = "";
 		try{
@@ -252,6 +264,18 @@ public class CrmDb extends AbstractDB {
 		
 		try{
 			list = smc.queryForList("CrmSql.queryHt1", param);
+			getLogger(bossCodeStr,GlobalConst.EXIT).info("查询用户结束。");
+		}catch(Exception e){
+			getLogger(bossCodeStr,GlobalConst.ERROR).error("::查询用户有错！::" + "error:"+e.getMessage());
+		}
+		return list;
+	}
+	public List<CrmInfo> queryHtExp(HashMap param) {
+		getLogger(bossCodeStr,GlobalConst.ENTER).info("查询用户：");
+		List<CrmInfo> list = null;
+		
+		try{
+			list = smc.queryForList("CrmSql.queryHtExp", param);
 			getLogger(bossCodeStr,GlobalConst.EXIT).info("查询用户结束。");
 		}catch(Exception e){
 			getLogger(bossCodeStr,GlobalConst.ERROR).error("::查询用户有错！::" + "error:"+e.getMessage());
