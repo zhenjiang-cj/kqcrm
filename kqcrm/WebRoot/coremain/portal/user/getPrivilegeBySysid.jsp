@@ -18,7 +18,6 @@ HashMap<String,String> resultMap = new HashMap<String,String>();
 try
 {
 	String sysid = request.getParameter("sysid");
-	System.out.println("%%%%%%%%sysid"+sysid);
 	UserForm formBean = new UserForm();
 	
 	UserSc sc = new UserSc();
@@ -27,7 +26,6 @@ try
 	
 	//return  GlobalFunc.getJosnStrForList(privilegeList);
 	
-	System.out.println("%%%%%%%%"+GlobalFunc.getJosnStrForList(privilegeList));
 	out.print(GlobalFunc.getJosnStrForList(privilegeList));
 }catch(Exception e){
 //	getLogger(bosscodestr,GlobalConst.ERROR).error("进入欢迎页面出错:"+e.getMessage());
