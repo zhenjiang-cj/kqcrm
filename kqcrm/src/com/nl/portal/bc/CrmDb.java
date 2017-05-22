@@ -53,11 +53,11 @@ public class CrmDb extends AbstractDB {
 		}
 		return list;
 	}
-	public String getSno() throws Exception {
+	public String getkh_id(String regionId) throws Exception {
 		String flowSql = "";
 		try{
-			flowSql = smc.queryForObject("CrmSql.getKhid", null).toString();
-					smc.insert("CrmSql.addkhid", null);//序列增长
+			flowSql = smc.queryForObject("CrmSql.getKhid", regionId).toString();
+					smc.insert("CrmSql.addkhid", regionId);//序列增长
 		}catch(Exception e){
 			getLogger("",GlobalConst.ERROR).error(
 					"::获取工单流序列有错！::" + "error:"+e.getMessage());
