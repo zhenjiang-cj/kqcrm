@@ -35,7 +35,7 @@ UserForm userform = (UserForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_F
 
 
 <div class="pageHeader">
-	<form onsubmit="return navTabSearch(this);" action="<%=path%>/userAction.do?method=toRoleManage" method="post">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="<%=path%>/userAction.do?method=toRoleManage" method="post">
 	<div class="searchBar">
 		<table class="searchContent">
 			<tr>
