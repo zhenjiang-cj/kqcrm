@@ -13,6 +13,8 @@ public class CrmForm extends BaseAppActionForm {
 	private String kh_addr;
 	private String kh_card;
 	private String introduce_name;
+	private String channel_source;
+	private String is_install;
 	
 	private String ht_id;
 	private String ht_code ;
@@ -390,6 +392,18 @@ public class CrmForm extends BaseAppActionForm {
 	}
 	public void setHt_type(String ht_type) {
 		this.ht_type = ht_type;
+	}
+	public String getChannel_source() {
+		return channel_source;
+	}
+	public void setChannel_source(String channel_source) {
+		this.channel_source = channel_source;
+	}
+	public String getIs_install() {
+		return is_install;
+	}
+	public void setIs_install(String is_install) {
+		this.is_install = is_install;
 	}
 
 }
