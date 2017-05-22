@@ -35,7 +35,7 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 
 
 <div class="pageHeader">
-	<form onsubmit="return navTabSearch(this);" action="<%=path%>/crmAction.do?method=toHtManage" method="post">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="<%=path%>/crmAction.do?method=toHtManage" method="post">
 	<div class="searchBar">
 		<table class="searchContent">
 			<tr>

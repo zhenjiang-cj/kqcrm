@@ -36,7 +36,7 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 
 
 <div class="pageHeader">
-	<form onsubmit="return navTabSearch(this);" action="<%=path%>/crmAction.do?method=toKhManage" method="post">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="<%=path%>/crmAction.do?method=toKhManage" method="post">
 	<div class="searchBar">
 		<table class="searchContent">
 			<tr>
@@ -48,6 +48,17 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 				</td>
 				<td>
 					转介绍人(编号)：<input type="text" name="introduce_name" id="introduce_name" value="<%=userform.getIntroduce_name()==null?"":userform.getIntroduce_name() %>"  />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					手机号码1：<input type="text" name="kh_phone1" id="kh_phone1" value="<%=userform.getKh_phone1()==null?"":userform.getKh_phone1() %>" />
+				</td>
+				<td>
+					手机号码2：<input type="text" name="kh_phone2" id="kh_phone2" value="<%=userform.getKh_phone2()==null?"":userform.getKh_phone2() %>" />
+				</td>
+				<td>
+					家庭地址：<input type="text" name="kh_addr" id="kh_addr" value="<%=userform.getKh_addr()==null?"":userform.getKh_addr() %>"  />
 				</td>
 			</tr>
 		</table>

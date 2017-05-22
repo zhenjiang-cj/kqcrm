@@ -30,12 +30,12 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
   
   <form id="pagerForm" method="post" action="<%=path%>/crmAction.do?method=toHfManage">
 	<input type="hidden" name="pageNum" value="1" />
-	<input type="hidden" name="numPerPage" value="20" />
+	<input type="hidden" name="numPerPage" value="20" /> 
 </form>
 
 
 <div class="pageHeader">
-	<form onsubmit="return navTabSearch(this);" action="<%=path%>/crmAction.do?method=toHfManage" method="post">
+	<form rel="pagerForm"  onsubmit="return navTabSearch(this);" action="<%=path%>/crmAction.do?method=toHfManage" method="post">
 	<div class="searchBar">
 		<table class="searchContent">
 			<tr>
@@ -51,10 +51,17 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 					</select>
 				</td>
 				<td>
+					回访次数： <input type="text" name="hf_type" id="hf_type" value="<%=userform.getHf_type()==null?"":userform.getHf_type() %>"  />
+				</td>
+			</tr>
+			<tr>
+				<td>
 					工作统计开始日期：<input type="text" name="hf_begin_date" id="hf_begin_date" class="date" value="<%=userform.getHf_begin_date()==null?"":userform.getHf_begin_date() %>" />
 				</td>
 				<td>
 					工作统计结束日期：<input type="text" name="hf_end_date" id="hf_end_date" class="date" value="<%=userform.getHf_end_date()==null?"":userform.getHf_end_date() %>" />
+				</td>
+				<td>
 				</td>
 			</tr>
 		</table>
@@ -72,16 +79,18 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 			<li><a class="icon" href="<%=path%>/crmAction.do?method=toHfExp" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
 		</ul>
 	</div>
-	<table class="table" width="1200" layoutH="138"  style="table-layout:fixed">
+	<table class="table" width="1400" layoutH="138"  style="table-layout:fixed">
 		<thead>
 			<tr>
-				<th width="120" orderField="accountNo" >客户编码</th>
-				<th width="120" orderField="accountName">客户姓名</th>
-				<th width="100" orderField="accountType">签约年度</th>  
-				<th width="120" orderField="accountName">身份证号</th>
+				<th width="120" >客户编码</th>
+				<th width="120" >客户姓名</th>
+				<th width="100" >签约年度</th>  
+				<th width="100" >押金</th>  
+				<th width="120" >身份证号</th>
 				<th width="100" >电话号码</th>
-				<th orderField="accountName">地址</th>  
+				<th >地址</th>  
 				<th width="100">回访状态</th>
+				<th width="100">回访次数</th>
 				<th width="100">应访日期</th>
 				<th width="100">实际日期</th>
 				<th width="100">访问情况</th>

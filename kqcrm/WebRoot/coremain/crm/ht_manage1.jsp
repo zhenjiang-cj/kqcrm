@@ -35,12 +35,20 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 
 
 <div class="pageHeader">
-	<form onsubmit="return navTabSearch(this);" action="<%=path%>/crmAction.do?method=toHtManage1" method="post">
+	<form rel="pagerForm"  onsubmit="return navTabSearch(this);" action="<%=path%>/crmAction.do?method=toHtManage1" method="post">
 	<div class="searchBar">
 		<table class="searchContent">
 			<tr>
 				<td>
 					客户名称： <input type="text" name="kh_name" id="kh_name"  value="<%=userform.getKh_name()==null?"":userform.getKh_name() %>" />
+				</td>
+				<td>
+					合同类别：
+					 <select name="ht_type" id="ht_type">
+					<option value="">--请选择--</option>
+					<option value="1" <%if("1".equals(userform.getHt_type())){%>selected<%} %>  >新增</option>
+					<option value="0" <%if("0".equals(userform.getHt_type())){%>selected<%} %> >续约</option>
+					</select>
 				</td>
 				<td>
 					签约开始日期：<input type="text" name="ht_begin_date" id="ht_begin_date" class="date" value="<%=userform.getHt_begin_date()==null?"":userform.getHt_begin_date() %>" />
@@ -75,7 +83,8 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 				<th width="5%">租金(元)</th>
 				<th width="10%">产品名</th>
 				<th width="10%">签约年度</th>
-				<th width="15%">备注</th>
+				<th width="5%">合同类别</th>
+				<th width="10%">备注</th>
 				<th width="10%">操作</th>
 			</tr>
 		</thead>
@@ -95,6 +104,7 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 						<td><%=user.getHt_rent() %></td>
 						<td><%=user.getProd_name() %></td>
 						<td><%=user.getHt_year() %></td>
+						<td><%=user.getHt_type().equals("1")?"新增":"续约" %></td>
 						<td  title="<%=user.getRemark() %>" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><%=user.getRemark() %></td>
 						<td>
 							<a title="删除" target="ajaxTodo" href="<%=path%>/crmAction.do?method=doHtDel1&ht_id=<%=user.getHt_id() %>" class="btnDel">删除</a>
