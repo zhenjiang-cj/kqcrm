@@ -4,15 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.huawei.csp.bsf.pwm.service.impl.PasswordForMD5;
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.nl.base.AbstractDB;
 import com.nl.portal.actionForm.CrmForm;
-import com.nl.portal.actionForm.UserForm;
 import com.nl.portal.bc.CrmDb;
-import com.nl.portal.bc.UserDbMgr;
 import com.nl.portal.dt.CrmInfo;
-import com.nl.portal.dt.UserInfo;
 import com.nl.util.GlobalConst;
 
 public class CrmSc extends AbstractDB {
@@ -132,6 +128,51 @@ public class CrmSc extends AbstractDB {
 		}
 		return retCode;
 	}
+	
+	public int doYxkhAdd(CrmForm form) throws Exception {
+		SqlMapClient smc = null;
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try {
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			Map<String, String> param = new HashMap<String, String>();
+			//数据访问对象
+			CrmDb db = new CrmDb(smc);
+			
+			//获取客户序列
+			form.setKh_id(db.getkh_id(form.getRegion()));
+			
+			param.put("kh_id",form.getRegion()+form.getKh_id());
+			param.put("kh_name",form.getKh_name());
+			param.put("provinces",form.getProvinces()==null?"":form.getProvinces());
+			param.put("city",form.getCity()==null?"":form.getCity());
+			param.put("region",form.getRegion()==null?"":form.getRegion());
+			
+			param.put("kh_addr",form.getKh_addr());
+			param.put("kh_phone1",form.getKh_phone1());
+			param.put("kh_phone2",form.getKh_phone2());
+			param.put("kh_card",form.getKh_card());
+			param.put("introduce_name",form.getIntroduce_name());
+			param.put("channel_source",form.getChannel_source());
+			param.put("is_install",form.getIs_install());
+			param.put("remark",form.getRemark());
+			param.put("create_id",form.getOperatorId());
+			
+			retCode = db.doYxkhAdd(param);
+			if(retCode == GlobalConst.GLOBAL_RESULT_FAIL)return retCode;
+			
+			 
+			
+			smc.commitTransaction();
+		} catch (Exception e) {
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		} finally {
+			this.endTransaction(smc);
+		}
+		return retCode;
+	}
+	
 	public int doKhDel(CrmForm form)  throws Exception {
 		SqlMapClient smc = null;
 		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
@@ -141,8 +182,7 @@ public class CrmSc extends AbstractDB {
 			Map<String, String> param = new HashMap<String, String>();
 			//数据访问对象
 			CrmDb db = new CrmDb(smc);
-//			param.put("create_id",form.getOperatorId());
-			
+			param.put("operator_id",form.getOperatorId());				
 			param.put("kh_id",form.getKh_id());
 			
 			retCode = db.doKhDel(param);
@@ -159,6 +199,34 @@ public class CrmSc extends AbstractDB {
 		}
 		return retCode;
 	}
+	
+	public int doYxkhDel(CrmForm form)  throws Exception {
+		SqlMapClient smc = null;
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try {
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			Map<String, String> param = new HashMap<String, String>();
+			//数据访问对象
+			CrmDb db = new CrmDb(smc);
+ 			param.put("operator_id",form.getOperatorId());			
+			param.put("kh_id",form.getKh_id());
+			
+			retCode = db.doYxkhDel(param);
+			if(retCode == GlobalConst.GLOBAL_RESULT_FAIL)return retCode;
+			
+			 
+			
+			smc.commitTransaction();
+		} catch (Exception e) {
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		} finally {
+			this.endTransaction(smc);
+		}
+		return retCode;
+	}
+	
 	public int doHtDel(CrmForm form)  throws Exception {
 		SqlMapClient smc = null;
 		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
@@ -272,6 +340,46 @@ public class CrmSc extends AbstractDB {
 		}
 		return retCode;
 	}
+	
+	public int doYxkhEdit(CrmForm form)  throws Exception  {
+		SqlMapClient smc = null;
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try {
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			Map<String, String> param = new HashMap<String, String>();
+			//数据访问对象
+			//数据访问对象
+			CrmDb db = new CrmDb(smc);
+			param.put("kh_id",form.getKh_id());
+			
+			param.put("kh_addr",form.getKh_addr());
+			param.put("kh_phone1",form.getKh_phone1());
+			param.put("kh_phone2",form.getKh_phone2());
+			param.put("kh_card",form.getKh_card());
+			param.put("introduce_name",form.getIntroduce_name());
+			param.put("channel_source",form.getChannel_source());
+			param.put("is_install",form.getIs_install());
+			param.put("remark",form.getRemark());
+			param.put("create_id",form.getOperatorId());
+						
+			retCode = db.doModifyYxkh(param);
+			if("1".equals(form.getIs_install()))
+			{
+				retCode = db.copyYxkhTokh(param);
+			}
+			
+			
+			smc.commitTransaction();
+		} catch (Exception e) {
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		} finally {
+			this.endTransaction(smc);
+		}
+		return retCode;
+	}
+	
 	public List<CrmInfo> queryHt(CrmForm userform) {
 		List<CrmInfo> userlist = null;
 		SqlMapClient smc = null;

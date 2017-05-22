@@ -249,6 +249,29 @@ public class CrmAction extends BaseAppAction {
 			throw new Exception();
 		}
 	}
+	
+	public ActionForward toYxkhAdd(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String bosscodestr = super.getBossCodeStr();
+
+		try
+		{
+			CrmForm formBean = (CrmForm)form;
+
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
+			
+			//记录日志
+
+			getLogger(bosscodestr,GlobalConst.EXIT).info("进入意向客户新增页面。");
+			return mapping.findForward("yxkhadd");
+		}catch(Exception e){
+			getLogger(bosscodestr,GlobalConst.ERROR).error("进入意向客户新增页面出错:"+e.getMessage());
+			throw new Exception();
+		}
+	}
+	
 	public void doKhAdd(ActionMapping mapping,
 			ActionForm form,
 			HttpServletRequest request,
@@ -281,6 +304,38 @@ public class CrmAction extends BaseAppAction {
 			throw new Exception();
 		}
 	}
+	
+	public void doYxkhAdd(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		int retCode = 0;
+		try
+		{
+			
+			CrmForm formBean = (CrmForm)form;
+			CrmSc sc = new CrmSc();
+			SessionData sessionData =(SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
+			formBean.setOperatorId(sessionData.getSno());
+			
+			retCode = sc.doYxkhAdd(formBean);
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);			
+
+			String url ="";
+			if(retCode == 0){
+				url =request.getContextPath()+"/crmAction.do?method=toYxkhAdd";
+				doJump(0,url,"新增意向客户",request,response);
+			}else{
+				url =request.getContextPath()+"/crmAction.do?method=toYxkhAdd";
+				doJump(-1,url,"新增意向客户",request,response);
+			}
+			
+		}catch(Exception e){
+			throw new Exception();
+		}
+	}
+	
 	public void doKhDel(ActionMapping mapping,
 			ActionForm form,
 			HttpServletRequest request,
@@ -361,6 +416,35 @@ public class CrmAction extends BaseAppAction {
 		}catch(Exception e){
 			getLogger(bosscodestr,GlobalConst.ERROR).error("修改客户信息出错:"+e.getMessage());
 //			throw new Exception(AppConst.CENTERTASK_ERROR_INFO);
+			throw new Exception();
+		}
+	}
+	
+	public void doYxkhEdit(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String bosscodestr = super.getBossCodeStr();
+		int retCode = 0;
+		try
+		{
+			CrmForm formBean = (CrmForm)form;
+			CrmSc sc = new CrmSc();
+			
+			retCode = sc.doYxkhEdit(formBean);
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
+			
+			String url ="";
+			if(retCode == 0){
+				url =request.getContextPath()+"/crmAction.do?method=toYxkhManage";
+				doJump1(0,url,"修改意向客户",request,response);
+			}else{
+				url =request.getContextPath()+"/crmAction.do?method=toYxkhManage";
+				doJump1(-1,url,"修改意向客户",request,response);
+			}
+
+		}catch(Exception e){
+			getLogger(bosscodestr,GlobalConst.ERROR).error("修改意向客户信息出错:"+e.getMessage());
 			throw new Exception();
 		}
 	}
@@ -739,7 +823,7 @@ public class CrmAction extends BaseAppAction {
 
 			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
 			
-			String[] titles ={"客户名称","地址","首次签约日期","本次签约日期","押金","租金","产品名","签约年度","备注"};
+			String[] titles ={"客户名称","地址","首次签约日期","本次签约日期","押金(元)","租金(元)","产品名","签约年度","合同类别","备注"};
 
 			List alist = getHtExpList(userlist);
 			
@@ -768,10 +852,9 @@ public class CrmAction extends BaseAppAction {
 			tmp_ls.add(user.getHt_date_current());
 			tmp_ls.add(user.getHt_pledge());
 			tmp_ls.add(user.getHt_rent());
-			tmp_ls.add(user.getHt_rent());
 			tmp_ls.add(user.getProd_name());
-			tmp_ls.add(user.getProd_code());
 			tmp_ls.add(user.getHt_year());
+			tmp_ls.add("1".equals(user.getHf_type())?"新增":"续约");
 			tmp_ls.add(user.getRemark());
          
 			ls.add(tmp_ls);

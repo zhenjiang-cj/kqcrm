@@ -47,7 +47,7 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 					 <select name="ht_type" id="ht_type">
 					<option value="">--请选择--</option>
 					<option value="1" <%if("1".equals(userform.getHt_type())){%>selected<%} %>  >新增</option>
-					<option value="0" <%if("0".equals(userform.getHt_type())){%>selected<%} %> >续约</option>
+					<option value="2" <%if("2".equals(userform.getHt_type())){%>selected<%} %> >续约</option>
 					</select>
 				</td>
 				<td>
