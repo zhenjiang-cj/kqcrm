@@ -101,6 +101,18 @@ public class CrmDb extends AbstractDB {
 		}
 		return retCode;
 	}
+	
+	public int doYxkhAdd(Map<String, String> param) throws Exception { 
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try
+		{
+			smc.insert("CrmSql.doYxkhAdd", param);
+		}catch(Exception e){
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		}
+		return retCode;
+	}
 
 	public int doKhDel(Map<String, String> param) throws Exception  {
 		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
@@ -113,6 +125,44 @@ public class CrmDb extends AbstractDB {
 		}
 		return retCode;
 	}
+	
+	public int doYxkhDel(Map<String, String> param) throws Exception  {
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try
+		{
+			smc.update("CrmSql.doYxkhDel", param);
+		}catch(Exception e){
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		}
+		return retCode;
+	}
+	
+	public int doModifyYxkh(Map<String, String> param) throws Exception  {
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try
+		{
+			smc.update("CrmSql.doModifyYxkh", param);
+		}catch(Exception e){
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		}
+		return retCode;
+	}
+	
+
+	public int copyYxkhTokh(Map<String, String> param) throws Exception  {
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try
+		{
+			smc.insert("CrmSql.copyYxkhTokh", param);
+		}catch(Exception e){
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		}
+		return retCode;
+	}
+	
 	public int doHtDel(Map<String, String> param) throws Exception  {
 		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
 		try
