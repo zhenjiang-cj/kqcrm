@@ -236,11 +236,7 @@ public class CrmAction extends BaseAppAction {
 		try
 		{
 			CrmForm formBean = (CrmForm)form;
-			CrmSc sc = new CrmSc();
-			//获取客户序列
-			formBean.setKh_id(sc.getSno());
-			
-			
+
 			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
 			
 			//记录日志
