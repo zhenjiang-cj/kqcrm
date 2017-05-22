@@ -116,10 +116,97 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		
 	</insert>
 	
+	<insert id="doYxkhAdd" parameterClass="java.util.HashMap">
+		
+		insert into kq_yxkh_info
+		( 
+			kh_id,
+			kh_name,
+			provinces,
+			city,
+			region,
+			kh_phone1,
+			kh_phone2,
+			kh_addr,
+			kh_card,
+			introduce_name,
+			channel_source,
+			is_install,
+			remark,
+			create_id,
+			create_date,
+			is_valid
+
+		)
+		values
+		(   #kh_id#,
+			#kh_name#,
+			#provinces#,
+			#city#,
+			#region#,
+			#kh_phone1#,
+			#kh_phone2#,
+			#kh_addr#,
+			#kh_card#,
+			#introduce_name#,
+			#channel_source#,
+			#is_install#,
+			#remark#,
+			#create_id#,
+			getdate(),
+			1
+		)
+		
+	</insert>
 	
 	<update id="doKhDel" parameterClass="java.util.HashMap">
 	  UPDATE kq_kh_info set is_valid=0 where is_valid =1 and kh_id = #kh_id#
 	</update>
+	
+	<update id="doYxkhDel" parameterClass="java.util.HashMap">
+	  UPDATE kq_yxkh_info set is_valid=0 where is_valid =1 and kh_id = #kh_id#
+	</update>
+	
+	<update id="doInstallYxkh" parameterClass="java.util.HashMap">
+	  UPDATE kq_yxkh_info set is_install=1 where is_valid =1 and kh_id = #kh_id#
+	</update>
+	
+	<insert id="copyYxkhTokh" parameterClass="java.util.HashMap">
+		
+		insert into kq_kh_info
+		( 
+			kh_id,
+			kh_name,
+			provinces,
+			city,
+			region,
+			kh_phone1,
+			kh_phone2,
+			kh_addr,
+			kh_card,
+			introduce_name,
+			create_id,
+			create_date,
+			is_valid
+
+		)
+		select kh_id,
+			kh_name,
+			provinces,
+			city,
+			region,
+			kh_phone1,
+			kh_phone2,
+			kh_addr,
+			kh_card,
+			introduce_name,
+			create_id,
+			create_date,
+			is_valid 
+	    from kq_yxkh_info where kh_id = #kh_id#
+		
+	</insert>
+	
 	<select id='queryKhListById' parameterClass="java.util.HashMap" resultClass="crminfo" >
         select *
 		  from (select a.*, row_number() over(order by a.kh_id) rn, count(*) over() totalCount
