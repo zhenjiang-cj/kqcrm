@@ -73,24 +73,24 @@ public class CrmSc extends AbstractDB {
 		}
 		return userlist;
 	}
-	public String getSno() throws Exception {
+	public String getkh_id(String regionId) throws Exception {
 		SqlMapClient smc = null;
-		String sno="";
+		String khId="";
 		try {
 			smc = getSqlMapClient();
 			smc.startTransaction();
 
 			CrmDb db = new CrmDb(smc);
-			sno = db.getSno();
+			khId = db.getkh_id(regionId);
 
 			smc.commitTransaction();
 		} catch (Exception e) {
-			sno = "";
+			khId = "";
 			throw e;
 		} finally {
 			this.endTransaction(smc);
 		}
-		return sno;
+		return khId;
 	}
 	public int doKhAdd(CrmForm form) throws Exception {
 		SqlMapClient smc = null;
@@ -101,6 +101,10 @@ public class CrmSc extends AbstractDB {
 			Map<String, String> param = new HashMap<String, String>();
 			//数据访问对象
 			CrmDb db = new CrmDb(smc);
+			
+			//获取客户序列
+			form.setKh_id(db.getkh_id(form.getRegion()));
+			
 			param.put("kh_id",form.getRegion()+form.getKh_id());
 			param.put("kh_name",form.getKh_name());
 			param.put("provinces",form.getProvinces()==null?"":form.getProvinces());
