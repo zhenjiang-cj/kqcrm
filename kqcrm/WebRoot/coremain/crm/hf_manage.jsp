@@ -52,9 +52,7 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 				</td>
 				<td>
 					回访次数： <input type="text" name="hf_type" id="hf_type" value="<%=userform.getHf_type()==null?"":userform.getHf_type() %>"  />
-				</td>
-			</tr>
-			<tr>
+				</td> 
 				<td>
 					工作统计开始日期：<input type="text" name="hf_begin_date" id="hf_begin_date" class="date" value="<%=userform.getHf_begin_date()==null?"":userform.getHf_begin_date() %>" />
 				</td>

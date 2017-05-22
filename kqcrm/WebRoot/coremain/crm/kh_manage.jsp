@@ -48,9 +48,7 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 				</td>
 				<td>
 					转介绍人(编号)：<input type="text" name="introduce_name" id="introduce_name" value="<%=userform.getIntroduce_name()==null?"":userform.getIntroduce_name() %>"  />
-				</td>
-			</tr>
-			<tr>
+				</td> 
 				<td>
 					手机号码1：<input type="text" name="kh_phone1" id="kh_phone1" value="<%=userform.getKh_phone1()==null?"":userform.getKh_phone1() %>" />
 				</td>
