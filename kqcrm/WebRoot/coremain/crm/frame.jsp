@@ -31,8 +31,10 @@
 	</div>
 	<div class="accordionContent">
 		<ul class="tree treeFolder">
+			<li><a href="<%=path%>/crmAction.do?method=toAddYxkh" target="navTab" rel="toAddYxkh">意向客户录入</a></li>	
+			<li><a href="<%=path%>/crmAction.do?method=queryYxkh" target="navTab" rel="queryYxkh">意向客户维护</a></li>	
 			<li><a href="<%=path%>/crmAction.do?method=toKhManage" target="navTab" rel="user">客户管理</a></li>	
-			<li><a href="<%=path%>/crmAction.do?method=toHtManage1" target="navTab" rel="ht">合同管理</a></li>	
+			
 		</ul>
 	</div>
 </div>
