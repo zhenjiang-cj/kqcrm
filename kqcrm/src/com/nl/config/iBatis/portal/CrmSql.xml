@@ -53,13 +53,14 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 				  </dynamic>         
 		                   ) a) t 
 	</select>
-	<select id="getKhid" resultClass="java.lang.String">
-		select seq_value from kq_seq_kh_id
+	<select id="getKhid" parameterClass="java.lang.String" resultClass="java.lang.String">
+		select seq_value from kq_seq_kh_id where region_id = #region_id#
 	</select>
 	
-	<update id="addkhid" parameterClass="java.util.HashMap">
+	<update id="addkhid" parameterClass="java.lang.String">
 	    update kq_seq_kh_id 
 		   set seq_value = seq_value+1 
+		   where region_id = #region_id#
 	</update>
 	<select id="gethtid" resultClass="java.lang.String">
 		select seq_value from kq_seq_ht_id
