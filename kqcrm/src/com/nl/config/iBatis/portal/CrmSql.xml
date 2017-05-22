@@ -426,7 +426,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 					<isNotEmpty property="kh_name">
 							and a.kh_name  like '%$kh_name$%'
 					</isNotEmpty>
-					<isNotEmpty property="kh_name">
+					<isNotEmpty property="ht_type">
 							and b.ht_type  = #ht_type#
 					</isNotEmpty>
 					
