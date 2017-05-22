@@ -95,12 +95,16 @@ public class LoginAction extends BaseAppAction
 					sessionData.setOrg_level(sysOperator.getOrg_level()==null?"1":sysOperator.getOrg_level());
 					if("1".equals(sysOperator.getOrg_level())){
 						sessionData.setOrg_name(sysOperator.getProvinces_name());
+						sessionData.setOrg_id(sysOperator.getProvinces());
 					}else if("2".equals(sysOperator.getOrg_level())){
 						sessionData.setOrg_name(sysOperator.getProvinces_name()+sysOperator.getCity_name());
+						sessionData.setOrg_id(sysOperator.getCity());
 					}else if("3".equals(sysOperator.getOrg_level())){
 						sessionData.setOrg_name(sysOperator.getProvinces_name()+sysOperator.getCity_name()+sysOperator.getRegion_name());
+						sessionData.setOrg_id(sysOperator.getRegion());
 					}else  {
 						sessionData.setOrg_name("");
+						sessionData.setOrg_id("");
 					}
 					
 
