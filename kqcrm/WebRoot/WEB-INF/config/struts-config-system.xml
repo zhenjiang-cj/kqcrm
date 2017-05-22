@@ -3,16 +3,18 @@
        "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
        "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
 <struts-config>
-	<global-forwards>
-		
-	</global-forwards>
+	
 
 	<form-beans>
        <form-bean name="loginForm"  type="com.nl.portal.actionForm.LoginForm"/>
        <form-bean name="userForm"  type="com.nl.portal.actionForm.UserForm"/>
        <form-bean name="crmForm"  type="com.nl.portal.actionForm.CrmForm"/>
     </form-beans>
-	          
+	        
+	<global-forwards>
+		
+	</global-forwards>
+	  
 	<action-mappings>
 	
 		<action path="/userAction" type="com.nl.portal.action.UserAction" parameter="method"
@@ -50,6 +52,9 @@
 			<forward name="hfframe" path="/coremain/crm/hfframe.jsp"/>
 			<forward name="hfmanage" path="/coremain/crm/hf_manage.jsp"/>
 			<forward name="hfedit" path="/coremain/crm/hf_edit.jsp"/>
+			
+			<forward name="yxkhmanage" path="/coremain/crm/yxkh_manage.jsp"/>
+			<forward name="yxkhadd" path="/coremain/crm/yxkh_add.jsp"/>
 		</action>
 		
 	</action-mappings>
