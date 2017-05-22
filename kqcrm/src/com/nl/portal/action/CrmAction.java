@@ -257,8 +257,11 @@ public class CrmAction extends BaseAppAction {
 		int retCode = 0;
 		try
 		{
+			
 			CrmForm formBean = (CrmForm)form;
 			CrmSc sc = new CrmSc();
+			SessionData sessionData =(SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
+			formBean.setOperatorId(sessionData.getSno());
 			
 			retCode = sc.doKhAdd(formBean);
 			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);			
