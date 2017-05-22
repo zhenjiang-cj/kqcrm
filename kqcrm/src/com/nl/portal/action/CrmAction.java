@@ -270,10 +270,10 @@ public class CrmAction extends BaseAppAction {
 			String url ="";
 			if(retCode == 0){
 				url =request.getContextPath()+"/crmAction.do?method=toKhManage";
-				doJump1(0,url,"新增客户",request,response);
+				doJump(0,url,"新增客户",request,response);
 			}else{
 				url =request.getContextPath()+"/crmAction.do?method=toKhManage";
-				doJump1(-1,url,"新增客户",request,response);
+				doJump(-1,url,"新增客户",request,response);
 			}
 			
 		}catch(Exception e){
@@ -466,10 +466,10 @@ public class CrmAction extends BaseAppAction {
 			String url ="";
 			if(retCode == 0){
 				url =request.getContextPath()+"/crmAction.do?method=toKhManage";
-				doJump1(0,url,"新增合同",request,response);
+				doJump(0,url,"新增合同",request,response);
 			}else{
 				url =request.getContextPath()+"/crmAction.do?method=toKhManage";
-				doJump1(-1,url,"新增合同",request,response);
+				doJump(-1,url,"新增合同",request,response);
 			}
 			
 		}catch(Exception e){

@@ -536,27 +536,7 @@ public class UserAction extends BaseAppAction {
 			throw new Exception();
 		}
 	}
-	public String getPrivilegeBySysid(ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response) throws Exception 
-	{
-		
-		try
-		{
-			UserForm formBean = (UserForm)form;
-			UserSc sc = new UserSc();
-			List<UserInfo> privilegeList = sc.getPrivilegeBySysid(formBean);
-			
-			return  GlobalFunc.getJosnStrForList(privilegeList);
-			 
-		}catch(Exception e){
-//			getLogger(bosscodestr,GlobalConst.ERROR).error("进入欢迎页面出错:"+e.getMessage());
-			throw new Exception();
-		}
-		
-		
-	}
+	 
 
 	public void doRoleAdd(ActionMapping mapping,
 			ActionForm form,

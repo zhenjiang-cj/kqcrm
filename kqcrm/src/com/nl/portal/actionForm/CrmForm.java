@@ -24,6 +24,7 @@ public class CrmForm extends BaseAppActionForm {
 	private String prod_code;
 	private String ht_year;
 	private String remark;
+	private String ht_type;
 	
 	private String hf_id;
 	private String hf_date_must;
@@ -383,6 +384,12 @@ public class CrmForm extends BaseAppActionForm {
 	}
 	public void setHf_id4(String hf_id4) {
 		this.hf_id4 = hf_id4;
+	}
+	public String getHt_type() {
+		return ht_type;
+	}
+	public void setHt_type(String ht_type) {
+		this.ht_type = ht_type;
 	}
 
 }

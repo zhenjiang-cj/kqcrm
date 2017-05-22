@@ -30,6 +30,9 @@ public class CrmSc extends AbstractDB {
 			param.put("kh_id", userform.getKh_id());
 			param.put("kh_name", userform.getKh_name());
 			param.put("introduce_name", userform.getIntroduce_name());
+			param.put("kh_phone1", userform.getKh_phone1());
+			param.put("kh_phone2", userform.getKh_phone2());
+			param.put("kh_addr", userform.getKh_addr());
 			param.put("page_num", userform.getPageNum());
 			param.put("page_size", userform.getNumPerPage());
 			
@@ -446,6 +449,7 @@ public class CrmSc extends AbstractDB {
 			HashMap param = new HashMap(); 
 			param.put("org_ids", userform.getOrg_ids());
 			param.put("kh_name", userform.getKh_name());
+			param.put("ht_type", userform.getHt_type());
 			param.put("ht_begin_date", userform.getHt_begin_date());
 			param.put("ht_end_date", userform.getHt_end_date());
 			param.put("page_num", userform.getPageNum());
@@ -518,6 +522,7 @@ public class CrmSc extends AbstractDB {
 			param.put("org_ids", userform.getOrg_ids());
 			param.put("kh_name", userform.getKh_name());
 			param.put("hf_status", userform.getHf_status());
+			param.put("hf_type", userform.getHf_type());
 			param.put("hf_begin_date", userform.getHf_begin_date());
 			param.put("hf_end_date", userform.getHf_end_date());
 			

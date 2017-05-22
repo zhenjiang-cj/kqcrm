@@ -22,6 +22,7 @@ public class CrmInfo {
 	private String prod_code;
 	private String ht_year;
 	private String remark;
+	private String ht_type;
 	
 	private String hf_id;
 	private String hf_date_must;
@@ -265,5 +266,11 @@ public class CrmInfo {
 	}
 	public void setData_level(String data_level) {
 		this.data_level = data_level;
+	}
+	public String getHt_type() {
+		return ht_type;
+	}
+	public void setHt_type(String ht_type) {
+		this.ht_type = ht_type;
 	}
 }
