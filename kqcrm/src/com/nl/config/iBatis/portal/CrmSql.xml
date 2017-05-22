@@ -160,15 +160,25 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	</insert>
 	
 	<update id="doKhDel" parameterClass="java.util.HashMap">
-	  UPDATE kq_kh_info set is_valid=0 where is_valid =1 and kh_id = #kh_id#
+	  UPDATE kq_kh_info set is_valid=0,change_id = #operator_id#,change_date = getDate() where is_valid =1 and kh_id = #kh_id#
 	</update>
 	
 	<update id="doYxkhDel" parameterClass="java.util.HashMap">
-	  UPDATE kq_yxkh_info set is_valid=0 where is_valid =1 and kh_id = #kh_id#
+	  UPDATE kq_yxkh_info set is_valid=0,change_id = #operator_id#,change_date = getDate() where is_valid =1 and kh_id = #kh_id#
 	</update>
 	
-	<update id="doInstallYxkh" parameterClass="java.util.HashMap">
-	  UPDATE kq_yxkh_info set is_install=1 where is_valid =1 and kh_id = #kh_id#
+	<update id="doModifyYxkh" parameterClass="java.util.HashMap">
+	  UPDATE kq_yxkh_info 
+	     set is_install=1 ,
+	     	 kh_phone1 = #kh_phone1#,
+	     	 kh_phone2 = #kh_phone2#,
+	     	 kh_addr = #kh_addr#,
+	     	 kh_card = #kh_card#,
+	     	 introduce_name = #introduce_name#,
+	     	 channel_source = #channel_source#,
+	     	 is_install = #is_install#,
+	     	 remark = #remark#
+	   where is_valid =1 and kh_id = #kh_id#
 	</update>
 	
 	<insert id="copyYxkhTokh" parameterClass="java.util.HashMap">
