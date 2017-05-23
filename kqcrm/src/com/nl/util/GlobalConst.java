@@ -146,22 +146,40 @@ public class GlobalConst{
 	public static final String SYSTEM_ID_SYSTEM = "99";//系统管理
 	public static final String SYSTEM_ID_CRM = "1";//客户管理
 	public static final String SYSTEM_ID_HT = "2";//合同管理
-	public static final String SYSTEM_ID_HF = "2";//客户回访
+	public static final String SYSTEM_ID_HF = "3";//客户回访
 	
 	/*菜单*/
-	public static final String FUNCTION_SYS_MANAGE="9910";//系统管理
-	public static final String FUNCTION_SYS_USER="9920";//用户管理
-	public static final String FUNCTION_SYS_ROLE="9930";//角色管理
+	public static final String FUNCTION_SYS_MANAGE="99";//系统管理
+	public static final String FUNCTION_SYS_USER="9910";//用户管理
+	public static final String FUNCTION_SYS_USER_ADD="9911";
+	public static final String FUNCTION_SYS_USER_EDIT="9912";
+	public static final String FUNCTION_SYS_USER_DEL="9913";
+	
+	public static final String FUNCTION_SYS_ROLE="9920";//角色管理
+	public static final String FUNCTION_SYS_ROLE_ADD="9921";
+	public static final String FUNCTION_SYS_ROLE_EDIT="9922";
+	public static final String FUNCTION_SYS_ROLE_DEL="9923";
 	
 	
 	public static final String FUNCTION_CRM_MANAGE="110";//客户管理
 	public static final String FUNCTION_CRM_USER="120";//客户管理
+	public static final String FUNCTION_CRM_USER_ADD = "121";//客户新增
+	public static final String FUNCTION_CRM_USER_EDIT = "122";//客户新增
+	public static final String FUNCTION_CRM_USER_DEL = "123";//客户新增
+	public static final String FUNCTION_CRM_USER_EXP = "124";//客户导出
 	
 	public static final String FUNCTION_HT_MANAGE="210";//合同管理
 	public static final String FUNCTION_HT_USER="220";//合同管理
+	public static final String FUNCTION_HT_USER_ADD = "221";//客户新增
+	public static final String FUNCTION_HT_USER_EDIT = "222";//客户新增
+	public static final String FUNCTION_HT_USER_DEL = "223";//客户新增
 	
 	public static final String FUNCTION_HF_MANAGE="310";//客户回访
 	public static final String FUNCTION_HF_USER="320";//客户回访
+	public static final String FUNCTION_HF_USER_ADD = "321";//回访新增
+	public static final String FUNCTION_HF_USER_EDIT = "322";//回访新增
+	public static final String FUNCTION_HF_USER_DEL = "323";//回访新增
+	public static final String FUNCTION_HF_USER_EXP = "324";//回访新增
 	
 	/*操作类型*/
 	public static final String OPERATION_INSERT = "1";//增加
