@@ -42,6 +42,7 @@
 			<forward name="frame" path="/coremain/crm/frame.jsp"/>
 			<forward name="khmanage" path="/coremain/crm/kh_manage.jsp"/>
 			<forward name="khadd" path="/coremain/crm/kh_add.jsp"/>
+			<forward name="khview" path="/coremain/crm/kh_view.jsp"/>
 			<forward name="khedit" path="/coremain/crm/kh_edit.jsp"/>
 			<forward name="htframe" path="/coremain/crm/htframe.jsp"/>
 			<forward name="htmanage" path="/coremain/crm/ht_manage.jsp"/>
