@@ -18,6 +18,14 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 					<isNotEmpty property="org_ids">
 							 and charindex(a.region,#org_ids#) >0
 					</isNotEmpty>
+					<isNotEmpty property="is_ws">
+						<isEqual property="is_ws" compareValue="1">
+							and exists (select * from kq_ht_info b where a.kh_id=b.kh_id and b.is_valid=1)
+						</isEqual>
+						<isEqual property="is_ws" compareValue="0">
+							and not exists (select * from kq_ht_info b where a.kh_id=b.kh_id and b.is_valid=1)
+						</isEqual>
+					</isNotEmpty>
 					<isNotEmpty property="introduce_name">
 							 and  introduce_name = #introduce_name#
 					</isNotEmpty>
@@ -301,7 +309,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
   from kq_kh_info a ,kq_ht_info b 
   where a.is_valid =1 
     and b.is_valid=1
-    and a.introduce_name = #kh_id#
+    and exists (select * from kq_kh_info c where c.kh_id=#kh_id# and a.kh_name+'+'+a.kh_phone1 = c.introduce_name)  
     and a.kh_id = b.kh_id 
     order by b.ht_date_first desc
 	</select>
