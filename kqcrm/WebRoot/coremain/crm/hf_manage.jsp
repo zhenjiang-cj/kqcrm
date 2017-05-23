@@ -125,6 +125,7 @@ if(sessdata!=null){
 						<td><%=user.getKh_phone1() %></td>
 						<td  title="<%=user.getKh_addr() %>" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><%=user.getKh_addr() %></td>
 						<td><%=user.getHf_status().equals("1")?"已回访":"未回访" %></td>
+						<td><%=user.getHf_type()==null?"":user.getHf_type() %></td>
 						<td><%=user.getHf_date_must()==null?"":user.getHf_date_must() %></td>
 						<td><%=user.getHf_date_fact()==null?"":user.getHf_date_fact() %></td>
 						<td  title="<%=user.getHf_remark()==null?"":user.getHf_remark() %>" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><%=user.getHf_remark()==null?"":user.getHf_remark() %></td>

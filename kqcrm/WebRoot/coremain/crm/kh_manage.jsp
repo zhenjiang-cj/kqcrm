@@ -135,6 +135,7 @@ if(sessdata!=null){
 						<td><%=user.getKh_phone2() %></td>
 						<td><%=user.getIntroduce_name() %></td>
 						<td>
+							<a title="详细" target="navTab" href="<%=path%>/crmAction.do?method=toKhView&kh_id=<%=user.getKh_id() %>"    class="btnView">详细</a>
 							<%
 							if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_CRM_USER_DEL)){
 								%>

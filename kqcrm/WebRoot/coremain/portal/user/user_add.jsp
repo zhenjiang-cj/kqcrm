@@ -4,12 +4,15 @@
 <%@ page import="com.nl.portal.actionForm.*"%>
 <%@page import="java.util.List"%>
 <%@ page import="com.nl.util.GlobalConst"%>
+<%@page import="com.nl.base.utils.GlobalFunc"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 	UserForm userform = (UserForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FORM);
+    List regionList = (List)request.getAttribute("regionList");
+    String jsonStr = GlobalFunc.getJosnStrForList(regionList);
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -27,72 +30,125 @@
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
- 
-	<script src="<%=path%>/dwz/js/jquery.validate.js" type="text/javascript"></script>
-	<script src="<%=path%>/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="<%=path%>/plugins/jquery/plugins/ztree/3.0/css/zTreeStyle/zTreeStyle.css" type="text/css">
+	<script type="text/javascript" src="<%=path%>/plugins/jquery/plugins/ztree/3.0/jquery.ztree.core-3.0.js"></script>
+	<script type="text/javascript" src="<%=path%>/plugins/jquery/plugins/ztree/3.0/jquery.ztree.excheck-3.0.js"></script>
 	<script type="text/javascript">
+	$(function(){
+        reloadTree(); 
+        //changeSys(); 
+	});
+ 
 
-function provincesChange() {
-    jQuery("#city").html('');
-    jQuery("#region").html('');
-    var provinces = "";
-    provinces=document.getElementById("provinces").value;
-    if(provinces==''){
-        provinces='';
-    }
-    try{
-		$.ajax({
-		    type:"post",
-			dataType:"json",
-			contentType:"application/json;charset=UTF-8",
-			url:'<%=path%>/coremain/portal/user/provincesChange.jsp?provinces='+provinces,
-		    success:function(data){
-	            if(null!=data){
-                    jQuery("#city").html(data[0].cityMap);
-	            }else{
-	                alert("没有获取地市信息");
-	            }
-		    },
-		    error:function (data){
-		        alert("获取地市信息信息失败！");
-		    }
-		});
-	}catch(e){
-		alert(e);
-	}
-}
+<!--加载和设置树方法开始!-->
+    var zTree1;
+	var setting;
+	var nodeList = [];
 
-function cityChange() {
-    jQuery("#region").html('');
-    var provinces =  document.getElementById("provinces").value;
-    if(provinces==''){
-        provinces='';
-    }
-    var city =document.getElementById("city").value;
-    if(city==''){
-        city='';
-    }
-    try{
-		$.ajax({
-		    type:"post",
-			dataType:"json",
-			contentType:"application/json;charset=UTF-8",
-			url:'<%=path%>/coremain/portal/user/cityChange.jsp?provinces='+provinces+'&city='+city,
-		    success:function(data){
-	             if(null!=data){
-                    jQuery("#region").html(data[0].cityMap);
-	            }else{
-	                alert("没有获取区域信息");
-	            }
-		    },
-		    error:function (data){
-		        alert("获取区域信息失败！");
-		    }
-		});
-	}catch(e){
-		alert(e);
+	setting = {
+	    check: {
+				enable: true
+			   },
+		data: {
+			key: {
+				name: "org_name"
+			     },
+			simpleData: {
+				enable: true,
+				idKey: "org_id",
+		        pIdKey: "parent_org_id"	
+			    }				
+			},
+		view: {
+			fontCss: getFontCss
+		}
+	};
+
+	var zNodes = <%=jsonStr%>;
+    
+    //展开某一级
+	function expandNode() 
+	{
+	
+	    var treeNode = zTree1.getNodeByParam("org_id", 1);
+	    
+		if (treeNode) {
+		    //第一个参数treeNode为要展开的节点，第二个参数“true”表示该级展开，第三个参数“false”表示下级不展开
+			zTree1.expandNode(treeNode, true, true);
+			//node设置为被选中状态
+			//zTree1.selectNode(treeNode);
+		}
 	}
-}
+	
+	function zTreeOnChange()
+	{
+	    //方法放到提交的时候执行
+	    getCheckedNodesId();
+	}
+	
+	function getCheckedNodesId()
+	{
+	    var checkPrivId = "";
+	    
+	    var tmp = zTree1.getCheckedNodes();
+	    for (var i=0;i<tmp.length;i++)
+	    {
+	       checkPrivId +=  tmp[i].org_id + ",";
+	    }
+	    if (checkPrivId != "")
+	    {
+	        checkPrivId = checkPrivId.substr(0,checkPrivId.length-1);
+	    }
+	    $("#checkPrivId").val(checkPrivId);
+	    
+	}
+	
+	function getNodeByParam() {
+		var key = $("#searchKey").val();
+		if (key.length > 0)
+		{
+		    updateNodes(false);
+			nodeList = zTree1.getNodesByParamFuzzy("org_name", key);
+			
+			if (nodeList && nodeList.length>0) 
+			{
+				updateNodes(true);
+			} 
+			else 
+			{
+				alert("没有找到匹配的节点，请更换搜索条件");
+			}
+	    }
+	}
+	
+	function updateNodes(highlight)
+	{
+		for( var i=0, l=nodeList.length; i<l; i++) 
+		{
+			nodeList[i].highlight = highlight;
+			zTree1.updateNode(nodeList[i]);
+		}
+	}
+	
+	function getFontCss(treeId, treeNode) 
+	{
+		return (!!treeNode.highlight) ? {color:"#A60000", "font-weight":"bold"} : {color:"#333", "font-weight":"normal"};
+	}
+    
+	function reloadTree() {
+	    /**父子关联关系设定："Y"表示被勾选时，"N"表示取消勾选时，"p"表示关联父,"s"表示关联子	
+	       如：ps表示执行对应操作的时候关联父、关联子，"s"表示执行对应的操作的时候只关联子
+	    **/   
+	    setting.check.chkboxType = { "Y" : "ps", "N" : "s" };
+		$.fn.zTree.init($("#dropTree"), setting, zNodes);
+		zTree1 = $.fn.zTree.getZTreeObj("dropTree");
+		//expandNode();
+	} 
+    <!--加载和设置树方法结束!-->
+
+
+
+
 
 
 	</script>
@@ -105,8 +161,9 @@ function cityChange() {
   <form class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)" action="<%=path%>/userAction.do?method=doUserAdd" method="post" name="userForm">
     <input type="hidden" name="sno" id="sno" value="<%=userform.getSno() %>">
     <input type="hidden" name="operatorId" id="operatorId" value="<%=userform.getOperatorId() %>">
+	<input type="hidden" id="checkPrivId" name="checkPrivId"  value="" class="required">
     
-    <div class="formBar">
+    <div class="formBar">	
 			<ul>
 				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
 				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
@@ -134,27 +191,6 @@ function cityChange() {
 			<input name="password"  id="password" type="text"  maxlength="20"  class="required" equalto="#user_pswd"/>
 		</p>
 		<p>
-			<label>省份：</label>
-			<select  name="provinces" id="provinces" class="required" onchange="provincesChange();">
-				<option value="">--请选择--</option>
-				<%=DictMgmt.getSelectObj(DictMgmt.DICT_KQ_PROVINCES,"",false,false,"-1", -1, null, null, null,-1,"") %>
-			</select>
-		</p>
-		<p>
-			<label>地市：</label>
-			<select  name="city" id="city" onchange="cityChange();">
-				<option value="">--请选择--</option>
-				<%=DictMgmt.getSelectObj(DictMgmt.DICT_KQ_CITY,"",false,false,"-1", -1, null, null, null,-1,"") %>
-			</select>
-		</p>
-		<p>
-			<label>县区：</label>
-			<select  name="region" id="region" >
-				<option value="">--请选择--</option>
-				<%=DictMgmt.getSelectObj(DictMgmt.DICT_kq_REGION,"",false,false,"-1", -1, null, null, null,-1,"") %>
-			</select>
-		</p>
-		<p>
 			<label>手机号码：</label>
 			<input name="msisdn" id="msisdn" type="text"  maxlength="11"  class="digits"  />
 		</p>
@@ -162,6 +198,16 @@ function cityChange() {
 			<label>email：</label>
 			<input name="email" id ="email" type="text"  maxlength="40"  class="email" />
 		</p>
+		
+		
+		<p>
+			<label>归属区域：</label>
+		    <div>
+				<ul id="dropTree" class="ztree" 
+				style="margin-top: 2px;border: 1px solid #617775;background: #ffffff;height:350px; width:100%;overflow-y:auto;overflow-x:auto;"></ul>
+			</div>
+		</p>
+		
 		 
 		
 	</div>
