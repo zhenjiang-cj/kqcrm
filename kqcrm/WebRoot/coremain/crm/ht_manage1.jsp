@@ -4,11 +4,19 @@
 <%@ page import="com.nl.portal.actionForm.*"%>
 <%@page import="java.util.List"%>
 <%@ page import="com.nl.util.GlobalConst"%>
+<%@page import="com.nl.util.SessionData"%>
+<%@page import="com.nl.util.SessionConst"%>
+<%@page import="com.nl.util.GlobalUtil"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 List<CrmInfo> userlist = (List<CrmInfo>) request.getAttribute("userlist");//
 CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FORM);
+SessionData sessdata = (SessionData) request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
+List privlist = null;
+if(sessdata!=null){
+	privlist = sessdata.getPrivMap();
+}
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -69,7 +77,14 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="icon" href="<%=path%>/crmAction.do?method=toHtExp" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
+			<%
+			if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_HF_USER_EXP)){
+				%>
+				<li><a class="icon" href="<%=path%>/crmAction.do?method=toHtExp" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
+				<%
+			}
+			%>
+			
 		</ul>
 	</div>
 	<table class="table" width="100%" layoutH="138" style="table-layout:fixed">
@@ -107,8 +122,20 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 						<td><%=user.getHt_type().equals("1")?"新增":"续约" %></td>
 						<td  title="<%=user.getRemark() %>" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><%=user.getRemark() %></td>
 						<td>
-							<a title="删除" target="ajaxTodo" href="<%=path%>/crmAction.do?method=doHtDel1&ht_id=<%=user.getHt_id() %>" class="btnDel">删除</a>
-							<a title="编辑" target="navTab" href="<%=path%>/crmAction.do?method=toHtEdit1&ht_id=<%=user.getHt_id() %>" width="645" height="400"   class="btnEdit">编辑</a>
+							<%
+							if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_HT_USER_DEL)){
+								%>
+								<a title="删除" target="ajaxTodo" href="<%=path%>/crmAction.do?method=doHtDel1&ht_id=<%=user.getHt_id() %>" class="btnDel">删除</a>
+								<%
+							}
+							%>
+							<%
+							if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_HT_USER_EDIT)){
+								%>
+								<a title="编辑" target="navTab" href="<%=path%>/crmAction.do?method=toHtEdit1&ht_id=<%=user.getHt_id() %>" width="645" height="400"   class="btnEdit">编辑</a>
+								<%
+							}
+							%>
 						</td>
 					</tr>
 					

@@ -31,7 +31,7 @@
 	</div>
 	<div class="accordionContent">
 		<ul class="tree treeFolder">
-			<li><a href="<%=path%>/crmAction.do?method=toHfManage" target="navTab" rel="ht">回访工作</a></li>	
+			<li><a href="<%=path%>/crmAction.do?method=toHfManage" target="navTab" rel="hf">回访工作</a></li>	
 		</ul>
 	</div>
 </div>

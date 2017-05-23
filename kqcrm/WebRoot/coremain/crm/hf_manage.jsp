@@ -4,11 +4,19 @@
 <%@ page import="com.nl.portal.actionForm.*"%>
 <%@page import="java.util.List"%>
 <%@ page import="com.nl.util.GlobalConst"%>
+<%@page import="com.nl.util.SessionData"%>
+<%@page import="com.nl.util.SessionConst"%>
+<%@page import="com.nl.util.GlobalUtil"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 List<CrmInfo> userlist = (List<CrmInfo>) request.getAttribute("userlist");//
 CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FORM);
+SessionData sessdata = (SessionData) request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
+List privlist = null;
+if(sessdata!=null){
+	privlist = sessdata.getPrivMap();
+}
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -74,7 +82,13 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="icon" href="<%=path%>/crmAction.do?method=toHfExp" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
+			<%
+			if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_HF_USER_EXP)){
+				%>
+				<li><a class="icon" href="<%=path%>/crmAction.do?method=toHfExp" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
+				<%
+			}
+			%>
 		</ul>
 	</div>
 	<table class="table" width="1400" layoutH="138"  style="table-layout:fixed">
@@ -116,7 +130,13 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 						<td  title="<%=user.getHf_remark()==null?"":user.getHf_remark() %>" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><%=user.getHf_remark()==null?"":user.getHf_remark() %></td>
 						<td><%=user.getHf_user_name()==null?"":user.getHf_user_name() %></td>
 						<td>
-							<a title="回访" target="dialog" href="<%=path%>/crmAction.do?method=toHfEdit&hf_id=<%=user.getHf_id() %>" width="645" height="400"   class="btnEdit">回访</a>
+							<%
+							if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_HF_USER_EDIT)){
+								%>
+								<a title="回访" target="dialog" href="<%=path%>/crmAction.do?method=toHfEdit&hf_id=<%=user.getHf_id() %>" width="645" height="400" rel="ht"  class="btnEdit">回访</a>
+								<%
+							}
+							%>
 						</td>
 					</tr>
 					

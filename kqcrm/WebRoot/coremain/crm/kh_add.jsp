@@ -205,8 +205,8 @@ function cityChange() {
 			<input name="kh_card" id="kh_card" type="text"  maxlength="18"  class="alphanumeric"  />
 		</p>
 		<p>
-			<label>转介绍人(编号)：</label>
-			<input name="introduce_name" id="introduce_name" type="text"  maxlength="14"     />
+			<label>转介绍人(格式：姓名+手机号码)：</label>
+			<input name="introduce_name" id="introduce_name" type="text"  maxlength="24"     />
 		</p>
 		 
 		

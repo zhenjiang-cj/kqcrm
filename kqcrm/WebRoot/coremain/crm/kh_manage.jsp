@@ -4,11 +4,19 @@
 <%@ page import="com.nl.portal.actionForm.*"%>
 <%@page import="java.util.List"%>
 <%@ page import="com.nl.util.GlobalConst"%>
+<%@page import="com.nl.util.SessionData"%>
+<%@page import="com.nl.util.SessionConst"%>
+<%@page import="com.nl.util.GlobalUtil"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 List<CrmInfo> userlist = (List<CrmInfo>) request.getAttribute("userlist");//
 CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FORM);
+SessionData sessdata = (SessionData) request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
+List privlist = null;
+if(sessdata!=null){
+	privlist = sessdata.getPrivMap();
+}
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -47,10 +55,16 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 					客户名称：<input type="text" name="kh_name" id="kh_name" value="<%=userform.getKh_name()==null?"":userform.getKh_name() %>" />
 				</td>
 				<td>
-					转介绍人(编号)：<input type="text" name="introduce_name" id="introduce_name" value="<%=userform.getIntroduce_name()==null?"":userform.getIntroduce_name() %>"  />
-				</td> 
-			</tr>
-			<tr>
+					资料是否完善：
+					<select name="is_ws" id="is_ws">
+					<option value="">--请选择--</option>
+					<option value="1" <%if("1".equals(userform.getIs_ws())){%>selected<%} %>  >是</option>
+					<option value="0" <%if("0".equals(userform.getIs_ws())){%>selected<%} %> >否</option>
+					</select>
+				</td>
+				<td>
+					转介绍人(姓名+手机号码)：<input type="text" name="introduce_name" id="introduce_name" value="<%=userform.getIntroduce_name()==null?"":userform.getIntroduce_name() %>"  />
+				</td>  
 				<td>
 					手机号码1：<input type="text" name="kh_phone1" id="kh_phone1" value="<%=userform.getKh_phone1()==null?"":userform.getKh_phone1() %>" />
 				</td>
@@ -73,12 +87,25 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
+		<%
+		if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_CRM_USER_ADD)){
+			%>
 			<li><a class="add" href="<%=path%>/crmAction.do?method=toKhAdd" target="dialog" rel="kh_add" width="800" height="400"><span>新增</span></a></li>
+			<%
+		}
+		%>
 			<!-- <li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" href="demo/common/ajaxDone.html" class="delete"><span>批量删除默认方式</span></a></li> -->
 			<!--<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="demo/common/ajaxDone.html" class="delete"><span>批量删除逗号分隔</span></a></li>-->
 			<!--<li><a class="edit" href="demo_page4.html?uid={sid_user}" target="navTab" warn="请选择一个用户"><span>修改</span></a></li>-->
 			<li class="line">line</li>
+		<%
+		if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_CRM_USER_EXP)){
+			%>
 			<li><a class="icon" href="<%=path%>/crmAction.do?method=toKhExp" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
+			<%
+		}
+		%>
+			
 		</ul>
 	</div>
 	<table class="table" width="100%" layoutH="160">
@@ -108,9 +135,29 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 						<td><%=user.getKh_phone2() %></td>
 						<td><%=user.getIntroduce_name() %></td>
 						<td>
-							<a title="删除" target="ajaxTodo" href="<%=path%>/crmAction.do?method=doKhDel&kh_id=<%=user.getKh_id() %>" class="btnDel">删除</a>
-							<a title="编辑" target="dialog" href="<%=path%>/crmAction.do?method=toKhEdit&kh_id=<%=user.getKh_id() %>" width="800" height="400"  class="btnEdit">编辑</a>
-							<a title="合同新增" target="navTab" href="<%=path%>/crmAction.do?method=toHtAdd&kh_id=<%=user.getKh_id() %>"  rel="ht_add"  class="btnAttach">客户合同</a>
+							<%
+							if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_CRM_USER_DEL)){
+								%>
+								<a title="删除" target="ajaxTodo" href="<%=path%>/crmAction.do?method=doKhDel&kh_id=<%=user.getKh_id() %>" class="btnDel">删除</a>
+								<%
+							}
+							%>
+							<%
+							if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_CRM_USER_EDIT)){
+								%>
+								<a title="编辑" target="dialog" href="<%=path%>/crmAction.do?method=toKhEdit&kh_id=<%=user.getKh_id() %>" width="800" height="400"  class="btnEdit">编辑</a>
+								<%
+							}
+							%>
+							<%
+							if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_HT_USER_ADD)){
+								%>
+								<a title="合同新增" target="navTab" href="<%=path%>/crmAction.do?method=toHtAdd&kh_id=<%=user.getKh_id() %>"  rel="ht_add"  class="btnAttach">客户合同</a>
+								<%
+							}
+							%>
+							
+							
 						</td>
 					</tr>
 					
