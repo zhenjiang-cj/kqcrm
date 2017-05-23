@@ -72,8 +72,7 @@ public class CrmAction extends BaseAppAction {
 			pWriter.write(jsonString);	
 		}
 	}
-	
-	public void doJump1(int retCode,String url,String objString,HttpServletRequest request,HttpServletResponse response){
+	public void doJumps(int retCode,String url,String rel,String objString,HttpServletRequest request,HttpServletResponse response){
 		GlobalRsDt rsDt = new GlobalRsDt();
 		String remark = "";
 		String jsonString = "";
@@ -84,11 +83,12 @@ public class CrmAction extends BaseAppAction {
 			
 			rsDt.setStatusCode(GlobalConst.STATUS_CODE_SUCCESS);
 			rsDt.setMessage(remark);
-			rsDt.setCallbackType("closeCurrent");
+			rsDt.setCallbackType("forward");
 			
 //			rsDt.setNavTabId("userinfo");
 //			rsDt.setForwardUrl(request.getContextPath()+"/approvalFlowAction.do?method=queryApplyInfo");
 			rsDt.setForwardUrl(url);
+			rsDt.setRel(rel);
 			jsonString = GlobalFunc.getRsJson(rsDt);
 
 			try {
@@ -117,7 +117,96 @@ public class CrmAction extends BaseAppAction {
 			pWriter.write(jsonString);	
 		}
 	}
+	public void doJump1(int retCode,String url,String objString,HttpServletRequest request,HttpServletResponse response){
+		GlobalRsDt rsDt = new GlobalRsDt();
+		String remark = "";
+		String jsonString = "";
+		PrintWriter pWriter = null;
+		
+		if(retCode==0){
+			remark = objString+"成功";	
+			
+			rsDt.setStatusCode(GlobalConst.STATUS_CODE_SUCCESS);
+			rsDt.setMessage(remark);
+			rsDt.setCallbackType("closeCurrent");
+			
+//			rsDt.setNavTabId("userinfo");
+//			rsDt.setForwardUrl(request.getContextPath()+"/approvalFlowAction.do?method=queryApplyInfo");
+			rsDt.setForwardUrl(url);
+//			rsDt.setRel("ht");
+			jsonString = GlobalFunc.getRsJson(rsDt);
 
+			try {
+				response.setContentType("text/html;charset=UTF-8");  
+				pWriter = response.getWriter();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			pWriter.write(jsonString);		
+
+		}else{
+			remark =  objString+"失败";
+			
+			rsDt.setStatusCode(GlobalConst.STATUS_CODE_FAIL);
+			rsDt.setMessage(remark);
+			jsonString = GlobalFunc.getRsJson(rsDt);
+			
+			try {
+				response.setContentType("text/html;charset=UTF-8");  
+				pWriter = response.getWriter();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			pWriter.write(jsonString);	
+		}
+	}
+	public void doJump2(int retCode,String url,String rel,String objString,HttpServletRequest request,HttpServletResponse response){
+		GlobalRsDt rsDt = new GlobalRsDt();
+		String remark = "";
+		String jsonString = "";
+		PrintWriter pWriter = null;
+		
+		if(retCode==0){
+			remark = objString+"成功";	
+			
+			rsDt.setStatusCode(GlobalConst.STATUS_CODE_SUCCESS);
+			rsDt.setMessage(remark);
+			rsDt.setCallbackType("closeCurrent");
+			
+//			rsDt.setNavTabId("userinfo");
+//			rsDt.setForwardUrl(request.getContextPath()+"/approvalFlowAction.do?method=queryApplyInfo");
+			rsDt.setForwardUrl(url);
+			rsDt.setRel(rel);
+			jsonString = GlobalFunc.getRsJson(rsDt);
+
+			try {
+				response.setContentType("text/html;charset=UTF-8");  
+				pWriter = response.getWriter();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			pWriter.write(jsonString);		
+
+		}else{
+			remark =  objString+"失败";
+			
+			rsDt.setStatusCode(GlobalConst.STATUS_CODE_FAIL);
+			rsDt.setMessage(remark);
+			jsonString = GlobalFunc.getRsJson(rsDt);
+			
+			try {
+				response.setContentType("text/html;charset=UTF-8");  
+				pWriter = response.getWriter();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			pWriter.write(jsonString);	
+		}
+	}
 	
 	public ActionForward toKhManage(ActionMapping mapping,
 			ActionForm form,
@@ -293,9 +382,10 @@ public class CrmAction extends BaseAppAction {
 			if(retCode == 0){
 				url =request.getContextPath()+"/crmAction.do?method=toKhManage";
 				doJump(0,url,"新增客户",request,response);
+				doJumps(0,url,"user","新增客户",request,response);
 			}else{
 				url =request.getContextPath()+"/crmAction.do?method=toKhManage";
-				doJump(-1,url,"新增客户",request,response);
+				doJumps(-1,url,"user","新增客户",request,response);
 			}
 			
 		}catch(Exception e){
@@ -325,10 +415,10 @@ public class CrmAction extends BaseAppAction {
 			String url ="";
 			if(retCode == 0){
 				url =request.getContextPath()+"/crmAction.do?method=toYxkhAdd";
-				doJump(0,url,"新增意向客户",request,response);
+				doJumps(0,url,"queryYxkh","新增意向客户",request,response);
 			}else{
 				url =request.getContextPath()+"/crmAction.do?method=toYxkhAdd";
-				doJump(-1,url,"新增意向客户",request,response);
+				doJumps(-1,url,"queryYxkh","新增意向客户",request,response);
 			}
 			
 		}catch(Exception e){
@@ -355,10 +445,10 @@ public class CrmAction extends BaseAppAction {
 			String url ="";
 			if(retCode == 0){
 				url =request.getContextPath()+"/crmAction.do?method=toKhManage";
-				doJump(0,url,"删除客户",request,response);
+				doJumps(0,url,"user","删除客户",request,response);
 			}else{
 				url =request.getContextPath()+"/crmAction.do?method=toKhManage";
-				doJump(-1,url,"删除客户",request,response);
+				doJumps(-1,url,"user","删除客户",request,response);
 			}
 		}catch(Exception e){
 			getLogger(bosscodestr,GlobalConst.ERROR).error("删除客户出错:"+e.getMessage());
@@ -406,10 +496,10 @@ public class CrmAction extends BaseAppAction {
 			String url ="";
 			if(retCode == 0){
 				url =request.getContextPath()+"/crmAction.do?method=toKhManage";
-				doJump1(0,url,"修改客户",request,response);
+				doJump2(0,url,"user","修改客户",request,response);
 			}else{
 				url =request.getContextPath()+"/crmAction.do?method=toKhManage";
-				doJump1(-1,url,"修改客户",request,response);
+				doJump2(-1,url,"user","修改客户",request,response);
 			}
 //			return mapping.findForward("verifiinfo");
 			
@@ -437,10 +527,10 @@ public class CrmAction extends BaseAppAction {
 			String url ="";
 			if(retCode == 0){
 				url =request.getContextPath()+"/crmAction.do?method=toYxkhManage";
-				doJump1(0,url,"修改意向客户",request,response);
+				doJump2(0,url,"queryYxkh","修改意向客户",request,response);
 			}else{
 				url =request.getContextPath()+"/crmAction.do?method=toYxkhManage";
-				doJump1(-1,url,"修改意向客户",request,response);
+				doJump2(-1,url,"queryYxkh","修改意向客户",request,response);
 			}
 
 		}catch(Exception e){
@@ -511,8 +601,8 @@ public class CrmAction extends BaseAppAction {
 			List<CrmInfo> khlist = sc.queryKhListById(formBean);
 			request.setAttribute("khlist", khlist);	
 			//查询介绍人信息
-			List<CrmInfo> introducelist = sc.queryKhIntroduce(formBean);
-			request.setAttribute("introducelist", introducelist);	
+			//List<CrmInfo> introducelist = sc.queryKhIntroduce(formBean);
+			//request.setAttribute("introducelist", introducelist);	
 			
 			//新增合同的时候，查询出我这个客户，介绍的所有客户。
 			List<CrmInfo> userlist = sc.queryIntroduce(formBean);
@@ -549,10 +639,10 @@ public class CrmAction extends BaseAppAction {
 			String url ="";
 			if(retCode == 0){
 				url =request.getContextPath()+"/crmAction.do?method=toKhManage";
-				doJump(0,url,"新增合同",request,response);
+				doJumps(0,url,"ht","新增合同",request,response);
 			}else{
 				url =request.getContextPath()+"/crmAction.do?method=toKhManage";
-				doJump(-1,url,"新增合同",request,response);
+				doJumps(-1,url,"ht","新增合同",request,response);
 			}
 			
 		}catch(Exception e){
@@ -647,10 +737,10 @@ public class CrmAction extends BaseAppAction {
 			String url ="";
 			if(retCode == 0){
 				url =request.getContextPath()+"/crmAction.do?method=toHtManage";
-				doJump1(0,url,"修改合同",request,response);
+				doJump2(0,url,"ht","修改合同",request,response);
 			}else{
 				url =request.getContextPath()+"/crmAction.do?method=toHtManage";
-				doJump1(-1,url,"修改合同",request,response);
+				doJump2(-1,url,"ht","修改合同",request,response);
 			}
 			
 		}catch(Exception e){
@@ -677,10 +767,10 @@ public class CrmAction extends BaseAppAction {
 			String url ="";
 			if(retCode == 0){
 				url =request.getContextPath()+"/crmAction.do?method=toHtManage1";
-				doJump1(0,url,"修改合同",request,response);
+				doJump2(0,url,"ht","修改合同",request,response);
 			}else{
 				url =request.getContextPath()+"/crmAction.do?method=toHtManage1";
-				doJump1(-1,url,"修改合同",request,response);
+				doJump2(-1,url,"ht","修改合同",request,response);
 			}
 			
 		}catch(Exception e){
@@ -709,10 +799,10 @@ public class CrmAction extends BaseAppAction {
 			String url ="";
 			if(retCode == 0){
 				url =request.getContextPath()+"/crmAction.do?method=toHtManage";
-				doJump(0,url,"删除合同",request,response);
+				doJumps(0,url,"ht","删除合同",request,response);
 			}else{
 				url =request.getContextPath()+"/crmAction.do?method=toHtManage";
-				doJump(-1,url,"删除合同",request,response);
+				doJumps(-1,url,"ht","删除合同",request,response);
 			}
 		}catch(Exception e){
 			getLogger(bosscodestr,GlobalConst.ERROR).error("删除合同出错:"+e.getMessage());
@@ -738,10 +828,10 @@ public class CrmAction extends BaseAppAction {
 			String url ="";
 			if(retCode == 0){
 				url =request.getContextPath()+"/crmAction.do?method=toHtManage1";
-				doJump(0,url,"删除合同",request,response);
+				doJumps(0,url,"ht","删除合同",request,response);
 			}else{
 				url =request.getContextPath()+"/crmAction.do?method=toHtManage1";
-				doJump(-1,url,"删除合同",request,response);
+				doJumps(-1,url,"ht","删除合同",request,response);
 			}
 		}catch(Exception e){
 			getLogger(bosscodestr,GlobalConst.ERROR).error("删除合同出错:"+e.getMessage());
@@ -868,9 +958,56 @@ public class CrmAction extends BaseAppAction {
 			HttpServletResponse response) throws Exception {
 		String bosscodestr = super.getBossCodeStr();
 		int retCode = 0;
-		try
+		try 
 		{
 			CrmForm formBean = (CrmForm)form;
+			CrmSc sc = new CrmSc();
+			//查询用户管辖的区域
+			SessionData sessionData =(SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
+			formBean.setOperatorId(sessionData.getSno());
+			List<CrmInfo> orglist = sc.queryOrgByUser(formBean);
+			String org_id="";
+			if(orglist!=null&&orglist.size()>0){
+				for(int i=0;i<orglist.size();i++){
+					CrmInfo org = orglist.get(i);
+					org_id = org_id+org.getOrg_id()+",";
+				}
+			}
+			formBean.setOrg_ids(org_id);
+			
+			List<CrmInfo> userlist = sc.queryHf(formBean);
+			
+			request.setAttribute("userlist", userlist);	
+			if(userlist.size()>0)
+			{
+				formBean.setTotalCount(Integer.parseInt(userlist.get(0).getTotalCount()));
+			}else{
+				formBean.setTotalCount(0);
+			}
+			
+			
+			request.setAttribute("pager", formBean);	
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
+			
+			//记录日志
+//			doLog(form,"进入欢迎页面");
+//			createLog(request,"","","进入欢迎页面","1");
+			getLogger(bosscodestr,GlobalConst.EXIT).info("进入欢迎页面。");
+			return mapping.findForward("hfmanage");
+		}catch(Exception e){
+			getLogger(bosscodestr,GlobalConst.ERROR).error("进入欢迎页面出错:"+e.getMessage());
+			throw new Exception();
+		}
+	}
+	public ActionForward toHfManagePage(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String bosscodestr = super.getBossCodeStr();
+		int retCode = 0;
+		try 
+		{
+			CrmForm formBean  =(CrmForm)request.getAttribute("pager");
 			CrmSc sc = new CrmSc();
 			//查询用户管辖的区域
 			SessionData sessionData =(SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
@@ -1023,11 +1160,11 @@ public class CrmAction extends BaseAppAction {
 			getLogger(bosscodestr,GlobalConst.EXIT).info("工作回访。");
 			String url ="";
 			if(retCode == 0){
-				url =request.getContextPath()+"/crmAction.do?method=toHfManage";
-				doJump1(0,url,"工作回访",request,response);
+				url =request.getContextPath()+"/crmAction.do?method=toHfManagePage";
+				doJump2(0,url,"hf","工作回访",request,response);
 			}else{
-				url =request.getContextPath()+"/crmAction.do?method=toHfManage";
-				doJump1(-1,url,"工作回访",request,response);
+				url =request.getContextPath()+"/crmAction.do?method=toHfManagePage";
+				doJump2(-1,url,"hf","工作回访",request,response);
 			}
 		}catch(Exception e){
 			getLogger(bosscodestr,GlobalConst.ERROR).error("工作回访出错:"+e.getMessage());

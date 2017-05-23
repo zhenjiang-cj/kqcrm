@@ -3,6 +3,7 @@ package com.nl.portal.actionForm;
 import com.nl.base.BaseAppActionForm;
 
 public class CrmForm extends BaseAppActionForm {
+	private String opflag;
 	private String provinces;
 	private String city;
 	private String region;
@@ -15,6 +16,7 @@ public class CrmForm extends BaseAppActionForm {
 	private String introduce_name;
 	private String channel_source;
 	private String is_install;
+	private String is_ws;
 	
 	private String ht_id;
 	private String ht_code ;
@@ -404,6 +406,18 @@ public class CrmForm extends BaseAppActionForm {
 	}
 	public void setIs_install(String is_install) {
 		this.is_install = is_install;
+	}
+	public String getOpflag() {
+		return opflag;
+	}
+	public void setOpflag(String opflag) {
+		this.opflag = opflag;
+	}
+	public String getIs_ws() {
+		return is_ws;
+	}
+	public void setIs_ws(String is_ws) {
+		this.is_ws = is_ws;
 	}
 
 }

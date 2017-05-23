@@ -25,6 +25,7 @@ public class CrmSc extends AbstractDB {
 			param.put("org_ids", userform.getOrg_ids());
 			param.put("kh_id", userform.getKh_id());
 			param.put("kh_name", userform.getKh_name());
+			param.put("is_ws", userform.getIs_ws());
 			param.put("introduce_name", userform.getIntroduce_name());
 			param.put("kh_phone1", userform.getKh_phone1());
 			param.put("kh_phone2", userform.getKh_phone2());
