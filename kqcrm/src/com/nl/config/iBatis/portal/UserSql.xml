@@ -120,6 +120,20 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		)
 		
 	</insert>
+	<insert id="doUserRegionAdd1" parameterClass="java.util.HashMap">
+		
+		insert into kq_user_region
+		( 
+			sno,
+			region 
+
+		)
+		values
+		(   #sno#,
+			#region# 
+		)
+		
+	</insert>
 	
 	<update id="doUserDel" parameterClass="java.util.HashMap">
 	  UPDATE kq_isc_user set is_valid=0 where is_valid =1 and sno = #sno#
@@ -162,6 +176,11 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			provinces=#provinces#,
 			city=#city#,
 			region=#region# 
+	  where  sno = #sno#
+	</update>
+	<update id="doUserRegionEdit1" parameterClass="java.util.HashMap">
+	  UPDATE kq_user_region 
+	  set   region=#region# 
 	  where  sno = #sno#
 	</update>
 	
@@ -312,6 +331,26 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	</update> 
 	
 	
+	 <select id="queryAllRegion" parameterClass="java.util.HashMap" resultClass="user">
+		  
+		with cte_child(org_id,org_name,parent_org_id,data_level )
+			as
+			(
+			   select t.org_id,t.org_name, t.parent_org_id,t.data_level
+			    from kq_region_relation t
+			    where  org_id=1
+			    union all
+			    select a.org_id ,a.org_name,a.parent_org_id,a.data_level
+			    from kq_region_relation a, cte_child b
+			    where a.parent_org_id=b.org_id
+			)  
+			select distinct * from cte_child where  1=1
+			order by org_id,data_level
+	</select>
+	 <select id="getRegionByUser" parameterClass="java.util.HashMap" resultClass="user">
+		  
+		select sno,region from kq_user_region a where sno = #sno#
+	</select>
 	
 	
 	

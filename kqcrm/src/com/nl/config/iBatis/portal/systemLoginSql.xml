@@ -21,6 +21,17 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		  and a.user_id = #user_id#
   
 	</select>
+	<select id='queryOperatorById1' parameterClass="java.util.HashMap" resultClass="operator" >	   
+	
+	
+	select a.sno,a.user_id,a.user_name,a.user_pswd,a.msisdn,a.email,
+		b.provinces,b.city,b.region,b.org_level 
+		from kq_isc_user a ,kq_user_region b  
+		where a.is_valid =1 
+		  and a.sno =b.sno 
+		  and a.user_id = #user_id#
+  
+	</select>
 	
 	<select id='queryMenu' parameterClass="java.util.HashMap" resultClass="sysMenu" >
 		 

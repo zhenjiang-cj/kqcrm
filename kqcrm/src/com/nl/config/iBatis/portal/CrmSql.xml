@@ -4,6 +4,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 "http://www.ibatis.com/dtd/sql-map-2.dtd">
 <sqlMap namespace="CrmSql">
 	<typeAlias alias="crminfo" type="com.nl.portal.dt.CrmInfo"/>
+	<typeAlias alias="user" type="com.nl.portal.dt.UserInfo"/>
 	
 	<select id='queryKh' parameterClass="java.util.HashMap" resultClass="crminfo" >
         select *
@@ -402,6 +403,24 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		                   ) a) t 
 	</select>
 	
+	<select id='queryhtBykh' parameterClass="java.util.HashMap" resultClass="crminfo" >
+        select *
+		  from (select a.*, row_number() over(order by a.ht_date_current) rn, count(*) over() totalCount
+		          from (
+		          select distinct a.kh_addr,a.kh_id,a.kh_name,a.kh_card,a.kh_phone1,a.kh_phone2,a.introduce_name,
+							b.ht_id,b.ht_code,b.ht_date_first,b.ht_date_current,b.ht_pledge,b.ht_rent,b.prod_name,b.prod_code,b.ht_year,b.remark ,b.ht_type  
+					 from kq_kh_info a ,kq_ht_info b 
+					where a.kh_id = b.kh_id
+					  and b.is_valid =1 
+					  and a.is_valid =1
+		           <dynamic>
+					<isNotEmpty property="kh_id">
+							and b.kh_id = #kh_id#
+					</isNotEmpty>
+				  </dynamic>         
+		                   ) a) t 
+	</select>
+	
 	<update id="doHtEdit" parameterClass="java.util.HashMap">
 		update kq_ht_info set
 			ht_code=#ht_code#,
@@ -551,6 +570,17 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 				 where a.is_valid=1
 				   and hf_id = #hf_id#
 	</select>
+	<select id='queryhfBykh' parameterClass="java.util.HashMap" resultClass="crminfo" >
+		             
+				select c.ht_id,c.hf_date_fact,c.hf_date_must,c.hf_remark,c.hf_status,c.hf_type,c.hf_user_name 
+					from kq_kh_info a ,kq_ht_info b,kq_hf_info c
+					where a.kh_id=b.kh_id
+					  and b.ht_id=c.ht_id
+					  and a.is_valid=1
+					  and b.is_valid=1
+					  and c.is_valid=1
+				   	  and a.kh_id = #kh_id#
+	</select>
 	
 	<update id="doHfEdit" parameterClass="java.util.HashMap">
 		update kq_hf_info set
@@ -607,262 +637,6 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		  and is_valid=1
 		
 	</update>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<select id="getRole" resultClass="java.lang.String">
-		select seq_value from kq_seq_role_srl
-	</select>
-	
-	<update id="addRole" parameterClass="java.util.HashMap">
-	    update kq_seq_role_srl 
-		   set seq_value = seq_value+1 
-	</update>
-	
-	
-	<select id='getCityByPro' parameterClass="java.util.HashMap" resultClass="user" >
-        with cte_child(org_id,parent_org_id,org_name,data_level )
-			as
-			(
-			   select org_id ,parent_org_id,org_name,data_level
-			    from kq_region_relation 
-			    where  (   
-				 org_id = #provinces#
-				  
-			    )
-			    union all
-			    select a.org_id ,a.parent_org_id,a.org_name,a.data_level
-			    from kq_region_relation a, cte_child b
-			    where a.parent_org_id=b.org_id
-			)  
-			select * from cte_child where  data_level = 3
-			<dynamic>
-				<isNotEmpty property="city">
-						and org_id  =#city#
-				</isNotEmpty>
-			  </dynamic>    
-			
-			order by data_level,org_id
-	</select>
-	<select id='getRegionByCity' parameterClass="java.util.HashMap" resultClass="user" >
-        with cte_child(org_id,parent_org_id,org_name,data_level )
-			as
-			(
-			   select org_id ,parent_org_id,org_name,data_level
-			    from kq_region_relation 
-			    where  (   
-				 org_id = #city#
-				  
-			    )
-			    union all
-			    select a.org_id ,a.parent_org_id,a.org_name,a.data_level
-			    from kq_region_relation a, cte_child b
-			    where a.parent_org_id=b.org_id
-			)  
-			select * from cte_child where  data_level = 4
-			order by data_level,org_id
-	</select>
-	
-	
-	<insert id="doUserRegionAdd" parameterClass="java.util.HashMap">
-		
-		insert into kq_user_region
-		( 
-			sno,
-			org_level,
-			provinces,
-			city,
-			region 
-
-		)
-		values
-		(   #sno#,
-			#level#,
-			#provinces#,
-			#city#,
-			#region# 
-		)
-		
-	</insert>
-	
-	
-	
-	
-	
-	<update id="doUserEdit" parameterClass="java.util.HashMap">
-	  UPDATE kq_isc_user 
-	  set user_name=#user_name# ,
-		  msisdn = #msisdn#,
-		  email = #email#
-	  where is_valid =1 
-	  and sno = #sno#
-	</update>
-	
-	<select id='doUserRegioncheck' parameterClass="java.util.HashMap" resultClass="user" >
-        select *  from kq_user_region a where sno =#sno# 
-	</select>
-	
-	<update id="doUserRegionEdit" parameterClass="java.util.HashMap">
-	  UPDATE kq_user_region 
-	  set org_level=#level#,
-			provinces=#provinces#,
-			city=#city#,
-			region=#region# 
-	  where  sno = #sno#
-	</update>
-	
-	<select id='queryAllRole' parameterClass="java.util.HashMap" resultClass="user" >
-        select a.ROLE_ID,a.ROLE_NAME,a.REMARK,a.SYSID from kq_isc_role a where ENFLAG=1 
-	</select>
-	<select id='queryAllRolebysno' parameterClass="java.util.HashMap" resultClass="user" >
-        select a.ROLE_ID,a.ROLE_NAME,a.REMARK,a.SYSID from kq_isc_role a 
-        where ENFLAG=1 
-        and not exists (select 1 from kq_ISC_USER_ROLE b where a.ROLE_ID=b.ROLE_ID and b.SNO=#sno#)
-	</select>
-	
-	<select id='queryRoleByUser' parameterClass="java.util.HashMap" resultClass="user" >
-        select a.ROLE_ID,a.ROLE_NAME,a.REMARK,a.SYSID from kq_isc_role a,kq_isc_user_role b 
-        where a.ENFLAG=1 
-        and a.role_id =b.role_id
-        and b.sno =#sno#
-	</select>
-	
-	<update id="delUserRole" parameterClass="java.util.HashMap">
-	  delete kq_isc_user_role where sno = #sno# and role_id =#role_id#
-	</update>
-	
-	<insert id="addUserRole" parameterClass="java.util.HashMap">
-		
-		insert into kq_isc_user_role
-		( 
-			sno,
-			role_id 
-
-		)
-		values
-		(   #sno#,
-			#role_id# 
-		)
-		
-	</insert>
-	<select id='queryRole' parameterClass="java.util.HashMap" resultClass="user" >
-       select *
-		  from (select a.*, row_number() over(order by a.role_id) rn, count(*) over() totalCount
-		          from (
-		          select a.role_id,a.role_name,a.remark as role_remark,a.sysid from kq_isc_role a where enflag =1 
-		           <dynamic>
-					<isNotEmpty property="role_name">
-							and a.role_name   like '%$role_name$%'
-					</isNotEmpty>
-				  </dynamic>         
-		                   ) a) t
-		 where t.rn>(#page_num#-1)*#page_size# and #page_num#*#page_size# >= t.rn
-	</select>
-	<select id='queryRoleList' parameterClass="java.util.HashMap" resultClass="user" >
-	          select a.role_id,a.role_name,a.remark as role_remark,a.sysid 
-	          from kq_isc_role a 
-	          where enflag =1 
-	            and role_id = #role_id#
-	</select>
-	
-	
-	 <select id="queryAllprivilege" parameterClass="java.util.HashMap" resultClass="user">
-		  
-		with cte_child(privilege_id,privilege_name,parent_id,sysid )
-			as
-			(
-			   select t.privilege_id,t.privilege_name, t.parent_id,t.sysid
-			    from kq_isc_privilege t
-			    where  t.status =1
-			      and t.sysid =#sysid#
-			    union all
-			    select a.privilege_id ,a.privilege_name,a.parent_id,a.sysid
-			    from kq_isc_privilege a, cte_child b
-			    where a.parent_id=b.privilege_id
-			)  
-			select distinct * from cte_child where  1=1
-			order by privilege_id,sysid
-	</select>
-	
-	<insert id="doRoleAdd" parameterClass="java.util.HashMap">
-		
-		insert into kq_isc_role
-		( 
-			role_id,
-			role_name,
-			remark,
-			enflag,
-			createid,
-			createtime,
-			sysid
-		)
-		values
-		(    
-			#role_id#,
-			#role_name#,
-			#role_remark#,
-			1,
-			#create_id#,
-			GETDATE(),
-			#sysid# 
-		)
-		
-	</insert>
-	
-	<insert id="addRolePriv" parameterClass="java.util.HashMap">
-		
-		insert into kq_ISC_ROLE_PRIVILEGE
-		( 
-			role_id,
-			privilege_id
-		)
-		values
-		(    
-			#role_id#,
-			#priv_id#
-		)
-		
-	</insert>
-	
-	<update id="doRoleDel" parameterClass="java.util.HashMap">
-	  UPDATE kq_isc_role 
-	  set enflag=0, 
-	  where enflag =1 
-	  and role_id = #role_id#
-	</update>
-	
-	 <select id="getPrivilegeByRoleid" parameterClass="java.util.HashMap" resultClass="user">
-		 select role_id,privilege_id from kq_ISC_ROLE_PRIVILEGE a 
-		 where role_id = #role_id#
-	</select>
-	
-	<update id="doRoleEdit" parameterClass="java.util.HashMap">
-	  UPDATE kq_isc_role 
-	    set role_name=#role_name#,
-			remark=#role_remark#,
-			sysid=#sysid# 
-	  where enflag =1 
-	  and role_id = #role_id#
-	</update>
-	
-	<update id="delRolePriv" parameterClass="java.util.HashMap">
-	  delete kq_ISC_ROLE_PRIVILEGE
-	  where   role_id = #role_id#
-	</update> 
-	
-	
 	
 	
 	
