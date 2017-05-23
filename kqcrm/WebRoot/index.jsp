@@ -102,6 +102,19 @@ function checksession()
 	}
 
 }
+function fillSpace(key){
+	var obj = jmenus.get(key);
+	if (!obj) return;
+	
+	var parent = $(obj).parent();
+	var height = parent.height() - (($(".accordionHeader", obj).size()) * ($(".accordionHeader:first-child", obj).outerHeight())) -2;
+
+	//var os = parent.children().not(obj);
+	//$.each(os, function(i){
+	//	height -= $(os[i]).outerHeight();
+	//});
+	$(".accordionContent",obj).height(height);
+}
 </script>
 </head>
 
@@ -116,7 +129,6 @@ function checksession()
 					%>
 					<li><a>用户名称：<%=sessdata.getUser_name() %></a></li>
 					<li><a>用户工号：<%=sessdata.getUser_id() %></a></li>
-					<li><a>用户归属：<%=sessdata.getOrg_name() %></a></li>				
 					<%
 				}
 				%>
