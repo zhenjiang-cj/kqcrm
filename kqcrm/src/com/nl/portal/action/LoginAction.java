@@ -78,7 +78,8 @@ public class LoginAction extends BaseAppAction
 		if (!"".equals(user_id)&&!"".equals(password))
 		{
 			//查询用户是否存在
-			sysOperator = systemSC.getOperatorById(user_id);
+//			sysOperator = systemSC.getOperatorById(user_id);
+			sysOperator = systemSC.getOperatorById1(user_id);
 			if (sysOperator != null)
 			{
 				//校验密码是否正确
@@ -89,23 +90,23 @@ public class LoginAction extends BaseAppAction
 					sessionData.setSno(sysOperator.getSno());
 					sessionData.setUser_id(sysOperator.getUser_id());
 					sessionData.setUser_name(sysOperator.getUser_name());
-					sessionData.setProvinces(sysOperator.getProvinces()==null?"":sysOperator.getProvinces());
-					sessionData.setCity(sysOperator.getCity()==null?"":sysOperator.getCity());
+//					sessionData.setProvinces(sysOperator.getProvinces()==null?"":sysOperator.getProvinces());
+//					sessionData.setCity(sysOperator.getCity()==null?"":sysOperator.getCity());
 					sessionData.setRegion(sysOperator.getRegion()==null?"":sysOperator.getRegion());
-					sessionData.setOrg_level(sysOperator.getOrg_level()==null?"1":sysOperator.getOrg_level());
-					if("1".equals(sysOperator.getOrg_level())){
-						sessionData.setOrg_name(sysOperator.getProvinces_name());
-						sessionData.setOrg_id(sysOperator.getProvinces());
-					}else if("2".equals(sysOperator.getOrg_level())){
-						sessionData.setOrg_name(sysOperator.getProvinces_name()+sysOperator.getCity_name());
-						sessionData.setOrg_id(sysOperator.getCity());
-					}else if("3".equals(sysOperator.getOrg_level())){
-						sessionData.setOrg_name(sysOperator.getProvinces_name()+sysOperator.getCity_name()+sysOperator.getRegion_name());
-						sessionData.setOrg_id(sysOperator.getRegion());
-					}else  {
-						sessionData.setOrg_name("");
-						sessionData.setOrg_id("");
-					}
+//					sessionData.setOrg_level(sysOperator.getOrg_level()==null?"1":sysOperator.getOrg_level());
+//					if("1".equals(sysOperator.getOrg_level())){
+//						sessionData.setOrg_name(sysOperator.getProvinces_name());
+//						sessionData.setOrg_id(sysOperator.getProvinces());
+//					}else if("2".equals(sysOperator.getOrg_level())){
+//						sessionData.setOrg_name(sysOperator.getProvinces_name()+sysOperator.getCity_name());
+//						sessionData.setOrg_id(sysOperator.getCity());
+//					}else if("3".equals(sysOperator.getOrg_level())){
+//						sessionData.setOrg_name(sysOperator.getProvinces_name()+sysOperator.getCity_name()+sysOperator.getRegion_name());
+//						sessionData.setOrg_id(sysOperator.getRegion());
+//					}else  {
+//						sessionData.setOrg_name("");
+//						sessionData.setOrg_id("");
+//					}
 					
 
 						//获取工号系统菜单

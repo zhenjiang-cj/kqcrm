@@ -102,7 +102,7 @@ public class SystemDbMgr extends AbstractDB
 		}
 		return list;
 	}
-	
+
 	public SysOperator getOperatorById(String operatorId)
 	{
 		SysOperator operator = new SysOperator();
@@ -111,6 +111,20 @@ public class SystemDbMgr extends AbstractDB
 		try
 		{
 			operator = (SysOperator) smc.queryForObject("systemLoginSql.queryOperatorById",param);
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return operator;
+	}
+	public SysOperator getOperatorById1(String operatorId)
+	{
+		SysOperator operator = new SysOperator();
+		HashMap<String,String> param = new HashMap<String,String>();
+		param.put("user_id", operatorId);
+		try
+		{
+			operator = (SysOperator) smc.queryForObject("systemLoginSql.queryOperatorById1",param);
 		} catch (SQLException e)
 		{
 			e.printStackTrace();

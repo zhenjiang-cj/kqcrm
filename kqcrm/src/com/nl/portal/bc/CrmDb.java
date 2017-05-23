@@ -296,6 +296,18 @@ public class CrmDb extends AbstractDB {
 		}
 		return list;
 	}
+	public List<CrmInfo> queryhtBykh(HashMap param) {
+		getLogger(bossCodeStr,GlobalConst.ENTER).info("查询用户：");
+		List<CrmInfo> list = null;
+		
+		try{
+			list = smc.queryForList("CrmSql.queryhtBykh", param);
+			getLogger(bossCodeStr,GlobalConst.EXIT).info("查询用户结束。");
+		}catch(Exception e){
+			getLogger(bossCodeStr,GlobalConst.ERROR).error("::查询用户有错！::" + "error:"+e.getMessage());
+		}
+		return list;
+	}
 
 	public int doHtEdit(Map<String, String> param) throws Exception {
 		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
@@ -365,6 +377,18 @@ public class CrmDb extends AbstractDB {
 		
 		try{
 			list = smc.queryForList("CrmSql.queryhfByid", param);
+			getLogger(bossCodeStr,GlobalConst.EXIT).info("查询用户结束。");
+		}catch(Exception e){
+			getLogger(bossCodeStr,GlobalConst.ERROR).error("::查询用户有错！::" + "error:"+e.getMessage());
+		}
+		return list;
+	}
+	public List<CrmInfo> queryhfBykh(HashMap param) {
+		getLogger(bossCodeStr,GlobalConst.ENTER).info("查询用户：");
+		List<CrmInfo> list = null;
+		
+		try{
+			list = smc.queryForList("CrmSql.queryhfBykh", param);
 			getLogger(bossCodeStr,GlobalConst.EXIT).info("查询用户结束。");
 		}catch(Exception e){
 			getLogger(bossCodeStr,GlobalConst.ERROR).error("::查询用户有错！::" + "error:"+e.getMessage());

@@ -168,7 +168,10 @@ public class UserAction extends BaseAppAction {
 			UserSc sc = new UserSc();
 			//获取用户序列
 			formBean.setSno(sc.getSno());
+
+			List<UserInfo> regionList = sc.getRegionTree(formBean);
 			
+			request.setAttribute("regionList", regionList);
 			
 			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
 			
@@ -358,6 +361,11 @@ public class UserAction extends BaseAppAction {
 
 			List<UserInfo> userlist = sc.queryUserListBysno(formBean);
 			request.setAttribute("userlist", userlist);		
+			//获取用户的归属
+//			List<UserInfo> userregion = sc.getRegionByUser(formBean); 
+//			request.setAttribute("userregion", userregion);	
+			List<UserInfo> regionList = sc.getRegionTree(formBean);
+			request.setAttribute("regionList", regionList);	 
 			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
 			
 			

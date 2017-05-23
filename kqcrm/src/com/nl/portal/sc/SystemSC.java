@@ -339,6 +339,26 @@ public class SystemSC extends AbstractDB
 		}
 		return operator;
 	}
+	public SysOperator getOperatorById1(String operatorId)
+	{
+		SysOperator operator = null;
+		SqlMapClient smc = null;
+		try
+		{
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			SystemDbMgr sysDbMgr = new SystemDbMgr(smc);
+			operator = sysDbMgr.getOperatorById1(operatorId);
+		} catch (Exception e)
+		{
+			getLogger(bossCodeStr,GlobalConst.ERROR).error(e.getMessage());
+		}
+		finally
+		{
+			this.endTransaction(smc);
+		}
+		return operator;
+	}
 	/**
 	 * 获取操作员的系统菜单
 	 * @param sessionData

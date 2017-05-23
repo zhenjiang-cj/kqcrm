@@ -117,6 +117,17 @@ public class UserDbMgr extends AbstractDB{
 		}
 		return retCode;
 	}
+	public int doUserRegionAdd1(Map<String, String> param) throws Exception { 
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try
+		{
+			smc.insert("UserSql.doUserRegionAdd1", param);
+		}catch(Exception e){
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		}
+		return retCode;
+	}
 	public int doUserDel(Map<String, String> param) throws Exception { 
 		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
 		try
@@ -156,7 +167,8 @@ public class UserDbMgr extends AbstractDB{
 		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
 		try
 		{
-			smc.update("UserSql.doUserRegionEdit", param);
+//			smc.update("UserSql.doUserRegionEdit", param);
+			smc.update("UserSql.doUserRegionEdit1", param);
 		}catch(Exception e){
 			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
 			throw e;
@@ -245,6 +257,30 @@ public class UserDbMgr extends AbstractDB{
 		
 		try{
 			list = smc.queryForList("UserSql.queryAllprivilege", param);
+			getLogger(bossCodeStr,GlobalConst.EXIT).info("查询所有角色结束。");
+		}catch(Exception e){
+			getLogger(bossCodeStr,GlobalConst.ERROR).error("::查询所有角色有错！::" + "error:"+e.getMessage());
+		}
+		return list;
+	}
+	public List<UserInfo> getRegionTree(HashMap param) {
+		getLogger(bossCodeStr,GlobalConst.ENTER).info("查询所有角色：");
+		List<UserInfo> list = null;
+		
+		try{
+			list = smc.queryForList("UserSql.queryAllRegion", param);
+			getLogger(bossCodeStr,GlobalConst.EXIT).info("查询所有角色结束。");
+		}catch(Exception e){
+			getLogger(bossCodeStr,GlobalConst.ERROR).error("::查询所有角色有错！::" + "error:"+e.getMessage());
+		}
+		return list;
+	}
+	public List<UserInfo> getRegionByUser(HashMap param) {
+		getLogger(bossCodeStr,GlobalConst.ENTER).info("查询所有角色：");
+		List<UserInfo> list = null;
+		
+		try{
+			list = smc.queryForList("UserSql.getRegionByUser", param);
 			getLogger(bossCodeStr,GlobalConst.EXIT).info("查询所有角色结束。");
 		}catch(Exception e){
 			getLogger(bossCodeStr,GlobalConst.ERROR).error("::查询所有角色有错！::" + "error:"+e.getMessage());

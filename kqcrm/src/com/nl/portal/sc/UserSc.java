@@ -149,23 +149,28 @@ public class UserSc extends AbstractDB {
 			
 			param.put("create_id",form.getOperatorId());
 			
-			String level = "1";
+//			String level = "1";
 			
-			if(form.getRegion()!=null&&!"".equals(form.getRegion())&&!"null".equals(form.getRegion())){
-				level ="3";
-			}else if(form.getCity()!=null&&!"".equals(form.getCity())&&!"null".equals(form.getCity())){
-				level ="2";
-			}else{
-				level ="1";
-			}
+//			if(form.getRegion()!=null&&!"".equals(form.getRegion())&&!"null".equals(form.getRegion())){
+//				level ="3";
+//			}else if(form.getCity()!=null&&!"".equals(form.getCity())&&!"null".equals(form.getCity())){
+//				level ="2";
+//			}else{
+//				level ="1";
+//			}
 			
-			param.put("level",level);
-			param.put("provinces",form.getProvinces()==null?"":form.getProvinces());
-			param.put("city",form.getCity()==null?"":form.getCity());
-			param.put("region",form.getRegion()==null?"":form.getRegion());
+//			param.put("level",level);
+//			param.put("provinces",form.getProvinces()==null?"":form.getProvinces());
+//			param.put("city",form.getCity()==null?"":form.getCity());
+//			param.put("region",form.getRegion()==null?"":form.getRegion());
 			
 			retCode = db.doUserAdd(param);
-			retCode = db.doUserRegionAdd(param);
+			
+			param.put("region",form.getCheckPrivId());
+			
+			
+//			retCode = db.doUserRegionAdd(param);
+			retCode = db.doUserRegionAdd1(param);
 			if(retCode == GlobalConst.GLOBAL_RESULT_FAIL)return retCode;
 			
 			 
@@ -254,35 +259,36 @@ public class UserSc extends AbstractDB {
 			
 			param.put("create_id",form.getOperatorId());
 			
-			String level = "1";
-			
-			if(form.getRegion()!=null&&!"".equals(form.getRegion())&&!"null".equals(form.getRegion())){
-				level ="3";
-			}else if(form.getCity()!=null&&!"".equals(form.getCity())&&!"null".equals(form.getCity())){
-				level ="2";
-			}else{
-				level ="1";
-			}
-			
-			param.put("level",level);
-			param.put("provinces",form.getProvinces()==null?"":form.getProvinces());
-			param.put("city",form.getCity()==null?"":form.getCity());
-			param.put("region",form.getRegion()==null?"":form.getRegion());
+//			String level = "1";
+//			
+//			if(form.getRegion()!=null&&!"".equals(form.getRegion())&&!"null".equals(form.getRegion())){
+//				level ="3";
+//			}else if(form.getCity()!=null&&!"".equals(form.getCity())&&!"null".equals(form.getCity())){
+//				level ="2";
+//			}else{
+//				level ="1";
+//			}
+//			
+//			param.put("level",level);
+//			param.put("provinces",form.getProvinces()==null?"":form.getProvinces());
+//			param.put("city",form.getCity()==null?"":form.getCity());
+//			param.put("region",form.getRegion()==null?"":form.getRegion());
+			param.put("region",form.getCheckPrivId());
 			
 			 
 
 			//插入基本的工单信息 (流程实例信息表 FLOW_INSTANCE,工单基本信息表 CENSUPPORT_WORKORDER_BASE_INFO)
 			retCode = db.doUserEdit(param);
 			//判断是否这个用户有归属
-			List<UserInfo> userlist = db.doUserRegioncheck(param);
-			if(userlist!=null&&userlist.size()>0){
-				retCode = db.doUserRegionEdit(param);
-				if(retCode == GlobalConst.GLOBAL_RESULT_FAIL)return retCode;
-			}else{
-				retCode = db.doUserRegionAdd(param);
-				if(retCode == GlobalConst.GLOBAL_RESULT_FAIL)return retCode;
-			}
-			
+//			List<UserInfo> userlist = db.doUserRegioncheck(param);
+//			if(userlist!=null&&userlist.size()>0){
+//				retCode = db.doUserRegionEdit(param);
+//				if(retCode == GlobalConst.GLOBAL_RESULT_FAIL)return retCode;
+//			}else{
+//				retCode = db.doUserRegionAdd(param);
+//				if(retCode == GlobalConst.GLOBAL_RESULT_FAIL)return retCode;
+//			}
+			retCode = db.doUserRegionEdit(param);
 			
 			smc.commitTransaction();
 		} catch (Exception e) {
@@ -439,6 +445,48 @@ public class UserSc extends AbstractDB {
 			HashMap param = new HashMap(); 
 			param.put("sysid", formBean.getSysid());
 			userlist = db.queryAllprivilege(param);
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			this.endTransaction(smc);
+		}
+		return userlist;
+	}
+	public List<UserInfo> getRegionTree(UserForm formBean) {
+		List<UserInfo> userlist = null;
+		SqlMapClient smc = null;
+		try
+		{
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			UserDbMgr db = new UserDbMgr(smc);
+			HashMap param = new HashMap(); 
+//			param.put("sysid", formBean.getSysid());
+			userlist = db.getRegionTree(param);
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			this.endTransaction(smc);
+		}
+		return userlist;
+	}
+	public List<UserInfo> getRegionByUser(UserForm formBean) {
+		List<UserInfo> userlist = null;
+		SqlMapClient smc = null;
+		try
+		{
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			UserDbMgr db = new UserDbMgr(smc);
+			HashMap param = new HashMap(); 
+			param.put("sno", formBean.getSno());
+			userlist = db.getRegionByUser(param);
 		} catch(Exception e)
 		{
 			e.printStackTrace();

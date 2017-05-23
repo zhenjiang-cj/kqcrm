@@ -517,6 +517,29 @@ public class CrmSc extends AbstractDB {
 		}
 		return userlist;
 	}
+	public List<CrmInfo> queryhtBykh(CrmForm userform) {
+		List<CrmInfo> userlist = null;
+		SqlMapClient smc = null;
+		try
+		{
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			CrmDb db = new CrmDb(smc);
+			HashMap param = new HashMap(); 
+			param.put("kh_id", userform.getKh_id());
+//			param.put("page_num", userform.getPageNum());
+//			param.put("page_size", userform.getNumPerPage());
+			userlist = db.queryhtBykh(param);
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			this.endTransaction(smc);
+		}
+		return userlist;
+	}
 	public int doHtEdit(CrmForm form)  throws Exception{
 		SqlMapClient smc = null;
 		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
@@ -694,6 +717,27 @@ public class CrmSc extends AbstractDB {
 			param.put("ht_id", userform.getHt_id());
 			param.put("hf_id", userform.getHf_id());
 			userlist = db.queryhfByid(param);
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			this.endTransaction(smc);
+		}
+		return userlist;
+	}
+	public List<CrmInfo> queryhfBykh(CrmForm userform) {
+		List<CrmInfo> userlist = null;
+		SqlMapClient smc = null;
+		try
+		{
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			CrmDb db = new CrmDb(smc);
+			HashMap param = new HashMap(); 
+			param.put("kh_id", userform.getKh_id());
+			userlist = db.queryhfBykh(param);
 		} catch(Exception e)
 		{
 			e.printStackTrace();

@@ -455,6 +455,38 @@ public class CrmAction extends BaseAppAction {
 			throw new Exception();
 		}
 	}
+	public ActionForward toKhView(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String bosscodestr = super.getBossCodeStr();
+		int retCode = 0;
+		try
+		{
+			CrmForm formBean = (CrmForm)form;
+			CrmSc sc = new CrmSc();
+			//展现用户基本信息、
+			List<CrmInfo> userlist = sc.queryKhListById(formBean);
+			request.setAttribute("userlist", userlist);		
+			//用户所有的合同信息
+			List<CrmInfo> htlist = sc.queryhtBykh(formBean);
+			request.setAttribute("htlist", htlist);	
+			//回访记录  
+			List<CrmInfo> hflist = sc.queryhfBykh(formBean);
+			request.setAttribute("hflist", hflist);	
+			
+			
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
+			
+			
+			return mapping.findForward("khview");
+			
+		}catch(Exception e){
+			getLogger(bosscodestr,GlobalConst.ERROR).error("进入基本信息出错:"+e.getMessage());
+//			throw new Exception(AppConst.CENTERTASK_ERROR_INFO);
+			throw new Exception();
+		}
+	}
 	public ActionForward toKhEdit(ActionMapping mapping,
 			ActionForm form,
 			HttpServletRequest request,
@@ -961,53 +993,6 @@ public class CrmAction extends BaseAppAction {
 		try 
 		{
 			CrmForm formBean = (CrmForm)form;
-			CrmSc sc = new CrmSc();
-			//查询用户管辖的区域
-			SessionData sessionData =(SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
-			formBean.setOperatorId(sessionData.getSno());
-			List<CrmInfo> orglist = sc.queryOrgByUser(formBean);
-			String org_id="";
-			if(orglist!=null&&orglist.size()>0){
-				for(int i=0;i<orglist.size();i++){
-					CrmInfo org = orglist.get(i);
-					org_id = org_id+org.getOrg_id()+",";
-				}
-			}
-			formBean.setOrg_ids(org_id);
-			
-			List<CrmInfo> userlist = sc.queryHf(formBean);
-			
-			request.setAttribute("userlist", userlist);	
-			if(userlist.size()>0)
-			{
-				formBean.setTotalCount(Integer.parseInt(userlist.get(0).getTotalCount()));
-			}else{
-				formBean.setTotalCount(0);
-			}
-			
-			
-			request.setAttribute("pager", formBean);	
-			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
-			
-			//记录日志
-//			doLog(form,"进入欢迎页面");
-//			createLog(request,"","","进入欢迎页面","1");
-			getLogger(bosscodestr,GlobalConst.EXIT).info("进入欢迎页面。");
-			return mapping.findForward("hfmanage");
-		}catch(Exception e){
-			getLogger(bosscodestr,GlobalConst.ERROR).error("进入欢迎页面出错:"+e.getMessage());
-			throw new Exception();
-		}
-	}
-	public ActionForward toHfManagePage(ActionMapping mapping,
-			ActionForm form,
-			HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		String bosscodestr = super.getBossCodeStr();
-		int retCode = 0;
-		try 
-		{
-			CrmForm formBean  =(CrmForm)request.getAttribute("pager");
 			CrmSc sc = new CrmSc();
 			//查询用户管辖的区域
 			SessionData sessionData =(SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
