@@ -543,12 +543,15 @@ public class CrmAction extends BaseAppAction {
 			//展现用户基本信息、
 			List<CrmInfo> userlist = sc.queryKhListById(formBean);
 			request.setAttribute("userlist", userlist);		
+//			System.out.println("%%%%%userlist"+userlist);
 			//用户所有的合同信息
 			List<CrmInfo> htlist = sc.queryhtBykh(formBean);
 			request.setAttribute("htlist", htlist);	
+//			System.out.println("%%%%%htlist"+htlist);
 			//回访记录  
 			List<CrmInfo> hflist = sc.queryhfBykh(formBean);
 			request.setAttribute("hflist", hflist);	
+//			System.out.println("%%%%%hflist"+hflist);
 			
 			
 			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
