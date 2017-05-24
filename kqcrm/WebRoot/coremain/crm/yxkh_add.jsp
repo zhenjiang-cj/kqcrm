@@ -19,11 +19,7 @@
    
     <title>意向客户录入</title>
     
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
+	<link type="text/css" rel= "stylesheet" href="<%=path%>/css/content.css" >
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
@@ -146,84 +142,97 @@ function cityChange() {
     <div class="pageContent">
   <form class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)" action="<%=path%>/crmAction.do?method=doYxkhAdd" method="post" name="userForm">
     <input type="hidden" name="kh_id" id="kh_id" value="<%=userform.getKh_id() %>">
-    <input type="hidden" name="operatorId" id="operatorId" value="<%=userform.getOperatorId() %>">
     
-    <div class="formBar">
+    
+    
+    <div class="pageFormContent nowrap" layoutH="56" style="height:100px">
+		<table class="TabList">                   	                  
+	                  <tr style="margin-top:20px;">
+	                      <td class="tit">用户名称：</td>
+	                      <td style="text-align:left;">
+	                         <input name="kh_name"  id="kh_name" type="text"  maxlength="30"  class="required" />
+	                      </td>
+	                      <td class="tit03">省份：</td>
+	                      <td style="text-align:left;">
+	                          <select  name="provinces" id="provinces" class="required" onchange="provincesChange();">
+															<option value="">--请选择--</option>
+															<%=DictMgmt.getSelectObj(DictMgmt.DICT_KQ_PROVINCES,"",false,false,"-1", -1, null, null, null,-1,"") %>
+														</select>
+	                      </td>
+	                  </tr>
+	                  <tr style="margin-top:20px;">
+	                      <td class="tit">地市：</td>
+	                      <td style="text-align:left;">
+	                          <select  name="city" id="city" onchange="cityChange();" class="required" >
+															<option value="">--请选择--</option>
+															<%=DictMgmt.getSelectObj(DictMgmt.DICT_KQ_CITY,"",false,false,"-1", -1, null, null, null,-1,"") %>
+														</select>
+	                      </td>
+	                      <td class="tit">县区：</td>
+	                      <td style="text-align:left;">
+	                          <select  name="region" id="region" class="required"  >
+															<option value="">--请选择--</option>
+															<%=DictMgmt.getSelectObj(DictMgmt.DICT_kq_REGION,"",false,false,"-1", -1, null, null, null,-1,"") %>
+														</select>
+	                      </td>
+	                  </tr>
+	                  <tr style="margin-top:20px;">
+	                      <td class="tit">手机号码1：</td>
+	                      <td style="text-align:left;">
+	                          <input name="kh_phone1" id="kh_phone1" type="text"  maxlength="11"  class="required digits"  />
+	                      </td>
+	                      <td class="tit">手机号码2：</td>
+	                      <td style="text-align:left;">
+	                          <input name="kh_phone2" id="kh_phone2" type="text"  maxlength="11"  class="digits"  />
+	                      </td>
+	                  </tr>
+	                  <tr style="margin-top:20px;">
+	                      <td class="tit">身份证号：</td>
+	                      <td style="text-align:left;">
+	                          <input name="kh_card" id="kh_card" type="text"  maxlength="18"  class="alphanumeric"  />
+	                      </td>
+	                      <td class="tit">转介绍人(姓名+手机号码)：</td>
+	                      <td style="text-align:left;">
+	                          <input name="introduce_name" id="introduce_name" type="text"  maxlength="20"     />
+	                      </td>
+	                  </tr>
+	                  <tr style="margin-top:20px;">
+	                      <td class="tit">渠道来源：</td>
+	                      <td style="text-align:left;">
+	                          <input name="channel_source" id="channel_source" type="text"  maxlength="80" />
+	                      </td>
+	                      <td class="tit">是否安装：</td>
+	                      <td style="text-align:left;">
+												<select  name="is_install" id="is_install" class="required"  >
+																<option value="0">未安装</option>
+																<option value="1">已安装</option>
+															</select>
+	                      </td>
+	                  </tr>
+					  <tr style="margin-top:20px;">
+	                      <td class="tit">家庭住址：</td>
+	                      <td style="text-align:left;" colspan="3">
+	                          <input name="kh_addr" id ="kh_addr" type="text"  maxlength="100"  class="required" size="60"/>
+	                      </td>
+	      
+	                  </tr>
+
+	                  <tr style="margin-top:20px;">
+	                      <td class="tit">备注：</td>
+	                      <td colspan=3 style="text-align:left;">
+	                          <textarea name="remark" cols="80" rows="2" class="required textInput" style="margin: 0px; height: 350px; width: 100%;"></textarea>
+	                      </td>
+	                  </tr>
+	            </table>
+	</div>
+	
+	<div class="formBar">
 			<ul>
 				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
 				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
 			</ul>
     </div>
     
-    <div class="pageFormContent nowrap" layoutH="56" style="height:100px">
-    <h1>客户新增</h1>
-		<p>
-			<label>用户名称：</label>
-			<input name="kh_name"  id="kh_name" type="text"  maxlength="30"  class="required" />
-		</p>
-		<p>
-			<label>省份：</label>
-			<select  name="provinces" id="provinces" class="required" onchange="provincesChange();">
-				<option value="">--请选择--</option>
-				<%=DictMgmt.getSelectObj(DictMgmt.DICT_KQ_PROVINCES,"",false,false,"-1", -1, null, null, null,-1,"") %>
-			</select>
-		</p>
-		<p>
-			<label>地市：</label>
-			<select  name="city" id="city" onchange="cityChange();" class="required" >
-				<option value="">--请选择--</option>
-				<%=DictMgmt.getSelectObj(DictMgmt.DICT_KQ_CITY,"",false,false,"-1", -1, null, null, null,-1,"") %>
-			</select>
-		</p>
-		<p>
-			<label>县区：</label>
-			<select  name="region" id="region" class="required"  >
-				<option value="">--请选择--</option>
-				<%=DictMgmt.getSelectObj(DictMgmt.DICT_kq_REGION,"",false,false,"-1", -1, null, null, null,-1,"") %>
-			</select>
-		</p>
-		<dl>
-		<dt>家庭住址：</dt>
-			<dd>
-			<input name="kh_addr" id ="kh_addr" type="text"  maxlength="100"  class="required" size="60"/>
-			</dd>
-		</dl> 
-		<p>
-			<label>手机号码1：</label>
-			<input name="kh_phone1" id="kh_phone1" type="text"  maxlength="11"  class="required digits"  />
-		</p>
-		<p>
-			<label>手机号码2：</label>
-			<input name="kh_phone2" id="kh_phone2" type="text"  maxlength="11"  class="digits"  />
-		</p>
-		<p>
-			<label>身份证号：</label>
-			<input name="kh_card" id="kh_card" type="text"  maxlength="18"  class="alphanumeric"  />
-		</p>
-		<p>
-			<label>转介绍人(姓名+手机号码)：</label>
-			<input name="introduce_name" id="introduce_name" type="text"  maxlength="14"     />
-		</p>
-		 
-		<p>
-			<label>渠道来源：</label>
-			<input name="channel_source" id="channel_source" type="text"  maxlength="80" />
-		</p>
-		<p>
-			<label>是否安装：</label>
-			<select  name="is_install" id="is_install" class="required"  >
-				<option value="0">未安装</option>
-				<option value="1">已安装</option>
-			</select>
-		</p>
-		
-		<dl>
-		<dt>备注：</dt>
-			<dd>
-				<textarea   name="remark" id="remark" rows="5" cols="100"  ></textarea>
-			</dd>
-		</dl>
-	</div>
 	</form>
 	</div>
   </body>

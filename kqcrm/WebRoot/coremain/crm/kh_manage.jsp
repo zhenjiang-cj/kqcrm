@@ -48,9 +48,9 @@ if(sessdata!=null){
 	<div class="searchBar">
 		<table class="searchContent">
 			<tr>
-				<td>
+				<!--<td>
 					客户编号：<input type="text" name="kh_id" id="kh_id" value="<%=userform.getKh_id()==null?"":userform.getKh_id() %>" />
-				</td>
+				</td>  -->
 				<td>
 					客户名称：<input type="text" name="kh_name" id="kh_name" value="<%=userform.getKh_name()==null?"":userform.getKh_name() %>" />
 				</td>
@@ -64,7 +64,9 @@ if(sessdata!=null){
 				</td>
 				<td>
 					转介绍人(姓名+手机号码)：<input type="text" name="introduce_name" id="introduce_name" value="<%=userform.getIntroduce_name()==null?"":userform.getIntroduce_name() %>"  />
-				</td>  
+				</td> 
+				</tr>
+				<tr> 
 				<td>
 					手机号码1：<input type="text" name="kh_phone1" id="kh_phone1" value="<%=userform.getKh_phone1()==null?"":userform.getKh_phone1() %>" />
 				</td>
