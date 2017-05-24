@@ -56,6 +56,7 @@
 			
 			<forward name="yxkhmanage" path="/coremain/crm/yxkh_manage.jsp"/>
 			<forward name="yxkhadd" path="/coremain/crm/yxkh_add.jsp"/>
+			<forward name="yxkhedit" path="/coremain/crm/yxkh_edit.jsp"/>
 		</action>
 		
 	</action-mappings>
