@@ -132,14 +132,14 @@ function fillSpace(key){
 	<div id="layout">
 		<div id="header">
 			<div class="headerNav">
-				<a class="logo" href="http://j-ui.com">标志</a>
+				<!-- <a class="logo" href="">标志</a> -->
 				<ul class="nav">
 				<%
 				if(sessdata!=null){
 					%>
 					<li><a>用户名称：<%=sessdata.getUser_name() %></a></li>
 					<li><a>用户工号：<%=sessdata.getUser_id() %></a></li>
-					<li><a>归属区域:<select class=""><%=regionoption %></select></a></li>
+					<!-- <li><a>归属区域:<select class=""><%=regionoption %></select></a></li> -->
 					<%
 				}
 				%>
