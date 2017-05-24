@@ -597,7 +597,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		  from (select a.*, row_number() over(order by a.kh_id,a.hf_date_must) rn, count(*) over() totalCount
 		          from (
 			          select  distinct a.ht_id,hf_id,hf_date_must,hf_date_fact,hf_status,hf_user_name,hf_remark,hf_type,
-								ht_date_current,ht_year,b.kh_id,kh_name,kh_phone1,kh_addr,kh_phone2,kh_card
+								ht_date_current,ht_year,b.ht_pledge,b.ht_rent,b.kh_id,kh_name,kh_phone1,kh_addr,kh_phone2,kh_card
 						from kq_hf_info a ,kq_ht_info b,kq_kh_info c
 						where a.ht_id = b.ht_id
 						  and b.kh_id = c.kh_id
@@ -635,7 +635,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	</select>
 	<select id='queryhfBykh' parameterClass="java.util.HashMap" resultClass="crminfo" >
 		             
-				select c.ht_id,c.hf_date_fact,c.hf_date_must,c.hf_remark,c.hf_status,c.hf_type,c.hf_user_name 
+				select distinct c.ht_id,c.hf_date_fact,c.hf_date_must,c.hf_remark,c.hf_status,c.hf_type,c.hf_user_name 
 					from kq_kh_info a ,kq_ht_info b,kq_hf_info c
 					where a.kh_id=b.kh_id
 					  and b.ht_id=c.ht_id
