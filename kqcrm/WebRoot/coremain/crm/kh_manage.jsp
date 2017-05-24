@@ -118,7 +118,8 @@ if(sessdata!=null){
 				<th >地址</th>
 				<th width="100"  >号码1</th>  
 				<th width="100"  >号码2</th>  
-				<th width="100"  >转介绍人</th>  
+				<th width="100"  >转介绍人</th>
+				<th width="100"  >资料是否完善</th>   
 				<th width="100">操作</th>
 			</tr>
 		</thead>
@@ -136,6 +137,7 @@ if(sessdata!=null){
 						<td><%=user.getKh_phone1() %></td>
 						<td><%=user.getKh_phone2() %></td>
 						<td><%=user.getIntroduce_name() %></td>
+						<td><%=user.getIs_ws().equals("1")?"是":"否" %></td>
 						<td>
 							<a title="详细" target="navTab" href="<%=path%>/crmAction.do?method=toKhView&kh_id=<%=user.getKh_id() %>"    class="btnView">详细</a>
 							<%
