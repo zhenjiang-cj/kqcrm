@@ -121,6 +121,7 @@ if(sessdata!=null){
 						<td><%=user.getKh_id() %></td>
 						<td><%=user.getKh_name() %></td>
 						<td><%=user.getHt_year() %></td>
+						<td><%=user.getHt_pledge() %></td>
 						<td><%=user.getKh_card() %></td>
 						<td><%=user.getKh_phone1() %></td>
 						<td  title="<%=user.getKh_addr() %>" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><%=user.getKh_addr() %></td>

@@ -36,10 +36,10 @@
 	<script src="<%=path%>/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	$(function(){
-		jQuery("#provinces").val('<%=sessionData.getProvinces()  %>');
-		jQuery("#city").val('<%=sessionData.getCity()  %>');
-		jQuery("#region").val('<%=sessionData.getRegion()  %>');
-		checkuser();
+		//jQuery("#provinces").val('<%=sessionData.getProvinces()  %>');
+		//jQuery("#city").val('<%=sessionData.getCity()  %>');
+		//jQuery("#region").val('<%=sessionData.getRegion()  %>');
+		//checkuser();
 		//setTimeout(checkuser, 1000);
 		
 	});

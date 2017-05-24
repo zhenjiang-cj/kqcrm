@@ -17,6 +17,7 @@ List privlist = null;
 if(sessdata!=null){
 	privlist = sessdata.getPrivMap();
 }
+System.out.println("%%%%%%"+privlist);
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -120,7 +121,7 @@ if(sessdata!=null){
 				<th width="100"  >号码2</th>  
 				<th width="100"  >转介绍人</th>
 				<th width="100"  >资料是否完善</th>   
-				<th width="100">操作</th>
+				<th width="150">操作</th>
 			</tr>
 		</thead>
 		<tbody>

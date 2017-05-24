@@ -40,7 +40,7 @@ $(function(){
 		jQuery("#provinces").val('<%=user.getProvinces()  %>');
 		jQuery("#city").val('<%=user.getCity()  %>');
 		jQuery("#region").val('<%=user.getRegion()  %>');
-		checkuser();	
+		//checkuser();	
 		
 	});
 	//根据用户归属，确定能新增客户的归属
