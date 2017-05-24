@@ -102,6 +102,19 @@ public class CrmDb extends AbstractDB {
 		return retCode;
 	}
 	
+	public List<CrmInfo> queryYxkh(HashMap param) {
+		getLogger(bossCodeStr,GlobalConst.ENTER).info("查询意向用户：");
+		List<CrmInfo> list = null;
+		
+		try{
+			list = smc.queryForList("CrmSql.queryYxkh", param);
+			getLogger(bossCodeStr,GlobalConst.EXIT).info("查询意向用户结束。");
+		}catch(Exception e){
+			getLogger(bossCodeStr,GlobalConst.ERROR).error("::查询意向用户有错！::" + "error:"+e.getMessage());
+		}
+		return list;
+	}
+	
 	public int doYxkhAdd(Map<String, String> param) throws Exception { 
 		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
 		try
@@ -198,6 +211,20 @@ public class CrmDb extends AbstractDB {
 		}
 		return list;
 	}
+	
+	public List<CrmInfo> queryYxkhById(HashMap param) {
+		getLogger(bossCodeStr,GlobalConst.ENTER).info("查询意向用户：");
+		List<CrmInfo> list = null;
+		
+		try{
+			list = smc.queryForList("CrmSql.queryYxkhById", param);
+			getLogger(bossCodeStr,GlobalConst.EXIT).info("查询意向用户结束。");
+		}catch(Exception e){
+			getLogger(bossCodeStr,GlobalConst.ERROR).error("::查询意向用户有错！::" + "error:"+e.getMessage());
+		}
+		return list;
+	}
+	
 	public List<CrmInfo> queryKhIntroduce(HashMap param) {
 		getLogger(bossCodeStr,GlobalConst.ENTER).info("查询用户：");
 		List<CrmInfo> list = null;

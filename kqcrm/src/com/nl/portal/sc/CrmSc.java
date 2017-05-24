@@ -130,6 +130,41 @@ public class CrmSc extends AbstractDB {
 		return retCode;
 	}
 	
+	public List<CrmInfo> queryYxkh(CrmForm userform)
+	{
+		List<CrmInfo> userlist = null;
+		SqlMapClient smc = null;
+		try
+		{
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			CrmDb db = new CrmDb(smc);
+			HashMap param = new HashMap(); 
+			param.put("org_ids", userform.getOrg_ids());
+			param.put("kh_id", userform.getKh_id());
+			param.put("kh_name", userform.getKh_name());
+			param.put("is_ws", userform.getIs_ws());
+			param.put("introduce_name", userform.getIntroduce_name());
+			param.put("kh_phone1", userform.getKh_phone1());
+			param.put("kh_phone2", userform.getKh_phone2());
+			param.put("kh_addr", userform.getKh_addr());
+			param.put("is_install", userform.getIs_install());
+			param.put("channel_source", userform.getChannel_source());
+			param.put("page_num", userform.getPageNum());
+			param.put("page_size", userform.getNumPerPage());
+			
+			userlist = db.queryYxkh(param);
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			this.endTransaction(smc);
+		}
+		return userlist;
+	}
+	
 	public int doYxkhAdd(CrmForm form) throws Exception {
 		SqlMapClient smc = null;
 		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
@@ -282,6 +317,30 @@ public class CrmSc extends AbstractDB {
 		}
 		return userlist;
 	}
+	
+	public List<CrmInfo> queryYxkhById(CrmForm userform)
+	{
+		List<CrmInfo> userlist = null;
+		SqlMapClient smc = null;
+		try
+		{
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			CrmDb db = new CrmDb(smc);
+			HashMap param = new HashMap(); 
+			param.put("kh_id", userform.getKh_id());
+			userlist = db.queryYxkhById(param);
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			this.endTransaction(smc);
+		}
+		return userlist;
+	}
+	
 	public List<CrmInfo> queryKhIntroduce(CrmForm userform)
 	{
 		List<CrmInfo> userlist = null;

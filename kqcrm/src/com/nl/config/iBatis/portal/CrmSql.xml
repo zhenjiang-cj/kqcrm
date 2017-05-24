@@ -125,6 +125,44 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		
 	</insert>
 	
+	<select id='queryYxkh' parameterClass="java.util.HashMap" resultClass="crminfo" >
+        select *
+		  from (select a.*, row_number() over(order by a.kh_id) rn, count(*) over() totalCount
+		          from (
+		          select  distinct a.kh_id,a.kh_name,a.provinces,a.city,a.region,
+		                  a.kh_addr,a.kh_card,a.kh_phone1,a.kh_phone2,a.introduce_name,
+		                  a.is_install,a.channel_source,a.remark
+		          from kq_yxkh_info a  where is_valid =1 
+		           <dynamic>
+					<isNotEmpty property="kh_name">
+							and a.kh_name  like '%$kh_name$%'
+					</isNotEmpty>
+					<isNotEmpty property="org_ids">
+							 and charindex(a.region,#org_ids#) >0
+					</isNotEmpty>
+					<isNotEmpty property="introduce_name">
+							 and  introduce_name like '%$introduce_name$%'
+					</isNotEmpty>
+					<isNotEmpty property="kh_phone1">
+							 and  kh_phone1 = #kh_phone1#
+					</isNotEmpty>
+					<isNotEmpty property="kh_phone2">
+							 and  kh_phone2 = #kh_phone2#
+					</isNotEmpty>
+					<isNotEmpty property="kh_addr">
+							and a.kh_addr  like '%$kh_addr$%'
+					</isNotEmpty>
+					<isEqual property="is_install" compareValue="-1">
+							and a.is_install = #is_install#
+					</isEqual>
+					<isNotEmpty property="channel_source">
+							and a.channel_source  like '%$channel_source$%'
+					</isNotEmpty>
+				  </dynamic>         
+		                   ) a) t
+		 where t.rn>(#page_num#-1)*#page_size# and #page_num#*#page_size# >= t.rn
+	</select>
+	
 	<insert id="doYxkhAdd" parameterClass="java.util.HashMap">
 		
 		insert into kq_yxkh_info
@@ -178,7 +216,11 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	
 	<update id="doModifyYxkh" parameterClass="java.util.HashMap">
 	  UPDATE kq_yxkh_info 
-	     set is_install=1 ,
+	     set kh_name = #kh_name#,
+	         provinces = #provinces#,
+	         city = #city#,
+	         region = #region#,
+	         is_install=1 ,
 	     	 kh_phone1 = #kh_phone1#,
 	     	 kh_phone2 = #kh_phone2#,
 	     	 kh_addr = #kh_addr#,
@@ -240,6 +282,26 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 				  </dynamic>         
 		                   ) a) t 
 	</select>
+	
+	<select id='queryYxkhById' parameterClass="java.util.HashMap" resultClass="crminfo" >
+        select a.kh_id,
+	       		 a.kh_name,
+	       		 a.provinces,
+	       		 a.city,
+	       		 a.region,
+	       		 a.kh_addr,
+	       		 a.kh_card,
+	       		 a.kh_phone1,
+	       		 a.kh_phone2,
+	       		 a.introduce_name,
+	       		 a.channel_source,
+	       		 a.is_install,
+	       		 a.remark
+	       from kq_yxkh_info a 
+	        where a.is_valid =1  
+	          and a.kh_id =  #kh_id#   
+	</select>
+	
 	<select id='queryKhIntroduce' parameterClass="java.util.HashMap" resultClass="crminfo" >
         select *
 		  from (select a.*, row_number() over(order by a.kh_id) rn, count(*) over() totalCount

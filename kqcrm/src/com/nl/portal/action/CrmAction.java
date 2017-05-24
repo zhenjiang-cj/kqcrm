@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,11 +16,9 @@ import com.nl.base.BaseAppAction;
 import com.nl.base.utils.GlobalFunc;
 import com.nl.base.utils.GlobalRsDt;
 import com.nl.portal.actionForm.CrmForm;
-import com.nl.portal.actionForm.UserForm;
 import com.nl.portal.dt.CrmInfo;
-import com.nl.portal.dt.UserInfo;
 import com.nl.portal.sc.CrmSc;
-import com.nl.portal.sc.UserSc;
+
 import com.nl.util.GlobalConst;
 import com.nl.util.GlobalUtil;
 import com.nl.util.SessionConst;
@@ -339,6 +336,53 @@ public class CrmAction extends BaseAppAction {
 		}
 	}
 	
+	public ActionForward toYxkhManage(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String bosscodestr = super.getBossCodeStr();
+		int retCode = 0;
+		try
+		{
+			CrmForm formBean = (CrmForm)form;
+			CrmSc sc = new CrmSc();
+			//查询用户管辖的区域
+			SessionData sessionData =(SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
+			formBean.setOperatorId(sessionData.getSno());
+			List<CrmInfo> orglist = sc.queryOrgByUser(formBean);
+			String org_id="";
+			if(orglist!=null&&orglist.size()>0){
+				for(int i=0;i<orglist.size();i++){
+					CrmInfo org = orglist.get(i);
+					org_id = org_id+org.getOrg_id()+",";
+				}
+			}
+			formBean.setOrg_ids(org_id);
+			List<CrmInfo> userlist = sc.queryYxkh(formBean);
+			
+			request.setAttribute("userlist", userlist);	
+			if(userlist.size()>0)
+			{
+				formBean.setTotalCount(Integer.parseInt(userlist.get(0).getTotalCount()));
+			}else{
+				formBean.setTotalCount(0);
+			}
+			
+			
+			request.setAttribute("pager", formBean);	
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
+			
+			//记录日志
+//			doLog(form,"进入欢迎页面");
+//			createLog(request,"","","进入欢迎页面","1");
+			getLogger(bosscodestr,GlobalConst.EXIT).info("进入欢迎页面。");
+			return mapping.findForward("yxkhmanage");
+		}catch(Exception e){
+			getLogger(bosscodestr,GlobalConst.ERROR).error("进入欢迎页面出错:"+e.getMessage());
+			throw new Exception();
+		}
+	}
+	
 	public ActionForward toYxkhAdd(ActionMapping mapping,
 			ActionForm form,
 			HttpServletRequest request,
@@ -415,10 +459,10 @@ public class CrmAction extends BaseAppAction {
 			String url ="";
 			if(retCode == 0){
 				url =request.getContextPath()+"/crmAction.do?method=toYxkhAdd";
-				doJumps(0,url,"queryYxkh","新增意向客户",request,response);
+				doJumps(0,url,"toYxkhAdd","新增意向客户",request,response);
 			}else{
 				url =request.getContextPath()+"/crmAction.do?method=toYxkhAdd";
-				doJumps(-1,url,"queryYxkh","新增意向客户",request,response);
+				doJumps(-1,url,"toYxkhAdd","新增意向客户",request,response);
 			}
 			
 		}catch(Exception e){
@@ -455,6 +499,37 @@ public class CrmAction extends BaseAppAction {
 			throw new Exception();
 		}
 	}
+	
+	public void doYxkhDel(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String bosscodestr = super.getBossCodeStr();
+		int retCode = 0;
+		try
+		{
+
+			CrmForm formBean = (CrmForm)form;
+			CrmSc sc = new CrmSc();
+			
+			retCode = sc.doYxkhDel(formBean);
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);			
+
+			getLogger(bosscodestr,GlobalConst.EXIT).info("删除意向客户。");
+			String url ="";
+			if(retCode == 0){
+				url =request.getContextPath()+"/crmAction.do?method=toYxkhManage";
+				doJumps(0,url,"user","删除意向客户",request,response);
+			}else{
+				url =request.getContextPath()+"/crmAction.do?method=toYxkhManage";
+				doJumps(-1,url,"user","删除意向客户",request,response);
+			}
+		}catch(Exception e){
+			getLogger(bosscodestr,GlobalConst.ERROR).error("删除意向客户出错:"+e.getMessage());
+			throw new Exception();
+		}
+	}
+	
 	public ActionForward toKhView(ActionMapping mapping,
 			ActionForm form,
 			HttpServletRequest request,
@@ -511,6 +586,32 @@ public class CrmAction extends BaseAppAction {
 			throw new Exception();
 		}
 	}
+	
+	public ActionForward toYxkhEdit(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String bosscodestr = super.getBossCodeStr();
+		int retCode = 0;
+		try
+		{
+			CrmForm formBean = (CrmForm)form;
+			CrmSc sc = new CrmSc();
+
+			List<CrmInfo> userlist = sc.queryYxkhById(formBean);
+			request.setAttribute("userlist", userlist);		
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
+			
+			
+			return mapping.findForward("yxkhedit");
+			
+		}catch(Exception e){
+			getLogger(bosscodestr,GlobalConst.ERROR).error("进入基本信息出错:"+e.getMessage());
+//			throw new Exception(AppConst.CENTERTASK_ERROR_INFO);
+			throw new Exception();
+		}
+	}
+	
 	public void doKhEdit(ActionMapping mapping,
 			ActionForm form,
 			HttpServletRequest request,
