@@ -10,6 +10,7 @@ public class CrmInfo {
 	private String kh_phone2;
 	private String kh_addr;
 	private String kh_card;
+	private String is_ws;
 	private String introduce_name;
 	private String channel_source;
 	private String is_install;
@@ -286,5 +287,11 @@ public class CrmInfo {
 	}
 	public void setIs_install(String is_install) {
 		this.is_install = is_install;
+	}
+	public String getIs_ws() {
+		return is_ws;
+	}
+	public void setIs_ws(String is_ws) {
+		this.is_ws = is_ws;
 	}
 }

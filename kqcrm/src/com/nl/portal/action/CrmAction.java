@@ -218,15 +218,15 @@ public class CrmAction extends BaseAppAction {
 			//查询用户管辖的区域
 			SessionData sessionData =(SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
 			formBean.setOperatorId(sessionData.getSno());
-			List<CrmInfo> orglist = sc.queryOrgByUser(formBean);
-			String org_id="";
-			if(orglist!=null&&orglist.size()>0){
-				for(int i=0;i<orglist.size();i++){
-					CrmInfo org = orglist.get(i);
-					org_id = org_id+org.getOrg_id()+",";
-				}
-			}
-			formBean.setOrg_ids(org_id);
+//			List<CrmInfo> orglist = sc.queryOrgByUser(formBean);
+//			String org_id="";
+//			if(orglist!=null&&orglist.size()>0){
+//				for(int i=0;i<orglist.size();i++){
+//					CrmInfo org = orglist.get(i);
+//					org_id = org_id+org.getOrg_id()+",";
+//				}
+//			}
+			formBean.setOrg_ids(sessionData.getRegion());
 			List<CrmInfo> userlist = sc.queryKh(formBean);
 			
 			request.setAttribute("userlist", userlist);	
@@ -264,15 +264,15 @@ public class CrmAction extends BaseAppAction {
 			//查询用户管辖的区域
 			SessionData sessionData =(SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
 			formBean.setOperatorId(sessionData.getSno());
-			List<CrmInfo> orglist = sc.queryOrgByUser(formBean);
-			String org_id="";
-			if(orglist!=null&&orglist.size()>0){
-				for(int i=0;i<orglist.size();i++){
-					CrmInfo org = orglist.get(i);
-					org_id = org_id+org.getOrg_id()+",";
-				}
-			}
-			formBean.setOrg_ids(org_id);
+//			List<CrmInfo> orglist = sc.queryOrgByUser(formBean);
+//			String org_id="";
+//			if(orglist!=null&&orglist.size()>0){
+//				for(int i=0;i<orglist.size();i++){
+//					CrmInfo org = orglist.get(i);
+//					org_id = org_id+org.getOrg_id()+",";
+//				}
+//			}
+			formBean.setOrg_ids(sessionData.getRegion());
 			List<CrmInfo> userlist = sc.queryExpKh(formBean);
 
 			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
@@ -685,15 +685,15 @@ public class CrmAction extends BaseAppAction {
 			//查询用户管辖的区域
 			SessionData sessionData =(SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
 			formBean.setOperatorId(sessionData.getSno());
-			List<CrmInfo> orglist = sc.queryOrgByUser(formBean);
-			String org_id="";
-			if(orglist!=null&&orglist.size()>0){
-				for(int i=0;i<orglist.size();i++){
-					CrmInfo org = orglist.get(i);
-					org_id = org_id+org.getOrg_id()+",";
-				}
-			}
-			formBean.setOrg_ids(org_id);
+//			List<CrmInfo> orglist = sc.queryOrgByUser(formBean);
+//			String org_id="";
+//			if(orglist!=null&&orglist.size()>0){
+//				for(int i=0;i<orglist.size();i++){
+//					CrmInfo org = orglist.get(i);
+//					org_id = org_id+org.getOrg_id()+",";
+//				}
+//			}
+			formBean.setOrg_ids(sessionData.getRegion());
 			List<CrmInfo> userlist = sc.queryHt(formBean);
 			
 			request.setAttribute("userlist", userlist);	
@@ -985,15 +985,15 @@ public class CrmAction extends BaseAppAction {
 			//查询用户管辖的区域
 			SessionData sessionData =(SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
 			formBean.setOperatorId(sessionData.getSno());
-			List<CrmInfo> orglist = sc.queryOrgByUser(formBean);
-			String org_id="";
-			if(orglist!=null&&orglist.size()>0){
-				for(int i=0;i<orglist.size();i++){
-					CrmInfo org = orglist.get(i);
-					org_id = org_id+org.getOrg_id()+",";
-				}
-			}
-			formBean.setOrg_ids(org_id);
+//			List<CrmInfo> orglist = sc.queryOrgByUser(formBean);
+//			String org_id="";
+//			if(orglist!=null&&orglist.size()>0){
+//				for(int i=0;i<orglist.size();i++){
+//					CrmInfo org = orglist.get(i);
+//					org_id = org_id+org.getOrg_id()+",";
+//				}
+//			}
+			formBean.setOrg_ids(sessionData.getRegion());
 			List<CrmInfo> userlist = sc.queryHt1(formBean);
 			
 			request.setAttribute("userlist", userlist);	
@@ -1032,15 +1032,15 @@ public class CrmAction extends BaseAppAction {
 			//查询用户管辖的区域
 			SessionData sessionData =(SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
 			formBean.setOperatorId(sessionData.getSno());
-			List<CrmInfo> orglist = sc.queryOrgByUser(formBean);
-			String org_id="";
-			if(orglist!=null&&orglist.size()>0){
-				for(int i=0;i<orglist.size();i++){
-					CrmInfo org = orglist.get(i);
-					org_id = org_id+org.getOrg_id()+",";
-				}
-			}
-			formBean.setOrg_ids(org_id);
+//			List<CrmInfo> orglist = sc.queryOrgByUser(formBean);
+//			String org_id="";
+//			if(orglist!=null&&orglist.size()>0){
+//				for(int i=0;i<orglist.size();i++){
+//					CrmInfo org = orglist.get(i);
+//					org_id = org_id+org.getOrg_id()+",";
+//				}
+//			}
+			formBean.setOrg_ids(sessionData.getRegion());
 			List<CrmInfo> userlist = sc.queryHtExp(formBean);
 			
 
@@ -1098,15 +1098,16 @@ public class CrmAction extends BaseAppAction {
 			//查询用户管辖的区域
 			SessionData sessionData =(SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
 			formBean.setOperatorId(sessionData.getSno());
-			List<CrmInfo> orglist = sc.queryOrgByUser(formBean);
-			String org_id="";
-			if(orglist!=null&&orglist.size()>0){
-				for(int i=0;i<orglist.size();i++){
-					CrmInfo org = orglist.get(i);
-					org_id = org_id+org.getOrg_id()+",";
-				}
-			}
-			formBean.setOrg_ids(org_id);
+//			List<CrmInfo> orglist = sc.queryOrgByUser(formBean);
+//			String org_id="";
+//			if(orglist!=null&&orglist.size()>0){
+//				for(int i=0;i<orglist.size();i++){
+//					CrmInfo org = orglist.get(i);
+//					org_id = org_id+org.getOrg_id()+",";
+//				}
+//			}
+//			formBean.setOrg_ids(org_id);
+			formBean.setOrg_ids(sessionData.getRegion());
 			
 			List<CrmInfo> userlist = sc.queryHf(formBean);
 			
@@ -1145,15 +1146,16 @@ public class CrmAction extends BaseAppAction {
 			//查询用户管辖的区域
 			SessionData sessionData =(SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
 			formBean.setOperatorId(sessionData.getSno());
-			List<CrmInfo> orglist = sc.queryOrgByUser(formBean);
-			String org_id="";
-			if(orglist!=null&&orglist.size()>0){
-				for(int i=0;i<orglist.size();i++){
-					CrmInfo org = orglist.get(i);
-					org_id = org_id+org.getOrg_id()+",";
-				}
-			}
-			formBean.setOrg_ids(org_id);
+//			List<CrmInfo> orglist = sc.queryOrgByUser(formBean);
+//			String org_id="";
+//			if(orglist!=null&&orglist.size()>0){
+//				for(int i=0;i<orglist.size();i++){
+//					CrmInfo org = orglist.get(i);
+//					org_id = org_id+org.getOrg_id()+",";
+//				}
+//			}
+//			formBean.setOrg_ids(org_id);
+			formBean.setOrg_ids(sessionData.getRegion());
 			
 			List<CrmInfo> userlist = sc.queryHfExp(formBean);
 			
