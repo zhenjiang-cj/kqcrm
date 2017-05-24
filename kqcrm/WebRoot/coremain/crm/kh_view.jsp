@@ -50,27 +50,61 @@
 	<div class="tabsPage"  >
 		<ul class="tabsPageHeader"><li><span>客户明细</span></li></ul>
 	</div>
-	<div class="pageFormContent nowrap"   style="height:120px">
-		<p> <label>客户编号：</label><%=kh.getKh_id() %> </p>
-		<p> <label>客户名称：</label><%=kh.getKh_name() %> </p>
-		<p> <label>客户身份证：</label><%=kh.getKh_card() %> </p>
-		<p> <label>客户归属：</label><%=DictMgmt.getValueDescs(DictMgmt.DICT_kq_REGION,kh.getRegion(),"" ) %> </p>
-		<p> <label>客户号码1：</label><%=kh.getKh_phone1() %> </p>
-		<p> <label>客户号码2：</label><%=kh.getKh_phone2() %> </p>
-		<p> <label>介绍人：</label><%=kh.getIntroduce_name() %> </p>
-		<dl>
-		<dt>客户地址：</dt>
-			<dd>
-				<%=kh.getKh_addr() %>
-			</dd>
-		</dl>
+	<div class="pageFormContent nowrap"   style="height:160px">
+
+		<table class="TabList">                   	                  
+               <tr style="margin-top:20px;">
+                   <td class="tit03">客户编号：</td>
+                   <td style="text-align:left;">
+                      <%=kh.getKh_id() %>
+                   </td>
+                   <td class="tit03">客户名称：</td>
+                   <td style="text-align:left;">
+                       <%=kh.getKh_name() %>
+                   </td>
+               </tr>
+               <tr style="margin-top:20px;">
+                   <td class="tit">客户身份证：</td>
+                   <td style="text-align:left;">
+                       <%=kh.getKh_card() %>
+                   </td>
+                   <td class="tit">客户归属：</td>
+                   <td style="text-align:left;">
+                       <%=DictMgmt.getValueDescs(DictMgmt.DICT_kq_REGION,kh.getRegion(),"" ) %>
+                   </td>
+               </tr>
+               <tr style="margin-top:20px;">
+                   <td class="tit">客户号码1：</td>
+                   <td style="text-align:left;">
+                       <%=kh.getKh_phone1() %>
+                   </td>
+                   <td class="tit">客户号码2：</td>
+                   <td style="text-align:left;">
+                       <%=kh.getKh_phone2() %>
+                   </td>
+               </tr>
+               <tr style="margin-top:20px;">
+                   <td class="tit">转介绍人(姓名+手机号码)：</td>
+                   <td style="text-align:left;" colspan="3">
+                       <%=kh.getIntroduce_name() %> 
+                   </td>
+   
+               </tr>
+	  		  <tr style="margin-top:20px;">
+                   <td class="tit">家庭住址：</td>
+                   <td style="text-align:left;" colspan="3">
+                       <%=kh.getKh_addr() %>
+                   </td>
+   
+               </tr>
+         </table>
 	</div>
  
     <div class="tabsPage"  >
 		<ul class="tabsPageHeader"><li><span>客户合同</span></li></ul>
 	</div>
 	<div class="pageContent"  >
-	<div class=tabsPage style="height:120px;">
+	<div class=tabsPage style="height:160px;">
 		<table class="table" width="1200"   style="table-layout:fixed;height:200px">
 			<thead>
 				<tr>
@@ -118,7 +152,7 @@
 		<ul class="tabsPageHeader"><li><span>回访记录</span></li></ul>
 	</div>
 	<div class="pageContent"  >
-	<div class=tabsPage style="height:120px;">
+	<div class=tabsPage style="height:160px;">
 		<table class="table" width="1200"   style="table-layout:fixed;height:200px">
 			<thead>
 				<tr>
@@ -164,7 +198,7 @@
     <div class="formBar" >
 			<ul>
 				<!-- <li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li> -->
-				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">关闭</button></div></div></li>
 			</ul>
     </div>
 	</form>
