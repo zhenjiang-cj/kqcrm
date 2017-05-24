@@ -10,8 +10,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
         select *
 		  from (select a.*, row_number() over(order by a.kh_id) rn, count(*) over() totalCount
 		          from (
-		          select  distinct a.kh_id,a.kh_name,a.provinces,a.city,a.region,a.kh_addr,a.kh_card,a.kh_phone1,a.kh_phone2,a.introduce_name
-		          from kq_kh_info a  where is_valid =1 
+		          select  distinct a.kh_id,a.kh_name,a.provinces,a.city,a.region,a.kh_addr,a.kh_card,a.kh_phone1,a.kh_phone2,a.introduce_name, 
+		          		(case when b.ht_id is not null then 1 else 0 end ) is_ws
+		          from kq_kh_info a LEFT JOIN  kq_ht_info b on a.kh_id = b.kh_id  where a.is_valid =1 
 		           <dynamic>
 					<isNotEmpty property="kh_name">
 							and a.kh_name  like '%$kh_name$%'
