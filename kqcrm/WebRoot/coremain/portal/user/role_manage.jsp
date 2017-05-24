@@ -4,6 +4,7 @@
 <%@ page import="com.nl.portal.actionForm.*"%>
 <%@page import="java.util.List"%>
 <%@ page import="com.nl.util.GlobalConst"%>
+<%@page import="com.nl.util.config.DictMgmt"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -84,7 +85,7 @@ UserForm userform = (UserForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_F
 						<td><input name="ids" value="xxx" type="checkbox"></td>
 						<td><%=user.getRole_name() %></td>
 						<td><%=user.getRole_remark() %></td>
-						<td><%=user.getSysid() %></td>
+						<td><%=DictMgmt.getValueDescs(1009,Integer.parseInt(user.getSysid())) %></td>
 						<td>
 							<a title="删除" target="ajaxTodo" href="<%=path%>/userAction.do?method=doRoleDel&role_id=<%=user.getRole_id() %>"  class="btnDel">删除</a>
 							<a title="编辑" target="dialog" href="<%=path%>/userAction.do?method=toRoleEdit&role_id=<%=user.getRole_id() %>" width="645" height="600" class="btnEdit">编辑</a>

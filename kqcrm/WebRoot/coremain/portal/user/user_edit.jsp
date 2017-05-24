@@ -13,7 +13,7 @@
 	UserForm userform = (UserForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FORM);
 	List<UserInfo> userlist =  (List<UserInfo>) request.getAttribute("userlist");
 	UserInfo user = userlist.get(0);
-    List regionList = (List)request.getAttribute("regionList");
+	List<UserInfo>  regionList = (List<UserInfo>)request.getAttribute("regionList");
     String jsonStr = GlobalFunc.getJosnStrForList(regionList);
     
 %>
@@ -34,15 +34,17 @@
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	--> 
 	
-	<script src="<%=path%>/dwz/js/jquery.validate.js" type="text/javascript"></script>
-	<script src="<%=path%>/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="<%=path%>/plugins/jquery/plugins/ztree/3.0/css/zTreeStyle/zTreeStyle.css" type="text/css">
+	<script type="text/javascript" src="<%=path%>/plugins/jquery/plugins/ztree/3.0/jquery.ztree.core-3.0.js"></script>
+	<script type="text/javascript" src="<%=path%>/plugins/jquery/plugins/ztree/3.0/jquery.ztree.excheck-3.0.js"></script>
 	<script type="text/javascript">
 	$(function(){
-		jQuery("#region").val('<%=user.getRegion()  %>');	
-		
+		jQuery("#checkPrivId").val('<%=user.getRegion()  %>');	
+		changeSys();
 	});
  
  
+	 
 <!--加载和设置树方法开始!-->
     var zTree1;
 	var setting;
@@ -73,13 +75,13 @@
 	function expandNode() 
 	{
 	
-	    var treeNode = zTree1.getNodeByParam("org_id", 1);
+	    var treeNode = zTree1.getNodeByParam("data_level",4);
 	    
 		if (treeNode) {
 		    //第一个参数treeNode为要展开的节点，第二个参数“true”表示该级展开，第三个参数“false”表示下级不展开
 			zTree1.expandNode(treeNode, true, true);
 			//node设置为被选中状态
-			//zTree1.selectNode(treeNode);
+			zTree1.selectNode(treeNode);
 		}
 	}
 	
@@ -96,7 +98,9 @@
 	    var tmp = zTree1.getCheckedNodes();
 	    for (var i=0;i<tmp.length;i++)
 	    {
-	       checkPrivId +=  tmp[i].org_id + ",";
+	      	if(tmp[i].data_level==4){
+	    		checkPrivId +=  tmp[i].org_id + ",";
+	    	}
 	    }
 	    if (checkPrivId != "")
 	    {
@@ -145,24 +149,29 @@
 	    setting.check.chkboxType = { "Y" : "ps", "N" : "s" };
 		$.fn.zTree.init($("#dropTree"), setting, zNodes);
 		zTree1 = $.fn.zTree.getZTreeObj("dropTree");
-		expandNode();
+		//expandNode();
 		initSelNodes();
 	} 
-	/*初始化时默认选中已经角色对应的权限*/
+    <!--加载和设置树方法结束!-->
+    
+    /*初始化时默认选中已经角色对应的权限*/
 	function initSelNodes()
 	{
 	    <%
-	        if (regionList.size()>0)
+	        if (user.getRegion()!=null&&user.getRegion().length()>0)
 	        {
-	            for (int i=0;i<regionList.size();i++)
+	        	String[] regions = user.getRegion().split(",");
+	            for (int i=0;i<regions.length;i++)
 	            {
-	                UserInfo priv = (UserInfo)regionList.get(i);
+	                String region = regions[i];;
 	            
 	    %>
-	    var treeNodes = zTree1.getNodeByParam("org_id", <%=priv.getOrg_id()%>);
+	    var treeNodes = zTree1.getNodeByParam("org_id", <%=region %>);
 	    if(treeNodes){
 		     treeNodes.checked = true;
 		    zTree1.updateNode(treeNodes);
+		    
+			zTree1.selectNode(treeNodes);
 	    }
 	   
 	    <%
@@ -170,7 +179,58 @@
 	        }
 	    %>
 	}
-    <!--加载和设置树方法结束!-->
+    
+    function changeSys()
+    {
+    	try{
+		$.ajax({
+			    type:"post",
+				dataType:"json",
+				contentType:"application/json;charset=UTF-8",
+				url:'<%=path%>/coremain/portal/user/getregion.jsp',
+			    success:function(data){
+		           zNodes = data;
+		           reloadTree();
+			    },
+			    error:function (data){
+			        alert("获取区域失败！");
+			    }
+			});
+		}catch(e){
+			alert(e);
+		}
+        
+    }
+    
+    function validateCallback(form, callback, confirmMsg) {
+    	getCheckedNodesId();
+    	
+		var $form = $(form);
+	
+		if (!$form.valid()) {
+			return false;
+		}
+		
+		var _submitFn = function(){
+			$.ajax({
+				type: form.method || 'POST',
+				url:$form.attr("action"),
+				data:$form.serializeArray(),
+				dataType:"json",
+				cache: false,
+				success: callback || DWZ.ajaxDone,
+				error: DWZ.ajaxError
+			});
+		}
+		
+		if (confirmMsg) {
+			alertMsg.confirm(confirmMsg, {okCall: _submitFn});
+		} else {
+			_submitFn();
+		}
+		
+		return false;
+	}
  
 	</script>
 	
@@ -181,7 +241,7 @@
   <form class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)" action="<%=path%>/userAction.do?method=doUserEdit" method="post" name="userForm">
     <input type="hidden" name="sno" id="sno" value="<%=user.getSno() %>">
     <input type="hidden" name="operatorId" id="operatorId" value="<%=userform.getOperatorId() %>">
-	<input type="hidden" id="checkPrivId" name="checkPrivId"  value="<%=user.getRegion() %>" class="required" >
+	<input type="hidden" id="checkPrivId" name="checkPrivId" value=""  class="required" >
     
     <div class="formBar">
 			<ul>

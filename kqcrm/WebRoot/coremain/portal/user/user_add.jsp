@@ -11,7 +11,7 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 	UserForm userform = (UserForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FORM);
-    List regionList = (List)request.getAttribute("regionList");
+	List<UserInfo>  regionList = (List<UserInfo> )request.getAttribute("regionList");
     String jsonStr = GlobalFunc.getJosnStrForList(regionList);
 %>
 
@@ -35,12 +35,12 @@
 	<script type="text/javascript" src="<%=path%>/plugins/jquery/plugins/ztree/3.0/jquery.ztree.excheck-3.0.js"></script>
 	<script type="text/javascript">
 	$(function(){
-        reloadTree(); 
-        //changeSys(); 
+        //reloadTree(); 
+        changeSys(); 
 	});
  
 
-<!--加载和设置树方法开始!-->
+	 
     var zTree1;
 	var setting;
 	var nodeList = [];
@@ -64,7 +64,7 @@
 		}
 	};
 
-	var zNodes = <%=jsonStr%>;
+	
     
     //展开某一级
 	function expandNode() 
@@ -93,7 +93,9 @@
 	    var tmp = zTree1.getCheckedNodes();
 	    for (var i=0;i<tmp.length;i++)
 	    {
-	       checkPrivId +=  tmp[i].org_id + ",";
+	    	if(tmp[i].data_level==4){
+	    		checkPrivId +=  tmp[i].org_id + ",";
+	    	}
 	    }
 	    if (checkPrivId != "")
 	    {
@@ -144,7 +146,58 @@
 		zTree1 = $.fn.zTree.getZTreeObj("dropTree");
 		//expandNode();
 	} 
-    <!--加载和设置树方法结束!-->
+    var zNodes = <%=jsonStr%>;
+    function changeSys()
+    {
+		try{
+		$.ajax({
+			    type:"post",
+				dataType:"json",
+				contentType:"application/json;charset=UTF-8",
+				url:'<%=path%>/coremain/portal/user/getregion.jsp',
+			    success:function(data){
+		           zNodes = data;
+		           reloadTree();
+			    },
+			    error:function (data){
+			        alert("获取区域失败！");
+			    }
+			});
+		}catch(e){
+			alert(e);
+		}
+        
+    }
+    
+    function validateCallback(form, callback, confirmMsg) {
+    	getCheckedNodesId();
+    	
+		var $form = $(form);
+	
+		if (!$form.valid()) {
+			return false;
+		}
+		
+		var _submitFn = function(){
+			$.ajax({
+				type: form.method || 'POST',
+				url:$form.attr("action"),
+				data:$form.serializeArray(),
+				dataType:"json",
+				cache: false,
+				success: callback || DWZ.ajaxDone,
+				error: DWZ.ajaxError
+			});
+		}
+		
+		if (confirmMsg) {
+			alertMsg.confirm(confirmMsg, {okCall: _submitFn});
+		} else {
+			_submitFn();
+		}
+		
+		return false;
+	}
 
 
 
