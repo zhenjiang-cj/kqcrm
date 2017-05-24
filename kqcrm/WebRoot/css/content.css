@@ -11,6 +11,7 @@ body{background:none;}
 .TabList td{ background-color:#FFFFFF; font-size:12px; height:25px; line-height:25px; color:#555555;  border-right:1px solid #4286fb;border-bottom:1px solid #4286fb;padding:2px 0px;padding-left:8px;padding-right:8px;}
 .TabList .tit{ background-color:#f3f8fe; width:100px; height:25px; line-height:25px; color:#000000; text-align:left;}
 .TabList .tit02{ background-color:#f3f8fe; width:120px; height:25px; line-height:25px; color:#000000; text-align:left;}
+.TabList .tit03{ background-color:#f3f8fe; width:150px; height:25px; line-height:25px; color:#000000; text-align:left;}
 .TabList .R{ color:#FF0000}
 .black_overlay{
              display: none; 
