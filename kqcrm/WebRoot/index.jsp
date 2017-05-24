@@ -4,15 +4,25 @@
 <%@page import="com.nl.util.SessionConst"%>
 <%@page import="com.nl.util.GlobalConst"%>
 <%@page import="com.nl.util.SessionData"%>
+<%@page import="com.nl.util.config.DictMgmt"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 
 SessionData sessdata = (SessionData) request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
 List privlist = null;
+String regionoption ="";
 if(sessdata!=null){
 	privlist = sessdata.getPrivMap();
-}
+
+	String[] regions = sessdata.getRegion().split(",");
+	if(regions!=null&&regions.length>0){
+		for(int i=0;i<regions.length;i++){
+			String region = regions[i];
+			regionoption =regionoption+"<option>"+DictMgmt.getValueDescs(1012,Integer.parseInt(region))+"</option>";
+		}
+	}
+} 
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -129,6 +139,7 @@ function fillSpace(key){
 					%>
 					<li><a>用户名称：<%=sessdata.getUser_name() %></a></li>
 					<li><a>用户工号：<%=sessdata.getUser_id() %></a></li>
+					<li><a>归属区域:<select class=""><%=regionoption %></select></a></li>
 					<%
 				}
 				%>
