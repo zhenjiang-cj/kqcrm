@@ -162,24 +162,21 @@ public class GlobalConst{
 	
 	
 	public static final String FUNCTION_CRM_MANAGE="110";//客户管理
-	public static final String FUNCTION_CRM_USER="120";//客户管理
-	public static final String FUNCTION_CRM_USER_ADD = "121";//客户新增
-	public static final String FUNCTION_CRM_USER_EDIT = "122";//客户新增
-	public static final String FUNCTION_CRM_USER_DEL = "123";//客户新增
-	public static final String FUNCTION_CRM_USER_EXP = "124";//客户导出
+	public static final String FUNCTION_CRM_USER_ADD = "111";//客户新增
+	public static final String FUNCTION_CRM_USER_EDIT = "112";//客户新增
+	public static final String FUNCTION_CRM_USER_DEL = "113";//客户新增
+	public static final String FUNCTION_CRM_USER_EXP = "114";//客户导出
 	
 	public static final String FUNCTION_HT_MANAGE="210";//合同管理
-	public static final String FUNCTION_HT_USER="220";//合同管理
-	public static final String FUNCTION_HT_USER_ADD = "221";//客户新增
-	public static final String FUNCTION_HT_USER_EDIT = "222";//客户新增
-	public static final String FUNCTION_HT_USER_DEL = "223";//客户新增
+	public static final String FUNCTION_HT_USER_ADD = "211";//客户新增
+	public static final String FUNCTION_HT_USER_EDIT = "212";//客户新增
+	public static final String FUNCTION_HT_USER_DEL = "213";//客户新增
 	
 	public static final String FUNCTION_HF_MANAGE="310";//客户回访
-	public static final String FUNCTION_HF_USER="320";//客户回访
-	public static final String FUNCTION_HF_USER_ADD = "321";//回访新增
-	public static final String FUNCTION_HF_USER_EDIT = "322";//回访新增
-	public static final String FUNCTION_HF_USER_DEL = "323";//回访新增
-	public static final String FUNCTION_HF_USER_EXP = "324";//回访新增
+	public static final String FUNCTION_HF_USER_ADD = "311";//回访新增
+	public static final String FUNCTION_HF_USER_EDIT = "312";//回访新增
+	public static final String FUNCTION_HF_USER_DEL = "313";//回访新增
+	public static final String FUNCTION_HF_USER_EXP = "314";//回访新增
 	
 	/*操作类型*/
 	public static final String OPERATION_INSERT = "1";//增加
