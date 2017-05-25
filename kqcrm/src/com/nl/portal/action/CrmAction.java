@@ -818,6 +818,29 @@ public class CrmAction extends BaseAppAction {
 			throw new Exception();
 		}
 	}
+	public ActionForward toHtAdd2(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String bosscodestr = super.getBossCodeStr();
+		int retCode = 0;
+		try
+		{
+			CrmForm formBean = (CrmForm)form;
+			CrmSc sc = new CrmSc();
+			 
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
+			
+			//记录日志
+//			doLog(form,"进入欢迎页面");
+//			createLog(request,"","","进入欢迎页面","1");
+			getLogger(bosscodestr,GlobalConst.EXIT).info("进入欢迎页面。");
+			return mapping.findForward("htadd2");
+		}catch(Exception e){
+			getLogger(bosscodestr,GlobalConst.ERROR).error("进入欢迎页面出错:"+e.getMessage());
+			throw new Exception();
+		}
+	}
 	
 	public void doHtAdd(ActionMapping mapping,
 			ActionForm form,
@@ -836,9 +859,38 @@ public class CrmAction extends BaseAppAction {
 			String url ="";
 			if(retCode == 0){
 				url =request.getContextPath()+"/crmAction.do?method=toKhManage";
-				doJumps(0,url,"ht","新增合同",request,response);
+				doJump1(0,url,"新增合同",request,response);
 			}else{
 				url =request.getContextPath()+"/crmAction.do?method=toKhManage";
+				doJump1(-1,url,"新增合同",request,response);
+			}
+			
+		}catch(Exception e){
+//			getLogger(bosscodestr,GlobalConst.ERROR).error("进入基本信息出错:"+e.getMessage());
+//			throw new Exception(AppConst.CENTERTASK_ERROR_INFO);
+			throw new Exception();
+		}
+	}
+	public void doHtAdd2(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+//		String bosscodestr = super.getBossCodeStr();
+		int retCode = 0;
+		try
+		{
+			CrmForm formBean = (CrmForm)form;
+			CrmSc sc = new CrmSc();
+			
+			retCode = sc.doHtAdd(formBean);
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);			
+
+			String url ="";
+			if(retCode == 0){
+				url =request.getContextPath()+"/crmAction.do?method=toHtAdd2";
+				doJumps(0,url,"ht","新增合同",request,response);
+			}else{
+				url =request.getContextPath()+"/crmAction.do?method=toHtAdd2";
 				doJumps(-1,url,"ht","新增合同",request,response);
 			}
 			
