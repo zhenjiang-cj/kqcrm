@@ -692,13 +692,13 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 				<isEqual property="hf_material1" compareValue="1">
 						materail1 = 1,
 					</isEqual>
-					<isEqual property="hf_material2" compareValue="1">
+					<isEqual property="hf_material2" compareValue="2">
 						materail2 = 1,
 					</isEqual>
-					<isEqual property="hf_material3" compareValue="1">
+					<isEqual property="hf_material3" compareValue="3">
 						materail3 = 1,
 					</isEqual>
-					<isEqual property="hf_material4" compareValue="1">
+					<isEqual property="hf_material4" compareValue="4">
 						materail4 = 1,
 					</isEqual>
 			</dynamic>
