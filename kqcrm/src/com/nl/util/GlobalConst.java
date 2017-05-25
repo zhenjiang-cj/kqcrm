@@ -176,6 +176,7 @@ public class GlobalConst{
 	public static final String FUNCTION_HT_USER_ADD = "211";//客户新增
 	public static final String FUNCTION_HT_USER_EDIT = "212";//客户新增
 	public static final String FUNCTION_HT_USER_DEL = "213";//客户新增
+	public static final String FUNCTION_HT_USER_EXP = "214";//客户新增
 	
 	public static final String FUNCTION_HF_MANAGE="310";//客户回访
 	public static final String FUNCTION_HF_USER_ADD = "311";//回访新增
