@@ -78,7 +78,14 @@ if(sessdata!=null){
 	<div class="panelBar">
 		<ul class="toolBar">
 			<%
-			if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_HF_USER_EXP)){
+			if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_HT_USER_ADD)){
+				%>
+				<li><a class="add" href="<%=path%>/crmAction.do?method=toHtAdd2" target="navTab" rel="ht_add" ><span>新增</span></a></li>
+				<%
+			}
+			%>
+			<%
+			if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_HT_USER_EXP)){
 				%>
 				<li><a class="icon" href="<%=path%>/crmAction.do?method=toHtExp" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
 				<%

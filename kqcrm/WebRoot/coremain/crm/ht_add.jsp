@@ -157,7 +157,7 @@
     
     <div class="pageFormContent nowrap"   style="height:170px">
 		
-		<table class="TabList">                   	                  
+		<table class="TabList">               	                  
                <tr style="margin-top:20px;">
                    <td class="tit03">合同编号：</td>
                    <td style="text-align:left;">
