@@ -36,45 +36,36 @@
 	<script src="<%=path%>/dwz/js/jquery.validate.js" type="text/javascript"></script>
 	<script src="<%=path%>/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
 	<script type="text/javascript">
-$(function(){
-		jQuery("#provinces").val('<%=user.getProvinces()  %>');
-		jQuery("#city").val('<%=user.getCity()  %>');
-		jQuery("#region").val('<%=user.getRegion()  %>');
-		//checkuser();	
+	$(function(){
+		getprovinces();
+		setTimeout(function(){
+				jQuery("#provinces").val('<%=user.getProvinces()  %>');
+				jQuery("#city").val('<%=user.getCity()  %>');
+				jQuery("#region").val('<%=user.getRegion()  %>');
+			},500);
 		
 	});
-	//根据用户归属，确定能新增客户的归属
-	function checkuser(){
-		var org_level = '<%=sessionData.getOrg_level()  %>';
-		if(org_level=='1'){
-			var p_name = $("#provinces").find("option:selected").text();
-			var p_value = $("#provinces").val();
-			$("#provinces").empty();
-			$("#provinces").html('<option value="'+p_value+'">'+p_name+'</option>');
-			provincesChange();
-		}else if(org_level=='2'){
-			var p_name = $("#provinces").find("option:selected").text();
-			var p_value = $("#provinces").val();
-			$("#provinces").empty();
-			$("#provinces").html('<option value="'+p_value+'">'+p_name+'</option>');
-			var c_name = $("#city").find("option:selected").text();
-			var c_value = $("#city").val();
-			$("#city").empty();
-			$("#city").html('<option value="'+c_value+'">'+c_name+'</option>');
-			cityChange();
-		}else{
-			var p_name = $("#provinces").find("option:selected").text();
-			var p_value = $("#provinces").val();
-			$("#provinces").empty();
-			$("#provinces").html('<option value="'+p_value+'">'+p_name+'</option>');
-			var c_name = $("#city").find("option:selected").text();
-			var c_value = $("#city").val();
-			$("#city").empty();
-			$("#city").html('<option value="'+c_value+'">'+c_name+'</option>');
-			var r_name = $("#region").find("option:selected").text();
-			var r_value = $("#region").val();
-			$("#region").empty();
-			$("#region").html('<option value="'+r_value+'">'+r_name+'</option>');
+	function getprovinces(){
+		try{
+			$.ajax({
+			    type:"post",
+				dataType:"json",
+				contentType:"application/json;charset=UTF-8",
+				url:'<%=path%>/coremain/portal/user/getproveinces.jsp',
+			    success:function(data){
+		            if(null!=data){
+	                    jQuery("#provinces").html(data[0].cityMap);
+	                    provincesChange();
+		            }else{
+		                alert("没有获取省信息");
+		            }
+			    },
+			    error:function (data){
+			        alert("获取省信息失败！");
+			    }
+			});
+		}catch(e){
+			alert(e);
 		}
 	}
 function provincesChange() {
@@ -94,6 +85,7 @@ function provincesChange() {
 		    success:function(data){
 	            if(null!=data){
                     jQuery("#city").html(data[0].cityMap);
+                    cityChange();
 	            }else{
 	                alert("没有获取地市信息");
 	            }
@@ -138,6 +130,7 @@ function cityChange() {
 		alert(e);
 	}
 }
+
 
 
 	</script>

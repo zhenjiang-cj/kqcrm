@@ -17,7 +17,6 @@ List privlist = null;
 if(sessdata!=null){
 	privlist = sessdata.getPrivMap();
 }
-System.out.println("%%%%%%"+privlist);
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
