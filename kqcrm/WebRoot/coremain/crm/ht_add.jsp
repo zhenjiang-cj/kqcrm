@@ -85,10 +85,13 @@
                </tr>
                <tr style="margin-top:20px;">
                    <td class="tit">转介绍人(姓名+手机号码)：</td>
-                   <td style="text-align:left;" colspan="3">
+                   <td style="text-align:left;" >
                        <%=kh.getIntroduce_name() %> 
                    </td>
-   
+   				   <td class="tit">首次签约日期：</td>
+                   <td style="text-align:left;" >
+                       <%=kh.getHt_date_first()==null?"":kh.getHt_date_first() %> 
+                   </td>
                </tr>
 	  		  <tr style="margin-top:20px;">
                    <td class="tit">家庭住址：</td>
@@ -162,7 +165,7 @@
                    </td>
                    <td class="tit03">首次签约日期：</td>
                    <td style="text-align:left;">
-                       <input name="ht_date_first"  id="ht_date_first" type="text"   class="required date" />
+                       <input name="ht_date_first"  id="ht_date_first" type="text"   class="required date" value="<%=kh.getHt_date_first()==null?"":kh.getHt_date_first() %>"/>
                    </td>
                </tr>
                <tr style="margin-top:20px;">
