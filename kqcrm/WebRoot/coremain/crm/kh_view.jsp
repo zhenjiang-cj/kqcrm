@@ -85,10 +85,13 @@
                </tr>
                <tr style="margin-top:20px;">
                    <td class="tit">转介绍人(姓名+手机号码)：</td>
-                   <td style="text-align:left;" colspan="3">
+                   <td style="text-align:left;" >
                        <%=kh.getIntroduce_name() %> 
                    </td>
-   
+   				   <td class="tit">首次签约日期：</td>
+                   <td style="text-align:left;" >
+                       <%=kh.getHt_date_first()==null?"":kh.getHt_date_first() %> 
+                   </td>
                </tr>
 	  		  <tr style="margin-top:20px;">
                    <td class="tit">家庭住址：</td>
@@ -152,7 +155,7 @@
 		<ul class="tabsPageHeader"><li><span>回访记录</span></li></ul>
 	</div>
 	<div class="pageContent"  >
-	<div class=tabsPage style="height:320px;">
+	<div class=tabsPage style="height:160px;">
 		<table class="table" width="1200"   style="table-layout:fixed;height:320px">
 			<thead>
 				<tr>
