@@ -628,6 +628,41 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		                   ) a) t
 		 where t.rn>(#page_num#-1)*#page_size# and #page_num#*#page_size# >= t.rn
 	</select>
+	
+	<select id='queryHfExp' parameterClass="java.util.HashMap" resultClass="crminfo" >
+        select *
+		  from (select a.*, row_number() over(order by a.kh_id,a.hf_date_must) rn, count(*) over() totalCount
+		          from (
+			          select  distinct a.ht_id,hf_id,hf_date_must,hf_date_fact,hf_status,hf_user_name,hf_remark,hf_type,
+								ht_date_current,ht_year,b.ht_pledge,b.ht_rent,b.kh_id,kh_name,kh_phone1,kh_addr,kh_phone2,kh_card
+						from kq_hf_info a ,kq_ht_info b,kq_kh_info c
+						where a.ht_id = b.ht_id
+						  and b.kh_id = c.kh_id
+						  and a.is_valid=1
+						  and b.is_valid=1
+		           <dynamic>
+					<isNotEmpty property="org_ids">
+							 and charindex(c.region,#org_ids#) >0
+					</isNotEmpty>
+					<isNotEmpty property="kh_name">
+							 and c.kh_name like '%$kh_name$%'
+					</isNotEmpty>
+					<isNotEmpty property="hf_status">
+							 and a.hf_status = #hf_status#
+					</isNotEmpty>
+					<isNotEmpty property="hf_type">
+							 and a.hf_type = #hf_type#
+					</isNotEmpty>
+					<isNotEmpty property="hf_begin_date">
+							 and  a.hf_date_must >= #hf_begin_date#
+					</isNotEmpty>
+					<isNotEmpty property="hf_end_date">
+							 and  #hf_end_date# >= a.hf_date_must 
+					</isNotEmpty>
+				  </dynamic>          
+		                   ) a) t
+	</select>
+	
 	<select id='queryhfByid' parameterClass="java.util.HashMap" resultClass="crminfo" >
 		             
 				select a.ht_id,a.hf_id,a.hf_date_must,a.hf_date_fact,a.hf_status,a.hf_user_name,hf_type,a.hf_remark 
