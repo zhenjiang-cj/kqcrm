@@ -15,21 +15,17 @@
 <%
 HashMap<String,String> resultMap = new HashMap<String,String>();
 SessionData sessionData =(SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
-
 try
 {
 	String regions = sessionData.getRegion();
-	String provinces = request.getParameter("provinces");
-	String city = request.getParameter("city");
 	UserForm formBean = new UserForm();
 	
-	UserSc sc = new UserSc();
-	formBean.setProvinces(provinces);
-	formBean.setCity(city);
-	formBean.setRegions(regions);
-	//formBean.setRegion(sessionData.getRegion());
 
-	List<UserInfo> userlist = sc.getRegionByCity(formBean);
+	UserSc sc = new UserSc();
+	formBean.setRegions(regions);
+	//formBean.setCity(sessionData.getCity());
+
+	List<UserInfo> userlist = sc.getprovinces(formBean);
 	
 	String options = "<option value=''>---È«²¿---</option>";
 	if(null!=userlist&&userlist.size()>0){ 
