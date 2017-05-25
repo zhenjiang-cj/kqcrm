@@ -48,6 +48,7 @@
 			<forward name="htmanage" path="/coremain/crm/ht_manage.jsp"/>
 			<forward name="htmanage1" path="/coremain/crm/ht_manage1.jsp"/>
 			<forward name="htadd" path="/coremain/crm/ht_add.jsp"/>
+			<forward name="htadd2" path="/coremain/crm/ht_add2.jsp"/>
 			<forward name="htedit" path="/coremain/crm/ht_edit.jsp"/>
 			<forward name="htedit1" path="/coremain/crm/ht_edit1.jsp"/>
 			<forward name="hfframe" path="/coremain/crm/hfframe.jsp"/>
