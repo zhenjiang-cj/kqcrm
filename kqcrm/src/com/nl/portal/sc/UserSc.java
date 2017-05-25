@@ -88,10 +88,36 @@ public class UserSc extends AbstractDB {
 			UserDbMgr db = new UserDbMgr(smc);
 			HashMap param = new HashMap(); 
 			param.put("provinces", userform.getProvinces());
+			param.put("regions", userform.getRegions());
 			//param.put("city", userform.getCity());
 //			param.put("page_num", userform.getPageNum());
 //			param.put("page_size", userform.getNumPerPage());
 			userlist = db.getCityByPro(param);
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			this.endTransaction(smc);
+		}
+		return userlist;
+	}
+	public List<UserInfo> getprovinces(UserForm userform)
+	{
+		List<UserInfo> userlist = null;
+		SqlMapClient smc = null;
+		try
+		{
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			UserDbMgr db = new UserDbMgr(smc);
+			HashMap param = new HashMap(); 
+			param.put("regions", userform.getRegions());
+			//param.put("city", userform.getCity());
+//			param.put("page_num", userform.getPageNum());
+//			param.put("page_size", userform.getNumPerPage());
+			userlist = db.getprovinces(param);
 		} catch(Exception e)
 		{
 			e.printStackTrace();
@@ -114,6 +140,7 @@ public class UserSc extends AbstractDB {
 			HashMap param = new HashMap(); 
 			param.put("provinces", userform.getProvinces());
 			param.put("city", userform.getCity());
+			param.put("regions", userform.getRegions());
 			//param.put("region", userform.getRegion());
 //			param.put("page_num", userform.getPageNum());
 //			param.put("page_size", userform.getNumPerPage());

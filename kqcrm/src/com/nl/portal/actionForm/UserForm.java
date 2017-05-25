@@ -21,6 +21,7 @@ public class UserForm extends BaseAppActionForm {
 	private String role_remark;
 	private String checkPrivId;
 	private String chooseRoles;
+	private String regions;
 	
 	private String privilege_id;
 	private String page_id;
@@ -144,6 +145,12 @@ public class UserForm extends BaseAppActionForm {
 	}
 	public void setCheckPrivId(String checkPrivId) {
 		this.checkPrivId = checkPrivId;
+	}
+	public String getRegions() {
+		return regions;
+	}
+	public void setRegions(String regions) {
+		this.regions = regions;
 	}
 
 }

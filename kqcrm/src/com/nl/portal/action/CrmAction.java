@@ -82,7 +82,7 @@ public class CrmAction extends BaseAppAction {
 			rsDt.setMessage(remark);
 			rsDt.setCallbackType("forward");
 			
-//			rsDt.setNavTabId("userinfo");
+			rsDt.setNavTabId(rel);
 //			rsDt.setForwardUrl(request.getContextPath()+"/approvalFlowAction.do?method=queryApplyInfo");
 			rsDt.setForwardUrl(url);
 			rsDt.setRel(rel);
@@ -425,7 +425,7 @@ public class CrmAction extends BaseAppAction {
 			String url ="";
 			if(retCode == 0){
 				url =request.getContextPath()+"/crmAction.do?method=toKhManage";
-				doJump(0,url,"新增客户",request,response);
+//				doJump(0,url,"新增客户",request,response);
 				doJumps(0,url,"user","新增客户",request,response);
 			}else{
 				url =request.getContextPath()+"/crmAction.do?method=toKhManage";

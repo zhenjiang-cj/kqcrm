@@ -82,6 +82,18 @@ public class UserDbMgr extends AbstractDB{
 		}
 		return list;
 	}
+	public List<UserInfo> getprovinces(HashMap param) {
+		getLogger(bossCodeStr,GlobalConst.ENTER).info("查询用户：");
+		List<UserInfo> list = null;
+		
+		try{
+			list = smc.queryForList("UserSql.getprovinces", param);
+			getLogger(bossCodeStr,GlobalConst.EXIT).info("查询用户结束。");
+		}catch(Exception e){
+			getLogger(bossCodeStr,GlobalConst.ERROR).error("::查询用户有错！::" + "error:"+e.getMessage());
+		}
+		return list;
+	}
 	public List<UserInfo> getRegionByCity(HashMap param) {
 		getLogger(bossCodeStr,GlobalConst.ENTER).info("查询用户：");
 		List<UserInfo> list = null;
