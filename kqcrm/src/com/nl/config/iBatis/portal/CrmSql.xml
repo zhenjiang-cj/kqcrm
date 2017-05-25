@@ -688,6 +688,20 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			hf_date_fact=#hf_date_fact#,
 			hf_remark=#hf_remark#,
 			hf_user_name=#hf_user_name# ,
+			<dynamic>
+				<isEqual property="hf_material1" compareValue="1">
+						materail1 = 1,
+					</isEqual>
+					<isEqual property="hf_material2" compareValue="1">
+						materail2 = 1,
+					</isEqual>
+					<isEqual property="hf_material3" compareValue="1">
+						materail3 = 1,
+					</isEqual>
+					<isEqual property="hf_material4" compareValue="1">
+						materail4 = 1,
+					</isEqual>
+			</dynamic>
 			hf_status=1
 		where hf_id=#hf_id# 
 		  and is_valid=1
@@ -739,18 +753,5 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		
 	</update>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 </sqlMap>
