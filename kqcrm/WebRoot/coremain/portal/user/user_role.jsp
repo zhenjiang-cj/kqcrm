@@ -32,7 +32,7 @@
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	--> 
-	
+	<link type="text/css" rel= "stylesheet" href="<%=path%>/css/content.css" >
 	<script type="text/javascript">
 	 
 	$(function(){
@@ -185,10 +185,10 @@
 	<div class="panel collapse" defH="350">
 		<h1>角色信息</h1>
 		<div>
-			<table class="list" width="98%">
+			<table class="TabList" width="98%">
 				<tbody>
 					<tr>
-						<td>归属功能 :
+						<td class="tit">归属功能 :
 							<select id="sysid" name="sysid" class="required" onchange="changeSys()">
 							        <%=DictMgmt.getSelectObj(DictMgmt.DICT_SYS_SYSTEM_ID,"",false,false,"-1", -1, null, null, null,-1,"") %>
 						    </select><font class="Red">*</font>
@@ -197,12 +197,12 @@
 				</tbody>
 			</table>
 			
-			<table class="list" width="98%">
+			<table class="TabList" width="98%">
 				<tbody> 
 					<tr>
-						<td >分配角色</td>
-						<td >设置</td>
-						<td >可用角色</td>
+						<td class="tit">分配角色</td>
+						<td class="tit">设置</td>
+						<td class="tit">可用角色</td>
 					</tr>
 					<tr>
 					<td>
@@ -224,8 +224,8 @@
 				         </select> 
 					</td>
 					<td>				
-						<div class="Divtr"><input name=""  type="button" value="增加 >>"  class="bntSty" onclick="changeObject('allRole','chooseRole')"/></div>
-					    <div class="Divtr"><input name=""  type="button" value="<< 删除"  class="bntSty" onclick="changeObject('chooseRole','allRole')"/></div>
+						<div class="Divtr"><input name=""  type="button" value="增加 >>"   onclick="changeObject('allRole','chooseRole')"/></div>
+					    <div class="Divtr"><input name=""  type="button" value="<< 删除"   onclick="changeObject('chooseRole','allRole')"/></div>
 				    </td>
 					<td>
 					   <select multiple="multiple" name="chooseRole" id="chooseRole"  class="select" style="width:300px;height:150px" 
