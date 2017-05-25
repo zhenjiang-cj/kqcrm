@@ -44,36 +44,60 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			as
 			(
 			   select org_id ,parent_org_id,org_name,data_level
-			    from kq_region_relation 
-			    where  (   
-				 org_id = #provinces#
-				  
-			    )
+			    from kq_region_relation  
+			    where    charindex(convert(varchar(20),org_id), #regions#) >0
 			    union all
 			    select a.org_id ,a.parent_org_id,a.org_name,a.data_level
 			    from kq_region_relation a, cte_child b
-			    where a.parent_org_id=b.org_id
+			    where a.org_id=b.parent_org_id
 			)  
-			select * from cte_child where  data_level = 3
+			select distinct org_id,parent_org_id,org_name,data_level from cte_child 
+			where data_level =3 
+				<dynamic>
+					<isNotEmpty property="provinces">
+							and parent_org_id=#provinces#
+					</isNotEmpty>
+				  </dynamic> 
+			
 			order by data_level,org_id
 	</select>
-	<select id='getRegionByCity' parameterClass="java.util.HashMap" resultClass="user" >
+	<select id='getprovinces' parameterClass="java.util.HashMap" resultClass="user" >
         with cte_child(org_id,parent_org_id,org_name,data_level )
 			as
 			(
 			   select org_id ,parent_org_id,org_name,data_level
-			    from kq_region_relation 
-			    where  (   
-				 org_id = #city#
-				  
-			    )
+			    from kq_region_relation  
+			    where    charindex(convert(varchar(20),org_id), #regions#) >0
 			    union all
 			    select a.org_id ,a.parent_org_id,a.org_name,a.data_level
 			    from kq_region_relation a, cte_child b
-			    where a.parent_org_id=b.org_id
+			    where a.org_id=b.parent_org_id
 			)  
-			select * from cte_child where  data_level = 4
+			select distinct org_id,parent_org_id,org_name,data_level from cte_child where data_level =2
 			order by data_level,org_id
+	</select>
+	<select id='getRegionByCity' parameterClass="java.util.HashMap" resultClass="user" >
+		with cte_child(org_id,parent_org_id,org_name,data_level )
+			as
+			(
+			   select org_id ,parent_org_id,org_name,data_level
+			    from kq_region_relation  
+			    where    charindex(convert(varchar(20),org_id), #regions#) >0
+			    union all
+			    select a.org_id ,a.parent_org_id,a.org_name,a.data_level
+			    from kq_region_relation a, cte_child b
+			    where a.org_id=b.parent_org_id
+			)  
+			select distinct org_id,parent_org_id,org_name,data_level from cte_child 
+			where data_level =4 
+			 	<dynamic>
+					<isNotEmpty property="city">
+							and parent_org_id=#city#
+					</isNotEmpty>
+				  </dynamic> 
+			
+			order by data_level,org_id
+		 
 	</select>
 	
 	<insert id="doUserAdd" parameterClass="java.util.HashMap">
