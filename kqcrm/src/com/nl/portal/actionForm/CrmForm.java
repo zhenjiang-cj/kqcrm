@@ -65,6 +65,8 @@ public class CrmForm extends BaseAppActionForm {
 	private String hf_begin_date;
 	private String hf_end_date;
 	
+	private String[] hf_material;
+	
 	
 	private String ht_begin_date;
 	private String ht_end_date;
@@ -418,6 +420,12 @@ public class CrmForm extends BaseAppActionForm {
 	}
 	public void setIs_ws(String is_ws) {
 		this.is_ws = is_ws;
+	}
+	public String[] getHf_material() {
+		return hf_material;
+	}
+	public void setHf_material(String[] hf_material) {
+		this.hf_material = hf_material;
 	}
 
 }
