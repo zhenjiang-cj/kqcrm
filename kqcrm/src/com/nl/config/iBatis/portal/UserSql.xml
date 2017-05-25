@@ -306,7 +306,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	
 	<update id="doRoleDel" parameterClass="java.util.HashMap">
 	  UPDATE kq_isc_role 
-	  set enflag=0, 
+	  set enflag=0 
 	  where enflag =1 
 	  and role_id = #role_id#
 	</update>
