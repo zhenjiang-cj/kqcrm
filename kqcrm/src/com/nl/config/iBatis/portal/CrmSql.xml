@@ -270,8 +270,8 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	</insert>
 	
 	<select id='queryKhListById' parameterClass="java.util.HashMap" resultClass="crminfo" >
-        select *
-		  from (select a.*, row_number() over(order by a.kh_id) rn, count(*) over() totalCount
+        select  a.*,b.ht_date_first
+		  from (select a.*
 		          from (
 		          select distinct a.kh_id,a.kh_name,a.provinces,a.city,a.region,a.kh_addr,a.kh_card,a.kh_phone1,a.kh_phone2,a.introduce_name
 		          from kq_kh_info a 
@@ -281,7 +281,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 							and a.kh_id =  #kh_id#
 					</isNotEmpty>
 				  </dynamic>         
-		                   ) a) t 
+		                   ) a ) a left join (select * from
+											(select kh_id,ht_date_first,ROW_NUMBER() over(partition by kh_id order by ht_date_current ) rn
+											from kq_ht_info) b where b.rn = 1) b on a.kh_id = b.kh_id
 	</select>
 	
 	<select id='queryYxkhById' parameterClass="java.util.HashMap" resultClass="crminfo" >
