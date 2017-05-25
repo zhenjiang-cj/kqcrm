@@ -31,7 +31,7 @@ if(sessdata!=null){
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page"> 
-
+	<link href="<%=path%>/css/content.css" rel="stylesheet" type="text/css"  />
   </head>
   
   <body>
@@ -133,7 +133,7 @@ if(sessdata!=null){
 							<%
 							if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_HF_USER_EDIT)){
 								%>
-								<a title="回访" target="dialog" href="<%=path%>/crmAction.do?method=toHfEdit&hf_id=<%=user.getHf_id() %>" width="645" height="400" rel="ht"  class="btnEdit">回访</a>
+								<a title="回访" target="dialog" href="<%=path%>/crmAction.do?method=toHfEdit&hf_id=<%=user.getHf_id() %>" width="645" height="400" rel="ht"  class="btnEdit">回访记录</a>
 								<%
 							}
 							%>
