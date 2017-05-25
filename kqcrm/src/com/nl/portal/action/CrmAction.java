@@ -1165,7 +1165,7 @@ public class CrmAction extends BaseAppAction {
 			
 			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
 			
-			String[] titles ={"客户编码","客户姓名","签约年度","身份证号","电话号码","地址","回访次数","回访状态","应访日期","实际日期","访问情况","回访人"};
+			String[] titles ={"客户编码","客户姓名","签约年度","身份证号","电话号码","地址","回访次数","回访状态","应访日期","实际日期","访问情况","回访人","客户签字"};
 
 			List alist = getHfExpList(userlist);
 			
@@ -1202,7 +1202,7 @@ public class CrmAction extends BaseAppAction {
 			tmp_ls.add(user.getHf_date_fact());
 			tmp_ls.add(user.getHf_remark());
 			tmp_ls.add(user.getHf_user_name());
-         
+			tmp_ls.add("");
 			ls.add(tmp_ls);
     	}
     	 

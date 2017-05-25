@@ -754,7 +754,7 @@ public class CrmSc extends AbstractDB {
 			
 			
 			
-			userlist = db.queryHf(param);
+			userlist = db.queryHfExp(param);
 		} catch(Exception e)
 		{
 			e.printStackTrace();

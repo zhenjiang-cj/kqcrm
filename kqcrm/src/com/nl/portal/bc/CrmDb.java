@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.nl.base.AbstractDB;
 import com.nl.portal.dt.CrmInfo;
-import com.nl.portal.dt.UserInfo;
 import com.nl.util.GlobalConst;
 
 public class CrmDb extends AbstractDB {
@@ -391,6 +390,19 @@ public class CrmDb extends AbstractDB {
 		
 		try{
 			list = smc.queryForList("CrmSql.queryHf", param);
+			getLogger(bossCodeStr,GlobalConst.EXIT).info("查询用户结束。");
+		}catch(Exception e){
+			getLogger(bossCodeStr,GlobalConst.ERROR).error("::查询用户有错！::" + "error:"+e.getMessage());
+		}
+		return list;
+	}
+	
+	public List<CrmInfo> queryHfExp(HashMap param) {
+		getLogger(bossCodeStr,GlobalConst.ENTER).info("查询用户：");
+		List<CrmInfo> list = null;
+		
+		try{
+			list = smc.queryForList("CrmSql.queryHfExp", param);
 			getLogger(bossCodeStr,GlobalConst.EXIT).info("查询用户结束。");
 		}catch(Exception e){
 			getLogger(bossCodeStr,GlobalConst.ERROR).error("::查询用户有错！::" + "error:"+e.getMessage());
