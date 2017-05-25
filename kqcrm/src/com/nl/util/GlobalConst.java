@@ -167,6 +167,11 @@ public class GlobalConst{
 	public static final String FUNCTION_CRM_USER_DEL = "113";//客户新增
 	public static final String FUNCTION_CRM_USER_EXP = "114";//客户导出
 	
+	public static final String FUNCTION_CRM_YXUSER_ADD = "121";//客户新增
+	public static final String FUNCTION_CRM_YXUSER_EDIT = "122";//客户修改
+	public static final String FUNCTION_CRM_YXUSER_DEL = "123";//客户删除
+	public static final String FUNCTION_CRM_YXUSER_EXP = "124";//客户导出
+	
 	public static final String FUNCTION_HT_MANAGE="210";//合同管理
 	public static final String FUNCTION_HT_USER_ADD = "211";//客户新增
 	public static final String FUNCTION_HT_USER_EDIT = "212";//客户新增
