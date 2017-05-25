@@ -98,7 +98,6 @@ if(sessdata!=null){
 				<th width="120" >客户姓名</th>
 				<th width="100" >签约年度</th>  
 				<th width="100" >押金</th>  
-				<th width="120" >身份证号</th>
 				<th width="100" >电话号码</th>
 				<th >地址</th>  
 				<th width="100">回访状态</th>
@@ -122,7 +121,6 @@ if(sessdata!=null){
 						<td><%=user.getKh_name() %></td>
 						<td><%=user.getHt_year() %></td>
 						<td><%=user.getHt_pledge() %></td>
-						<td><%=user.getKh_card() %></td>
 						<td><%=user.getKh_phone1() %></td>
 						<td  title="<%=user.getKh_addr() %>" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><%=user.getKh_addr() %></td>
 						<td><%=user.getHf_status().equals("1")?"已回访":"未回访" %></td>
