@@ -109,7 +109,7 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 						<td title="<%=user.getRemark() %>" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><%=user.getRemark() %></td>
 						<td>
 							<a title="删除" target="ajaxTodo" href="<%=path%>/crmAction.do?method=doYxkhDel&kh_id=<%=user.getKh_id() %>" class="btnDel">删除</a>
-							<a title="编辑" target="dialog" href="<%=path%>/crmAction.do?method=toYxkhEdit&kh_id=<%=user.getKh_id() %>" width="800" height="400"  class="btnEdit">编辑</a>
+							<a title="编辑" target="dialog" href="<%=path%>/crmAction.do?method=toYxkhEdit&kh_id=<%=user.getKh_id() %>" width="800" height="500"  class="btnEdit">编辑</a>
 						</td>
 					</tr>
 					
