@@ -826,10 +826,13 @@ public class CrmSc extends AbstractDB {
 			param.put("hf_remark",form.getHf_remark());
 			param.put("hf_user_name",form.getHf_user_name());
 			
-			param.put("hf_material1",form.getHf_material()[0]);
-			param.put("hf_material2",form.getHf_material()[1]);
-			param.put("hf_material3",form.getHf_material()[2]);
-			param.put("hf_material4",form.getHf_material()[3]);
+			if(form.getHf_material()!=null&&form.getHf_material().length>0)
+			{
+				for(int i=0;i<form.getHf_material().length;i++)
+				{
+					param.put("hf_material"+form.getHf_material()[i],form.getHf_material()[i]);
+				}
+			}
 
 			retCode = db.doHfEdit(param);
 //			retCode = db.doHfEdit1(param);
