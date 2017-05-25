@@ -405,6 +405,64 @@ public class CrmAction extends BaseAppAction {
 		}
 	}
 	
+	public ActionForward toYxkhExp(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String bosscodestr = super.getBossCodeStr();
+		int retCode = 0;
+		try
+		{
+			CrmForm formBean = (CrmForm)form;
+			CrmSc sc = new CrmSc();
+			//查询用户管辖的区域
+			SessionData sessionData =(SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
+			formBean.setOperatorId(sessionData.getSno());
+
+			formBean.setOrg_ids(sessionData.getRegion());
+			List<CrmInfo> userlist = sc.queryHtExp(formBean);
+			
+
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
+			
+			String[] titles ={"客户编号","名称","地址","号码1","号码2","转介绍人","是否已安装","渠道来源","备注"};
+
+			List alist = getYxkhExpList(userlist);
+			
+			GlobalUtil.AllDataToExcel("意向客户导出.xls","意向客户清单",titles,alist,response); 
+			
+			
+			getLogger(bosscodestr,GlobalConst.EXIT).info("进入欢迎页面。");
+			return null;
+		}catch(Exception e){
+			getLogger(bosscodestr,GlobalConst.ERROR).error("进入欢迎页面出错:"+e.getMessage());
+			throw new Exception();
+		}
+	}
+	
+	private List getYxkhExpList(List<CrmInfo> list) {
+		// TODO Auto-generated method stub
+		List ls = new ArrayList();
+    	List tmp_ls = null;
+    	for(int i=0;i<list.size();i++){
+    		tmp_ls = new ArrayList(); 
+    		CrmInfo user =   list.get(i);
+    		tmp_ls.add(user.getKh_id());
+			tmp_ls.add(user.getKh_name());
+			tmp_ls.add(user.getKh_addr());
+			tmp_ls.add(user.getKh_phone1());
+			tmp_ls.add(user.getKh_phone2());
+			tmp_ls.add(user.getIntroduce_name());
+			tmp_ls.add("1".equals(user.getIs_install())?"已安装":"未安装");
+			tmp_ls.add(user.getChannel_source());
+			tmp_ls.add(user.getRemark());
+         
+			ls.add(tmp_ls);
+    	}
+    	 
+		return ls;
+	}
+	
 	public void doKhAdd(ActionMapping mapping,
 			ActionForm form,
 			HttpServletRequest request,
@@ -511,6 +569,9 @@ public class CrmAction extends BaseAppAction {
 
 			CrmForm formBean = (CrmForm)form;
 			CrmSc sc = new CrmSc();
+			
+			SessionData sessionData =(SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
+			formBean.setOperatorId(sessionData.getSno());
 			
 			retCode = sc.doYxkhDel(formBean);
 			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);			
