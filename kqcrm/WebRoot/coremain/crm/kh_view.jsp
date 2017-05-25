@@ -152,9 +152,8 @@
 		<ul class="tabsPageHeader"><li><span>回访记录</span></li></ul>
 	</div>
 	<div class="pageContent"  >
-	<div class=tabsPage style="height:160px;">
-		<table class="table" width="1200"   style="table-layout:fixed;height:200px">
-
+	<div class=tabsPage style="height:320px;">
+		<table class="table" width="1200"   style="table-layout:fixed;height:320px">
 			<thead>
 				<tr>
 					<th width="120" orderField="accountNo"  >合同编号</th>
