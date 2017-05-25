@@ -221,7 +221,6 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	         provinces = #provinces#,
 	         city = #city#,
 	         region = #region#,
-	         is_install=1 ,
 	     	 kh_phone1 = #kh_phone1#,
 	     	 kh_phone2 = #kh_phone2#,
 	     	 kh_addr = #kh_addr#,
@@ -229,7 +228,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	     	 introduce_name = #introduce_name#,
 	     	 channel_source = #channel_source#,
 	     	 is_install = #is_install#,
-	     	 remark = #remark#
+	     	 remark = #remark#,
+	     	 change_id = #create_id#,
+	     	 change_date = getdate()
 	   where is_valid =1 and kh_id = #kh_id#
 	</update>
 	
