@@ -680,6 +680,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 					  and b.is_valid=1
 					  and c.is_valid=1
 				   	  and a.kh_id = #kh_id#
+				 order by c.ht_id,c.hf_type
 	</select>
 	
 	<update id="doHfEdit" parameterClass="java.util.HashMap">
