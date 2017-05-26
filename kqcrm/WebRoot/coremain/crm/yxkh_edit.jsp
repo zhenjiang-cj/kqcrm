@@ -14,7 +14,11 @@
 	CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FORM);
 	SessionData sessionData = (SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
 	List<CrmInfo> userlist =  (List<CrmInfo>) request.getAttribute("userlist");
-	CrmInfo user = userlist.get(0);
+	CrmInfo user = new CrmInfo();
+	if(userlist!=null)
+	{
+		user = userlist.get(0);
+	}
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -37,100 +41,11 @@
 	<script src="<%=path%>/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	$(function(){
-		getprovinces();
-		setTimeout(function(){
-				jQuery("#provinces").val('<%=user.getProvinces()  %>');
-				jQuery("#city").val('<%=user.getCity()  %>');
-				jQuery("#region").val('<%=user.getRegion()  %>');
-				jQuery("#is_install").val('<%=user.getIs_install()  %>');
-			},1000);
+		jQuery("#is_install").val('<%=user.getIs_install()  %>');
 		
 	});
-	function getprovinces(){
-		try{
-			$.ajax({
-			    type:"post",
-				dataType:"json",
-				contentType:"application/json;charset=UTF-8",
-				url:'<%=path%>/coremain/portal/user/getproveinces.jsp',
-			    success:function(data){
-		            if(null!=data){
-	                    jQuery("#provinces").html(data[0].cityMap);
-	                    provincesChange();
-		            }else{
-		                alert("没有获取省信息");
-		            }
-			    },
-			    error:function (data){
-			        alert("获取省信息失败！");
-			    }
-			});
-		}catch(e){
-			alert(e);
-		}
-	}
-function provincesChange() {
-    jQuery("#city").html('');
-    jQuery("#region").html('');
-    var provinces = "";
-    provinces=document.getElementById("provinces").value;
-    if(provinces==''){
-        provinces='';
-    }
-    try{
-		$.ajax({
-		    type:"post",
-			dataType:"json",
-			contentType:"application/json;charset=UTF-8",
-			url:'<%=path%>/coremain/portal/user/provincesChange.jsp?provinces='+provinces,
-		    success:function(data){
-	            if(null!=data){
-                    jQuery("#city").html(data[0].cityMap);
-                    cityChange();
-	            }else{
-	                alert("没有获取地市信息");
-	            }
-		    },
-		    error:function (data){
-		        alert("获取地市信息信息失败！");
-		    }
-		});
-	}catch(e){
-		alert(e);
-	}
-}
 
-function cityChange() {
-    jQuery("#region").html('');
-    var provinces =  document.getElementById("provinces").value;
-    if(provinces==''){
-        provinces='';
-    }
-    var city =document.getElementById("city").value;
-    if(city==''){
-        city='';
-    }
-    try{
-		$.ajax({
-		    type:"post",
-			dataType:"json",
-			contentType:"application/json;charset=UTF-8",
-			url:'<%=path%>/coremain/portal/user/cityChange.jsp?provinces='+provinces+'&city='+city,
-		    success:function(data){
-	             if(null!=data){
-                    jQuery("#region").html(data[0].cityMap);
-	            }else{
-	                alert("没有获取区域信息");
-	            }
-		    },
-		    error:function (data){
-		        alert("获取区域信息失败！");
-		    }
-		});
-	}catch(e){
-		alert(e);
-	}
-}
+
 
 
 	</script>
@@ -153,26 +68,17 @@ function cityChange() {
 	                      </td>
 	                      <td class="tit03">省份：</td>
 	                      <td style="text-align:left;">
-	                          <select  name="provinces" id="provinces" class="required" onchange="provincesChange();">
-															<option value="">--请选择--</option>
-															<%=DictMgmt.getSelectObj(DictMgmt.DICT_KQ_PROVINCES,"",false,false,"-1", -1, null, null, null,-1,"") %>
-														</select>
+	                          <%=user.getProvinces() %>
 	                      </td>
 	                  </tr>
 	                  <tr style="margin-top:20px;">
 	                      <td class="tit">地市：</td>
 	                      <td style="text-align:left;">
-	                          <select  name="city" id="city" onchange="cityChange();" class="required" >
-															<option value="">--请选择--</option>
-															<%=DictMgmt.getSelectObj(DictMgmt.DICT_KQ_CITY,"",false,false,"-1", -1, null, null, null,-1,"") %>
-														</select>
+	                          <%=user.getCity() %>
 	                      </td>
 	                      <td class="tit">县区：</td>
 	                      <td style="text-align:left;">
-	                          <select  name="region" id="region" class="required"  >
-															<option value="">--请选择--</option>
-															<%=DictMgmt.getSelectObj(DictMgmt.DICT_kq_REGION,"",false,false,"-1", -1, null, null, null,-1,"") %>
-														</select>
+	                          <%=user.getRegion() %>
 	                      </td>
 	                  </tr>
 	                  <tr style="margin-top:20px;">

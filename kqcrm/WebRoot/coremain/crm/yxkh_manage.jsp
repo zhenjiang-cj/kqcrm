@@ -4,11 +4,19 @@
 <%@ page import="com.nl.portal.actionForm.*"%>
 <%@page import="java.util.List"%>
 <%@ page import="com.nl.util.GlobalConst"%>
+<%@page import="com.nl.util.SessionData"%>
+<%@page import="com.nl.util.SessionConst"%>
+<%@page import="com.nl.util.GlobalUtil"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 List<CrmInfo> userlist = (List<CrmInfo>) request.getAttribute("userlist");//
 CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FORM);
+SessionData sessdata = (SessionData) request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
+List privlist = null;
+if(sessdata!=null){
+	privlist = sessdata.getPrivMap();
+}
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -36,7 +44,7 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 
 
 <div class="pageHeader">
-	<form onsubmit="return navTabSearch(this);" action="<%=path%>/crmAction.do?method=toKhManage" method="post">
+	<form onsubmit="return navTabSearch(this);" action="<%=path%>/crmAction.do?method=toYxkhManage" method="post">
 	<div class="searchBar">
 		<table class="searchContent">
 			<tr>
@@ -72,7 +80,13 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 		<ul class="toolBar">
 			<!-- <li><a class="add" href="<%=path%>/crmAction.do?method=toKhAdd" target="dialog" rel="kh_add" width="800" height="400"><span>新增</span></a></li>
 			<li class="line">line</li> -->
+			<%
+			if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_CRM_YXUSER_EXP)){
+				%>
 			<li><a class="icon" href="<%=path%>/crmAction.do?method=toYxkhExp" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
+			<%
+				}
+				%>
 		</ul>
 	</div>
 	<table class="table" width="1200" layoutH="138"  style="table-layout:fixed">
@@ -108,8 +122,14 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
 						<td><%=user.getChannel_source() %></td>
 						<td title="<%=user.getRemark() %>" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><%=user.getRemark() %></td>
 						<td>
+							<%
+							if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_CRM_YXUSER_DEL)){
+								%>								
 							<a title="删除" target="ajaxTodo" href="<%=path%>/crmAction.do?method=doYxkhDel&kh_id=<%=user.getKh_id() %>" class="btnDel">删除</a>
+							<%} %>
+							<%if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_CRM_YXUSER_EDIT)&&!"1".equals(user.getIs_install())){ %>
 							<a title="编辑" target="dialog" href="<%=path%>/crmAction.do?method=toYxkhEdit&kh_id=<%=user.getKh_id() %>" width="800" height="500"  class="btnEdit">编辑</a>
+							<%} %>
 						</td>
 					</tr>
 					
