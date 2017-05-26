@@ -97,7 +97,7 @@ if(sessdata!=null){
 				<th width="120" >客户编码</th>
 				<th width="120" >客户姓名</th>
 				<th width="100" >签约年度</th>  
-				<th width="100" >押金</th>  
+				<th width="100" >押金(元)</th>  
 				<th width="100" >电话号码</th>
 				<th >地址</th>  
 				<th width="100">回访状态</th>

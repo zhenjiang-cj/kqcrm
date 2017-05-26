@@ -14,7 +14,13 @@
 	CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FORM);
 	SessionData sessionData = (SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
 	List<CrmInfo> userlist =  (List<CrmInfo>) request.getAttribute("userlist");
-	CrmInfo user = userlist.get(0);
+	
+	CrmInfo user = new CrmInfo();
+	if(userlist!=null)
+	{
+		user = userlist.get(0);
+	}
+
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -54,6 +60,7 @@
 				url:'<%=path%>/coremain/portal/user/getproveinces.jsp',
 			    success:function(data){
 		            if(null!=data){
+		            	alert(11);
 	                    jQuery("#provinces").html(data[0].cityMap);
 	                    provincesChange();
 		            }else{

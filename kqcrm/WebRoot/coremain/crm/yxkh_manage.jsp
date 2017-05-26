@@ -37,14 +37,14 @@ if(sessdata!=null){
   
   <body>
   
-  <form id="pagerForm" method="post" action="<%=path%>/crmAction.do?method=toKhManage">
+  <form id="pagerForm" method="post" action="<%=path%>/crmAction.do?method=toYxkhManage">
 	<input type="hidden" name="pageNum" value="${pager.pageNum}" />
 	<input type="hidden" name="numPerPage" value="${pager.numPerPage}" />
 </form>
 
 
 <div class="pageHeader">
-	<form onsubmit="return navTabSearch(this);" action="<%=path%>/crmAction.do?method=toYxkhManage" method="post">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="<%=path%>/crmAction.do?method=toYxkhManage" method="post">
 	<div class="searchBar">
 		<table class="searchContent">
 			<tr>
@@ -52,18 +52,31 @@ if(sessdata!=null){
 					客户名称：<input type="text" name="kh_name" id="kh_name" value="<%=userform.getKh_name()==null?"":userform.getKh_name() %>" />
 				</td>
 				<td>
+					手机号码1：<input type="text" name="kh_phone1" id="kh_phone1" value="<%=userform.getKh_phone1()==null?"":userform.getKh_phone1() %>" />
+				</td>
+				<td>
+					手机号码2：<input type="text" name="kh_phone2" id="kh_phone2" value="<%=userform.getKh_phone2()==null?"":userform.getKh_phone2() %>" />
+				</td>				
+								
+			</tr>
+			<tr> 
+				
+				<td>
+					转介绍人(姓名+手机号码)：<input type="text" name="introduce_name" id="introduce_name" value="<%=userform.getIntroduce_name()==null?"":userform.getIntroduce_name() %>"  />
+				</td>
+				<td>
+					家庭地址：<input type="text" name="kh_addr" id="kh_addr" value="<%=userform.getKh_addr()==null?"":userform.getKh_addr() %>"  />
+				</td>
+				<td>
 					渠道来源：<input type="text" name="channel_source" id="channel_source" value="<%=userform.getChannel_source()==null?"":userform.getChannel_source() %>" />
 				</td>
 				<td>
 					是否已安装： 
-					<select name="is_install" id="is_install">
+					<select name="is_install" id="is_install" >
 					<option value="-1">--请选择--</option>
 					<option value="1" <%if("1".equals(userform.getIs_install())){%>selected<%} %>  >已安装</option>
 					<option value="0" <%if("0".equals(userform.getIs_install())){%>selected<%} %> >未安装</option>
 					</select>
-				</td>
-				<td>
-					家庭地址：<input type="text" name="kh_addr" id="kh_addr" value="<%=userform.getKh_addr()==null?"":userform.getKh_addr() %>"  />
 				</td>
 			</tr>
 		</table>
@@ -89,7 +102,7 @@ if(sessdata!=null){
 				%>
 		</ul>
 	</div>
-	<table class="table" width="1200" layoutH="138"  style="table-layout:fixed">
+	<table class="table" width="1200" layoutH="165"  style="table-layout:fixed">
 		<thead>
 			<tr>
 				<th width="120"  >编号</th>

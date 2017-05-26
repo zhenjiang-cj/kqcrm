@@ -27,7 +27,7 @@
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'user_legal.jsp' starting page</title>
+    <title>意向客户更新</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -46,15 +46,13 @@
 		
 	});
 
-
 	</script>
 	
-
   </head>
   
   <body>
     <div class="pageContent">
-  <form class="pageForm required-validate" onsubmit="return iframeCallback(this,dialogAjaxDone)" action="<%=path%>/crmAction.do?method=doYxkhEdit" method="post" name="userForm">
+  <form class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)" action="<%=path%>/crmAction.do?method=doYxkhEdit" method="post" name="crmForm">
     <input type="hidden" name="kh_id" id="kh_id" value="<%=user.getKh_id() %>">
     <input type="hidden" name="operatorId" id="operatorId" value="<%=sessionData.getSno() %>">   
 

@@ -92,7 +92,7 @@ if(sessdata!=null){
 		<%
 		if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_CRM_USER_ADD)){
 			%>
-			<li><a class="add" href="<%=path%>/crmAction.do?method=toKhAdd" target="dialog" rel="kh_add" width="800" height="400"><span>新增</span></a></li>
+			<li><a class="add" href="<%=path%>/crmAction.do?method=toKhAdd" target="navTab" rel="kh_add"><span>新增</span></a></li>
 			<%
 		}
 		%>
