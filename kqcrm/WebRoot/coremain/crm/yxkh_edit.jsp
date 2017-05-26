@@ -19,6 +19,7 @@
 	{
 		user = userlist.get(0);
 	}
+
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -55,10 +56,10 @@
   
   <body>
     <div class="pageContent">
-  <form class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)" action="<%=path%>/crmAction.do?method=doYxkhEdit" method="post" name="userForm">
+  <form class="pageForm required-validate" onsubmit="return iframeCallback(this,dialogAjaxDone)" action="<%=path%>/crmAction.do?method=doYxkhEdit" method="post" name="userForm">
     <input type="hidden" name="kh_id" id="kh_id" value="<%=user.getKh_id() %>">
     <input type="hidden" name="operatorId" id="operatorId" value="<%=sessionData.getSno() %>">   
-    
+
     <div class="pageFormContent nowrap" layoutH="56" style="height:100px">
     <table class="TabList">                   	                  
 	                  <tr style="margin-top:20px;">
