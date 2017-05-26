@@ -482,12 +482,12 @@ public class CrmAction extends BaseAppAction {
 
 			String url ="";
 			if(retCode == 0){
-				url =request.getContextPath()+"/crmAction.do?method=toKhManage";
+				url =request.getContextPath()+"/crmAction.do?method=toKhAdd";
 //				doJump(0,url,"新增客户",request,response);
-				doJumps(0,url,"user","新增客户",request,response);
+				doJumps(0,url,"kh_add","新增客户",request,response);
 			}else{
-				url =request.getContextPath()+"/crmAction.do?method=toKhManage";
-				doJumps(-1,url,"user","新增客户",request,response);
+				url =request.getContextPath()+"/crmAction.do?method=toKhAdd";
+				doJumps(-1,url,"kh_add","新增客户",request,response);
 			}
 			
 		}catch(Exception e){
