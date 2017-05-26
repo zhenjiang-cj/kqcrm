@@ -29,8 +29,8 @@ UserForm userform = (UserForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_F
   <body>
   
   <form id="pagerForm" method="post" action="<%=path%>/userAction.do?method=toUserManage">
-	<input type="hidden" name="pageNum" value="1" />
-	<input type="hidden" name="numPerPage" value="20" />
+	<input type="hidden" name="pageNum" value="${pager.pageNum}" />
+	<input type="hidden" name="numPerPage" value="${pager.numPerPage}" />
 	<input type="hidden" name="user_name"  />
 </form>
 
