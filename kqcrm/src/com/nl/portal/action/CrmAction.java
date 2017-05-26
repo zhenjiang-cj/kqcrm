@@ -172,10 +172,10 @@ public class CrmAction extends BaseAppAction {
 			rsDt.setMessage(remark);
 			rsDt.setCallbackType("closeCurrent");
 			
-//			rsDt.setNavTabId("userinfo");
+//			rsDt.setNavTabId(rel);
 //			rsDt.setForwardUrl(request.getContextPath()+"/approvalFlowAction.do?method=queryApplyInfo");
 			rsDt.setForwardUrl(url);
-			rsDt.setRel(rel);
+			rsDt.setRel("");
 			jsonString = GlobalFunc.getRsJson(rsDt);
 
 			try {
