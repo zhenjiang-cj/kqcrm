@@ -724,6 +724,7 @@ public class CrmAction extends BaseAppAction {
 			String url ="";
 			if(retCode == 0){
 				url =request.getContextPath()+"/crmAction.do?method=toYxkhManage";
+				//doJump2(0,url,"queryYxkh","修改意向客户",request,response);
 				doJump2(0,url,"queryYxkh","修改意向客户",request,response);
 				//doJump1(0,url,"修改意向客户",request,response);
 			}else{
