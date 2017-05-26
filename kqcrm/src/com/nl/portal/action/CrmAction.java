@@ -420,7 +420,7 @@ public class CrmAction extends BaseAppAction {
 			formBean.setOperatorId(sessionData.getSno());
 
 			formBean.setOrg_ids(sessionData.getRegion());
-			List<CrmInfo> userlist = sc.queryHtExp(formBean);
+			List<CrmInfo> userlist = sc.queryYxkhExp(formBean);
 			
 
 			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
@@ -724,7 +724,8 @@ public class CrmAction extends BaseAppAction {
 			String url ="";
 			if(retCode == 0){
 				url =request.getContextPath()+"/crmAction.do?method=toYxkhManage";
-				doJump2(0,url,"queryYxkh","修改意向客户",request,response);
+				//doJump2(0,url,"queryYxkh","修改意向客户",request,response);
+				doJump1(0,url,"修改意向客户",request,response);
 			}else{
 				url =request.getContextPath()+"/crmAction.do?method=toYxkhManage";
 				doJump2(-1,url,"queryYxkh","修改意向客户",request,response);

@@ -153,9 +153,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 					<isNotEmpty property="kh_addr">
 							and a.kh_addr  like '%$kh_addr$%'
 					</isNotEmpty>
-					<isEqual property="is_install" compareValue="-1">
+					<isNotEqual property="is_install" compareValue="-1">
 							and a.is_install = #is_install#
-					</isEqual>
+					</isNotEqual>
 					<isNotEmpty property="channel_source">
 							and a.channel_source  like '%$channel_source$%'
 					</isNotEmpty>
