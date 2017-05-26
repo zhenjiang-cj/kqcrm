@@ -722,16 +722,16 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			hf_user_name=#hf_user_name# ,
 			<dynamic>
 				<isEqual property="hf_material1" compareValue="1">
-						materail1 = 1,
+						material1 = 1,
 					</isEqual>
 					<isEqual property="hf_material2" compareValue="2">
-						materail2 = 1,
+						material2 = 1,
 					</isEqual>
 					<isEqual property="hf_material3" compareValue="3">
-						materail3 = 1,
+						material3 = 1,
 					</isEqual>
 					<isEqual property="hf_material4" compareValue="4">
-						materail4 = 1,
+						material4 = 1,
 					</isEqual>
 			</dynamic>
 			hf_status=1
