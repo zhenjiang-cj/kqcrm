@@ -38,8 +38,8 @@ if(sessdata!=null){
   <body>
   
   <form id="pagerForm" method="post" action="<%=path%>/crmAction.do?method=toKhManage">
-	<input type="hidden" name="pageNum" value="1" />
-	<input type="hidden" name="numPerPage" value="20" />
+	<input type="hidden" name="pageNum" value="${pager.pageNum}" />
+	<input type="hidden" name="numPerPage" value="${pager.numPerPage}" />
 </form>
 
 
@@ -86,7 +86,7 @@ if(sessdata!=null){
 	</div>
 	</form>
 </div>
-<div class="pageContent">
+<div class="pageContent" >
 	<div class="panelBar">
 		<ul class="toolBar">
 		<%

@@ -37,8 +37,8 @@ if(sessdata!=null){
   <body>
   
   <form id="pagerForm" method="post" action="<%=path%>/crmAction.do?method=toHfManage">
-	<input type="hidden" name="pageNum" value="1" />
-	<input type="hidden" name="numPerPage" value="20" /> 
+	<input type="hidden" name="pageNum" value="${pager.pageNum}" />
+	<input type="hidden" name="numPerPage" value="${pager.numPerPage}" />
 </form>
 
 

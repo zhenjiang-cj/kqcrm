@@ -132,13 +132,13 @@ function cityChange() {
 }
 
 
-
 	</script>
 	
 
   </head>
   
   <body>
+  
     <div class="pageContent">
   <form class="pageForm required-validate" onsubmit="return validateCallback(this,dialogAjaxDone)" action="<%=path%>/crmAction.do?method=doKhEdit" method="post" name="userForm">
     <input type="hidden" name="kh_id" id="kh_id" value="<%=user.getKh_id() %>">

@@ -29,8 +29,8 @@ CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FOR
   <body>
   
   <form id="pagerForm" method="post" action="<%=path%>/crmAction.do?method=toHtManage">
-	<input type="hidden" name="pageNum" value="1" />
-	<input type="hidden" name="numPerPage" value="20" />
+	<input type="hidden" name="pageNum" value="${pager.pageNum}" />
+	<input type="hidden" name="numPerPage" value="${pager.numPerPage}" />
 </form>
 
 
