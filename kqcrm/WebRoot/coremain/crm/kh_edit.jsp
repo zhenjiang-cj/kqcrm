@@ -60,7 +60,6 @@
 				url:'<%=path%>/coremain/portal/user/getproveinces.jsp',
 			    success:function(data){
 		            if(null!=data){
-		            	alert(11);
 	                    jQuery("#provinces").html(data[0].cityMap);
 	                    provincesChange();
 		            }else{
