@@ -84,6 +84,7 @@ if(sessdata!=null){
 				<%
 			}
 			%>
+			<li class="line">line</li>
 			<%
 			if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_HT_USER_EXP)){
 				%>
