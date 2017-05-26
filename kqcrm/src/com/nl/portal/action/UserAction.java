@@ -593,10 +593,10 @@ public class UserAction extends BaseAppAction {
 			String url ="";
 			if(retCode == 0){
 				url =request.getContextPath()+"/userAction.do?method=toRoleManage";
-				doJump1(0,url,"É¾³ý½ÇÉ«",request,response);
+				doJump(0,url,"É¾³ý½ÇÉ«",request,response);
 			}else{
 				url =request.getContextPath()+"/userAction.do?method=toRoleManage";
-				doJump1(-1,url,"É¾³ý½ÇÉ«",request,response);
+				doJump(-1,url,"É¾³ý½ÇÉ«",request,response);
 			}
 //			return mapping.findForward("verifiinfo");
 			
