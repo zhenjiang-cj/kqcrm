@@ -29,9 +29,7 @@
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
- 
-	<script src="<%=path%>/dwz/js/jquery.validate.js" type="text/javascript"></script>
-	<script src="<%=path%>/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
+  
 	<script type="text/javascript">
  
 

@@ -31,9 +31,7 @@
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
 	<link href="<%=path%>/css/content.css" rel="stylesheet" type="text/css"  />
- 
-	<script src="<%=path%>/dwz/js/jquery.validate.js" type="text/javascript"></script>
-	<script src="<%=path%>/dwz/js/dwz.regional.zh.js" type="text/javascript"></script>
+  
 	<script type="text/javascript">
  
 
