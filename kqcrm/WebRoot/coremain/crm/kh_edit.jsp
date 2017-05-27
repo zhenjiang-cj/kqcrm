@@ -48,7 +48,7 @@
 				jQuery("#provinces").val('<%=user.getProvinces()  %>');
 				jQuery("#city").val('<%=user.getCity()  %>');
 				jQuery("#region").val('<%=user.getRegion()  %>');
-			},500);
+			},1000);
 		
 	});
 	function getprovinces(){
