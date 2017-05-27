@@ -57,44 +57,55 @@
     
     
     <div class="pageFormContent nowrap"   style="height:300px">
-		<p>
-			<label>合同编号：</label>
-			<input name="ht_code"  id="ht_code" type="text" value="<%=user.getHt_code() %>"  />
-		</p>
-		<p>
-			<label>首次签约日期：</label>
-			<input name="ht_date_first"  id="ht_date_first" type="text"   class="required date" value="<%=user.getHt_date_first() %>" />
-		</p>
-		<p>
-			<label>本次签约日期：</label>
-			<input name="ht_date_current" id ="ht_date_current" type="text"   class="required date" value="<%=user.getHt_date_current() %>" />
-		</p>
-		<p>
-			<label>押金：</label>
-			<input name="ht_pledge" id="ht_pledge" type="text"  maxlength="9"  class="required digits"  value="<%=user.getHt_pledge() %>" />
-		</p>
-		<p>
-			<label>租金：</label>
-			<input name="ht_rent" id="ht_rent" type="text"  maxlength="9"  class="required digits"  value="<%=user.getHt_rent() %>" />
-		</p>
-		<p>
-			<label>产品名称：</label>
-			<input name="prod_name" id="prod_name" type="text"  maxlength="18"  class="required"  value="<%=user.getProd_name() %>" />
-		</p>
-		<p>
-			<label>产品代码：</label>
-			<input name="prod_code" id="prod_code" type="text"  maxlength="11"   value="<%=user.getProd_code() %>"   />
-		</p>
-		<p>
-			<label>签约年度：</label>
-			<input name="ht_year" id="ht_year" type="text"  maxlength="4"    class="required digits"  value="<%=user.getHt_year() %>"  />
-		</p>
-		<dl>
-		<dt>备注：</dt>
-			<dd>
-				<textarea   name="remark" id="remark" rows="10" cols="100"  ><%=user.getRemark() %></textarea>
-			</dd>
-		</dl> 
+		 <table class="TabList">                      	                  
+               <tr style="margin-top:20px;">
+                   <td class="tit03">合同编号：</td>
+                   <td style="text-align:left;">
+                      <input name="ht_code"  id="ht_code" type="text"  maxlength="16" value="<%=user.getHt_code() %>"/>
+                   </td>
+                   <td class="tit03">首次签约日期：</td>
+                   <td style="text-align:left;">
+                       <input name="ht_date_first"  id="ht_date_first" type="text"   class="required date" value="<%=user.getHt_date_first() %>" />
+                   </td>
+               </tr>
+               <tr style="margin-top:20px;">
+                   <td class="tit">本次签约日期：</td>
+                   <td style="text-align:left;">
+                       <input name="ht_date_current" id ="ht_date_current" type="text"   class="required date" value="<%=user.getHt_date_current() %>"/>
+                   </td>
+                   <td class="tit">签约年度：</td>
+                   <td style="text-align:left;">
+                       <input name="ht_year" id="ht_year" type="text"  maxlength="4"    class="required digits" value="<%=user.getHt_year() %>"  />
+                   </td>
+               </tr>
+               <tr style="margin-top:20px;">
+                   <td class="tit">押金(元)：</td>
+                   <td style="text-align:left;">
+                       <input name="ht_pledge" id="ht_pledge" type="text"  maxlength="9"  class="required digits"  value="<%=user.getHt_pledge() %>"/>
+                   </td>
+                   <td class="tit">租金(元)：</td>
+                   <td style="text-align:left;">
+                       <input name="ht_rent" id="ht_rent" type="text"  maxlength="9"  class="required digits" value="<%=user.getHt_rent() %>" />
+                   </td>
+               </tr>
+               <tr style="margin-top:20px;">
+                   <td class="tit">产品名称：</td>
+                   <td style="text-align:left;">
+                       <input name="prod_name" id="prod_name" type="text"  maxlength="18"  class="required"  value="<%=user.getProd_name() %>"/>
+                   </td>
+                   <td class="tit">产品代码：</td>
+                   <td style="text-align:left;">
+                       <input name="prod_code" id="prod_code" type="text"  maxlength="11"   value="<%=user.getProd_code() %>"  />
+                   </td>
+               </tr>
+               <tr style="margin-top:20px;">
+                   <td class="tit">备注：</td>
+                   <td style="text-align:left;" colspan="3">
+                       <textarea   name="remark" id="remark" rows="5" cols="100"  ><%=user.getRemark() %></textarea>
+                   </td>
+   
+               </tr>
+         </table>
 		
 	</div>
 	
