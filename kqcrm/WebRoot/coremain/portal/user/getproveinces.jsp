@@ -26,7 +26,6 @@ try
 	//formBean.setCity(sessionData.getCity());
 
 	List<UserInfo> userlist = sc.getprovinces(formBean);
-	
 	String options = "<option value=''>---È«²¿---</option>";
 	if(null!=userlist&&userlist.size()>0){ 
          for(int i=0;i<userlist.size();i++){
