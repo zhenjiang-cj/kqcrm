@@ -37,7 +37,7 @@
 				url:'<%=path%>/coremain/portal/user/getproveinces.jsp',
 			    success:function(data){
 		            if(null!=data){
-	                    jQuery("#provinces").html(data[0].cityMap);
+	                    jQuery("#provinces",navTab.getCurrentPanel()).html(data[0].cityMap);
 	                    provincesChange();
 		            }else{
 		                alert("没有获取省信息");
@@ -52,8 +52,8 @@
 		}
 	}
 function provincesChange() {
-    jQuery("#city").html('');
-    jQuery("#region").html('');
+    jQuery("#city",navTab.getCurrentPanel()).html('');
+    jQuery("#region",navTab.getCurrentPanel()).html('');
     var provinces = "";
     provinces=document.getElementById("provinces").value;
     if(provinces==''){
@@ -67,7 +67,7 @@ function provincesChange() {
 			url:'<%=path%>/coremain/portal/user/provincesChange.jsp?provinces='+provinces,
 		    success:function(data){
 	            if(null!=data){
-                    jQuery("#city").html(data[0].cityMap);
+                    jQuery("#city",navTab.getCurrentPanel()).html(data[0].cityMap);
                     cityChange();
 	            }else{
 	                alert("没有获取地市信息");
@@ -83,7 +83,7 @@ function provincesChange() {
 }
 
 function cityChange() {
-    jQuery("#region").html('');
+    jQuery("#region",navTab.getCurrentPanel()).html('');
     var provinces =  document.getElementById("provinces").value;
     if(provinces==''){
         provinces='';
@@ -100,7 +100,7 @@ function cityChange() {
 			url:'<%=path%>/coremain/portal/user/cityChange.jsp?provinces='+provinces+'&city='+city,
 		    success:function(data){
 	             if(null!=data){
-                    jQuery("#region").html(data[0].cityMap);
+                    jQuery("#region",navTab.getCurrentPanel()).html(data[0].cityMap);
 	            }else{
 	                alert("没有获取区域信息");
 	            }
