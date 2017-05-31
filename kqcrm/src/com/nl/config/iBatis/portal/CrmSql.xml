@@ -472,13 +472,11 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			hf_status,
 			is_valid
 		)
-		values
-		(   #ht_id#,#hf_id1#,CONVERT(varchar(12) , dateadd(MONTH,3,#ht_date_current#), 23 ),1,0,1),
-		(   #ht_id#,#hf_id2#,CONVERT(varchar(12) , dateadd(MONTH,6,#ht_date_current#), 23 ),2,0,1),
-		(   #ht_id#,#hf_id3#,CONVERT(varchar(12) , dateadd(MONTH,9,#ht_date_current#), 23 ),3,0,1),
-		(   #ht_id#,#hf_id4#,CONVERT(varchar(12) , dateadd(MONTH,12,#ht_date_current#), 23 ),4,0,1)
-			 
-		
+select #ht_id#,#hf_id1#,CONVERT(varchar(12) , dateadd(MONTH,3,#ht_date_current#), 23 ),1,0,1 union all
+select #ht_id#,#hf_id2#,CONVERT(varchar(12) , dateadd(MONTH,6,#ht_date_current#), 23 ),2,0,1 union all
+select #ht_id#,#hf_id3#,CONVERT(varchar(12) , dateadd(MONTH,9,#ht_date_current#), 23 ),3,0,1 union all
+select #ht_id#,#hf_id4#,CONVERT(varchar(12) , dateadd(MONTH,12,#ht_date_current#), 23 ),4,0,1
+
 	</insert>
 	
 	
