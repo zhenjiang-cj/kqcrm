@@ -70,10 +70,10 @@
                <tr style="margin-top:20px;">
    				   <td class="tit">耗材选择：</td>
                    <td style="text-align:left;" colspan="3">
-                       <input type="checkbox" name="hf_material" value="1" />滤芯1
-                       <input type="checkbox" name="hf_material" value="2" />滤芯2
-                       <input type="checkbox" name="hf_material" value="3" />滤芯3
-                       <input type="checkbox" name="hf_material" value="4" />滤芯4
+                       <input type="checkbox" name="hf_material" value="1" <%if("1".equals(hf.getMaterial1())){%>checked="checked"<%} %>/>滤芯1
+                       <input type="checkbox" name="hf_material" value="2" <%if("1".equals(hf.getMaterial2())){%>checked="checked"<%} %>/>滤芯2
+                       <input type="checkbox" name="hf_material" value="3" <%if("1".equals(hf.getMaterial3())){%>checked="checked"<%} %>/>滤芯3
+                       <input type="checkbox" name="hf_material" value="4" <%if("1".equals(hf.getMaterial4())){%>checked="checked"<%} %>/>滤芯4
                    </td>
                </tr>
                <tr style="margin-top:20px;">
