@@ -95,10 +95,10 @@ if(sessdata!=null){
 		<thead>
 			<tr>
 				<th width="120" >客户编码</th>
-				<th width="120" >客户姓名</th>
-				<th width="100" >签约年度</th>  
-				<th width="100" >押金(元)</th>  
+				<th width="120" >客户姓名</th>				 
 				<th width="100" >电话号码</th>
+				<th width="100" >签约年度</th>  
+				<th width="100" >押金(元)</th>
 				<th >地址</th>  
 				<th width="100">回访状态</th>
 				<th width="100">回访次数</th>
@@ -118,10 +118,10 @@ if(sessdata!=null){
 					%>
 					<tr target="sid_user" rel="1">
 						<td><%=user.getKh_id() %></td>
-						<td><%=user.getKh_name() %></td>
+						<td><%=user.getKh_name() %></td>						
+						<td><%=user.getKh_phone1() %></td>
 						<td><%=user.getHt_year() %></td>
 						<td><%=user.getHt_pledge() %></td>
-						<td><%=user.getKh_phone1() %></td>
 						<td  title="<%=user.getKh_addr() %>" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><%=user.getKh_addr() %></td>
 						<td><%=user.getHf_status().equals("1")?"已回访":"未回访" %></td>
 						<td><%=user.getHf_type()==null?"":user.getHf_type() %></td>
