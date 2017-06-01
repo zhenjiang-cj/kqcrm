@@ -1281,7 +1281,7 @@ public class CrmAction extends BaseAppAction {
 			
 			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
 			
-			String[] titles ={"客户编码","客户姓名","签约年度","身份证号","电话号码","地址","回访次数","回访状态","应访日期","实际日期","访问情况","回访人","客户签字"};
+			String[] titles ={"客户编码","客户姓名","电话号码","签约年度","押金(元)","地址","回访状态","回访次数","应访日期","实际日期","滤芯1","滤芯2","滤芯3","滤芯4","访问情况","回访人","客户签字"};
 
 			List alist = getHfExpList(userlist);
 			
@@ -1308,14 +1308,18 @@ public class CrmAction extends BaseAppAction {
 
 			tmp_ls.add(user.getKh_id());
 			tmp_ls.add(user.getKh_name());
-			tmp_ls.add(user.getHt_year());
-			tmp_ls.add(user.getKh_card());
 			tmp_ls.add(user.getKh_phone1());
+			tmp_ls.add(user.getHt_year());
+			tmp_ls.add(user.getHt_pledge());			
 			tmp_ls.add(user.getKh_addr());
-			tmp_ls.add(user.getHf_type());
 			tmp_ls.add(user.getHf_status().equals("1")?"已回访":"未回访");
+			tmp_ls.add(user.getHf_type());			
 			tmp_ls.add(user.getHf_date_must());
 			tmp_ls.add(user.getHf_date_fact());
+			tmp_ls.add(user.getMaterial1());
+			tmp_ls.add(user.getMaterial2());
+			tmp_ls.add(user.getMaterial3());
+			tmp_ls.add(user.getMaterial4());
 			tmp_ls.add(user.getHf_remark());
 			tmp_ls.add(user.getHf_user_name());
 			tmp_ls.add("");

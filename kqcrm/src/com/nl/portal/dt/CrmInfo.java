@@ -35,6 +35,11 @@ public class CrmInfo {
 	private String hf_user_name;
 	private String hf_remark;
 	
+	private String material1;
+	private String material2;
+	private String material3;
+	private String material4;
+	
 	private String ht_code;
 	
 	private String create_id;
@@ -293,5 +298,29 @@ public class CrmInfo {
 	}
 	public void setIs_ws(String is_ws) {
 		this.is_ws = is_ws;
+	}
+	public String getMaterial1() {
+		return material1;
+	}
+	public void setMaterial1(String material1) {
+		this.material1 = material1;
+	}
+	public String getMaterial2() {
+		return material2;
+	}
+	public void setMaterial2(String material2) {
+		this.material2 = material2;
+	}
+	public String getMaterial3() {
+		return material3;
+	}
+	public void setMaterial3(String material3) {
+		this.material3 = material3;
+	}
+	public String getMaterial4() {
+		return material4;
+	}
+	public void setMaterial4(String material4) {
+		this.material4 = material4;
 	}
 }
