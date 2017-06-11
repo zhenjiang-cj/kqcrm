@@ -11,10 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.huawei.csp.bsf.pwm.service.impl.PasswordForMD5;
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.nl.base.AbstractDB;
 import com.nl.base.bssp.BsspXmlMgr;
 import com.nl.base.utils.BASTree;
+import com.nl.portal.actionForm.CrmForm;
+import com.nl.portal.actionForm.LoginForm;
+import com.nl.portal.bc.CrmDb;
 import com.nl.portal.bc.SystemDbMgr;
 import com.nl.portal.dt.AdmUserFc;
 import com.nl.portal.dt.AdmUserLog;
@@ -430,5 +434,61 @@ public class SystemSC extends AbstractDB
 		}
 		return retCode;
 	}
+	
+	public int resetPass(LoginForm form)  throws Exception {
+		SqlMapClient smc = null;
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try {
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			Map<String, String> param = new HashMap<String, String>();
+			PasswordForMD5 md5 = new PasswordForMD5();
+			//数据访问对象
+			SystemDbMgr sysDbMgr = new SystemDbMgr(smc);
+			param.put("user_pswd",md5.encode("123456"));
+			param.put("sno",form.getOperatorId());
+			
+			retCode = sysDbMgr.resetPass(param);
+			if(retCode == GlobalConst.GLOBAL_RESULT_FAIL)return retCode;
+			
+			 
+			
+			smc.commitTransaction();
+		} catch (Exception e) {
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		} finally {
+			this.endTransaction(smc);
+		}
+		return retCode;
+	}
+	public int doPassEdit(LoginForm form)  throws Exception {
+		SqlMapClient smc = null;
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try {
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			Map<String, String> param = new HashMap<String, String>();
+			PasswordForMD5 md5 = new PasswordForMD5();
+			//数据访问对象
+			SystemDbMgr sysDbMgr = new SystemDbMgr(smc);
+			param.put("user_pswd",md5.encode(form.getUser_pswd()));
+			param.put("sno",form.getOperatorId());
+			
+			retCode = sysDbMgr.doPassEdit(param);
+			if(retCode == GlobalConst.GLOBAL_RESULT_FAIL)return retCode;
+			
+			 
+			
+			smc.commitTransaction();
+		} catch (Exception e) {
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		} finally {
+			this.endTransaction(smc);
+		}
+		return retCode;
+	}
+
 	
 }

@@ -1,5 +1,7 @@
 package com.nl.portal.action;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,10 +19,13 @@ import org.apache.struts.action.ActionMapping;
 import com.huawei.csp.bsf.pwm.service.impl.PasswordForMD5;
 import com.nl.base.BaseAppAction;
 import com.nl.base.utils.GlobalFunc;
+import com.nl.base.utils.GlobalRsDt;
+import com.nl.portal.actionForm.CrmForm;
 import com.nl.portal.actionForm.LoginForm;
 import com.nl.portal.actionForm.OperatorForm;
 import com.nl.portal.dt.AdmUserFc;
 import com.nl.portal.dt.AdmUserLog;
+import com.nl.portal.dt.CrmInfo;
 import com.nl.portal.dt.HtzjCodeBm;
 import com.nl.portal.dt.IscPriDataRel;
 import com.nl.portal.dt.IscRolePrivilege;
@@ -29,6 +34,7 @@ import com.nl.portal.dt.KmCompanyUser;
 import com.nl.portal.dt.RemindUserOrgCfg;
 import com.nl.portal.dt.SysMenu;
 import com.nl.portal.dt.SysOperator;
+import com.nl.portal.sc.CrmSc;
 import com.nl.portal.sc.SystemSC;
 import com.nl.portal.vo.PortalDeptInfoVo;
 import com.nl.util.Base64;
@@ -189,6 +195,184 @@ public class LoginAction extends BaseAppAction
 		
 		
 		return mapping.findForward("queryLogList");
+	}
+	public void doJumps(int retCode,String url,String rel,String objString,HttpServletRequest request,HttpServletResponse response){
+		GlobalRsDt rsDt = new GlobalRsDt();
+		String remark = "";
+		String jsonString = "";
+		PrintWriter pWriter = null;
+		
+		if(retCode==0){
+			remark = objString+"成功";	
+			
+			rsDt.setStatusCode(GlobalConst.STATUS_CODE_SUCCESS);
+			rsDt.setMessage(remark);
+			rsDt.setCallbackType("forward");
+			
+			rsDt.setNavTabId(rel);
+//			rsDt.setForwardUrl(request.getContextPath()+"/approvalFlowAction.do?method=queryApplyInfo");
+			rsDt.setForwardUrl(url);
+			rsDt.setRel(rel);
+			jsonString = GlobalFunc.getRsJson(rsDt);
+
+			try {
+				response.setContentType("text/html;charset=UTF-8");  
+				pWriter = response.getWriter();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			pWriter.write(jsonString);		
+
+		}else{
+			remark =  objString+"失败";
+			
+			rsDt.setStatusCode(GlobalConst.STATUS_CODE_FAIL);
+			rsDt.setMessage(remark);
+			jsonString = GlobalFunc.getRsJson(rsDt);
+			
+			try {
+				response.setContentType("text/html;charset=UTF-8");  
+				pWriter = response.getWriter();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			pWriter.write(jsonString);	
+		}
+	}
+	public void resetPass(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String bosscodestr = super.getBossCodeStr();
+		int retCode = 0;
+		try
+		{
+
+			HttpSession s = request.getSession();
+			SessionData sessionData = (SessionData)s.getAttribute(SessionConst.LOGIN_SESSION);
+			LoginForm formBean = (LoginForm)form;
+			SystemSC sc = new SystemSC();
+			
+			formBean.setOperatorId(sessionData.getSno());
+			
+			retCode = sc.resetPass(formBean);
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);			
+
+			getLogger(bosscodestr,GlobalConst.EXIT).info("删除客户。");
+			String url ="";
+			if(retCode == 0){
+				url ="";
+				doJumps(0,url,"user","重置密码",request,response);
+			}else{
+				url ="";
+				doJumps(-1,url,"user","重置密码",request,response);
+			}
+		}catch(Exception e){
+			getLogger(bosscodestr,GlobalConst.ERROR).error("删除客户出错:"+e.getMessage());
+			throw new Exception();
+		}
+	}
+	public void doJump2(int retCode,String url,String rel,String objString,HttpServletRequest request,HttpServletResponse response){
+		GlobalRsDt rsDt = new GlobalRsDt();
+		String remark = "";
+		String jsonString = "";
+		PrintWriter pWriter = null;
+		
+		if(retCode==0){
+			remark = objString+"成功";	
+			
+			rsDt.setStatusCode(GlobalConst.STATUS_CODE_SUCCESS);
+			rsDt.setMessage(remark);
+			rsDt.setCallbackType("closeCurrent");
+			
+//			rsDt.setNavTabId(rel);
+//			rsDt.setForwardUrl(request.getContextPath()+"/approvalFlowAction.do?method=queryApplyInfo");
+			rsDt.setForwardUrl(url);
+			rsDt.setRel("");
+			jsonString = GlobalFunc.getRsJson(rsDt);
+
+			try {
+				response.setContentType("text/html;charset=UTF-8");  
+				pWriter = response.getWriter();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			pWriter.write(jsonString);		
+
+		}else{
+			remark =  objString+"失败";
+			
+			rsDt.setStatusCode(GlobalConst.STATUS_CODE_FAIL);
+			rsDt.setMessage(remark);
+			jsonString = GlobalFunc.getRsJson(rsDt);
+			
+			try {
+				response.setContentType("text/html;charset=UTF-8");  
+				pWriter = response.getWriter();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			pWriter.write(jsonString);	
+		}
+	}
+	public ActionForward toPassEdit(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String bosscodestr = super.getBossCodeStr();
+		int retCode = 0;
+		try
+		{
+			LoginForm formBean = (LoginForm)form; 
+			HttpSession s = request.getSession();
+			SessionData sessionData = (SessionData)s.getAttribute(SessionConst.LOGIN_SESSION);
+
+			formBean.setOperatorId(sessionData.getSno());
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
+			
+			//记录日志
+//			doLog(form,"进入欢迎页面");
+//			createLog(request,"","","进入欢迎页面","1");
+			getLogger(bosscodestr,GlobalConst.EXIT).info("进入欢迎页面。");
+			return mapping.findForward("passedit");
+		}catch(Exception e){
+			getLogger(bosscodestr,GlobalConst.ERROR).error("进入欢迎页面出错:"+e.getMessage());
+			throw new Exception();
+		}
+	}
+	
+	public void doPassEdit(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String bosscodestr = super.getBossCodeStr();
+		int retCode = 0;
+		try
+		{
+
+			LoginForm formBean = (LoginForm)form; 
+			SystemSC sc = new SystemSC();
+			
+			retCode = sc.doPassEdit(formBean);
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);			
+
+			getLogger(bosscodestr,GlobalConst.EXIT).info("密码修改。");
+			String url ="";
+			if(retCode == 0){
+				url ="";
+				doJump2(0,url,"pass","密码修改",request,response);
+			}else{
+				url ="";
+				doJump2(-1,url,"pass","密码修改",request,response);
+			}
+		}catch(Exception e){
+			getLogger(bosscodestr,GlobalConst.ERROR).error("密码修改:"+e.getMessage());
+			throw new Exception();
+		}
 	}
 	
 	public static void main (String[] args){

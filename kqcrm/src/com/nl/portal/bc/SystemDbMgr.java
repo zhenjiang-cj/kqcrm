@@ -4,17 +4,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.nl.base.AbstractDB;
+import com.nl.portal.actionForm.LoginForm;
 import com.nl.portal.dt.AdmUserFc;
 import com.nl.portal.dt.AdmUserLog;
 import com.nl.portal.dt.HtzjCodeBm;
 import com.nl.portal.dt.KmDictCfg;
 import com.nl.portal.dt.SysMenu;
 import com.nl.portal.dt.SysOperator;
+import com.nl.util.GlobalConst;
 
 public class SystemDbMgr extends AbstractDB
 {
@@ -145,5 +148,29 @@ public class SystemDbMgr extends AbstractDB
 			e.printStackTrace();
 		}
 		return sysOperatorMenuList;
+	}
+	
+	public int resetPass(Map<String, String> param) throws Exception {
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try
+		{
+			smc.update("systemLoginSql.resetPass", param);
+		}catch(Exception e){
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		}
+		return retCode;
+	}
+
+	public int doPassEdit(Map<String, String> param) throws Exception {
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try
+		{
+			smc.update("systemLoginSql.doPassEdit", param);
+		}catch(Exception e){
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		}
+		return retCode;
 	}
 }
