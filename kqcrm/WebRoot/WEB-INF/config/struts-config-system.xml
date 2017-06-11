@@ -33,6 +33,7 @@
 		 name="loginForm" scope="request" validate="false">
 		    <forward name="login" path="/login.jsp"/>
 		    <forward name="index" path="/index.jsp"/>
+		    <forward name="passedit" path="/passedit.jsp"/>
 		    
 		</action>
 		
