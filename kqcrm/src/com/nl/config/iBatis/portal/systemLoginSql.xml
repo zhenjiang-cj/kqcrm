@@ -43,4 +43,12 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		                   and t1.sno = #sno# 
 	</select>
 	
+	<update id="resetPass" parameterClass="java.util.HashMap">
+	    update kq_isc_user  set  user_pswd = #user_pswd# where  sno = #sno#
+	</update>
+	<update id="doPassEdit" parameterClass="java.util.HashMap">
+	    update kq_isc_user  set  user_pswd = #user_pswd# where  sno = #sno#
+	</update>
+	
+	
 </sqlMap>
