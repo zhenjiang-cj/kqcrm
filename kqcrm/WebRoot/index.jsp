@@ -144,6 +144,10 @@ function fillSpace(key){
 				}
 				%>
 					<li><a href="<%=path%>/login.do?method=loginout">退出</a></li>
+					<li>
+					<a title="密码修改" target="dialog" href="<%=path%>/login.do?method=toPassEdit" width="645" height="400" rel="pass"  >密码修改</a>
+					</li>
+					<li><a target="ajaxTodo" href="<%=path%>/login.do?method=resetPass" >密码重置</a></li>
 					
 				</ul>
 			</div>
