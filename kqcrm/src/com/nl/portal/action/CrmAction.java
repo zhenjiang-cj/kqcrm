@@ -663,7 +663,7 @@ public class CrmAction extends BaseAppAction {
 			CrmForm formBean = (CrmForm)form;
 			CrmSc sc = new CrmSc();
 
-			List<CrmInfo> userlist = sc.queryYxkhById(formBean);
+			CrmInfo userlist = sc.queryYxkhById(formBean);
 			request.setAttribute("userlist", userlist);		
 			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
 			

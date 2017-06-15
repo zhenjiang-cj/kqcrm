@@ -348,9 +348,9 @@ public class CrmSc extends AbstractDB {
 		return userlist;
 	}
 	
-	public List<CrmInfo> queryYxkhById(CrmForm userform)
+	public CrmInfo queryYxkhById(CrmForm userform)
 	{
-		List<CrmInfo> userlist = null;
+		CrmInfo userlist = null;
 		SqlMapClient smc = null;
 		try
 		{

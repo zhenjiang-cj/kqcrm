@@ -224,17 +224,17 @@ public class CrmDb extends AbstractDB {
 		return list;
 	}
 	
-	public List<CrmInfo> queryYxkhById(HashMap param) {
+	public CrmInfo queryYxkhById(HashMap param) {
 		getLogger(bossCodeStr,GlobalConst.ENTER).info("查询意向用户：");
-		List<CrmInfo> list = null;
+		CrmInfo detail = null;
 		
 		try{
-			list = smc.queryForList("CrmSql.queryYxkhById", param);
+			detail = (CrmInfo)smc.queryForObject("CrmSql.queryYxkhById", param);
 			getLogger(bossCodeStr,GlobalConst.EXIT).info("查询意向用户结束。");
 		}catch(Exception e){
 			getLogger(bossCodeStr,GlobalConst.ERROR).error("::查询意向用户有错！::" + "error:"+e.getMessage());
 		}
-		return list;
+		return detail;
 	}
 	
 	public List<CrmInfo> queryKhIntroduce(HashMap param) {
