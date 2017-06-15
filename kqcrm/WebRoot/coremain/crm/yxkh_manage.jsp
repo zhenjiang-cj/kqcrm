@@ -143,7 +143,7 @@ if(sessdata!=null){
 							<%if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_CRM_YXUSER_EDIT)&&!"1".equals(user.getIs_install())){ %>
 							<a title="编辑" target="dialog" href="<%=path%>/crmAction.do?method=toYxkhEdit&kh_id=<%=user.getKh_id() %>" width="800" height="500"  class="btnEdit">编辑</a>
 							<%} %>
-							<a title="编辑" target="dialog" href="<%=path%>/crmAction.do?method=toYxkhEdit&kh_id=<%=user.getKh_id() %>" width="800" height="500"  class="btnEdit">编辑</a>
+							
 						</td>
 					</tr>
 					

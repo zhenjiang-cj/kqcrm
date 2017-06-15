@@ -1,9 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<%@page import="com.nl.util.config.DictMgmt"%>
 <%@page import="com.nl.portal.dt.*"%>
-<%@ page import="com.nl.portal.actionForm.*"%>
-<%@page import="java.util.List"%>
-<%@ page import="com.nl.util.GlobalConst"%>
 <%@page import="com.nl.util.SessionConst"%>
 <%@page import="com.nl.util.SessionData"%>
 <%
@@ -11,14 +7,11 @@
 	String basePath = request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
-	CrmForm userform = (CrmForm) request.getAttribute(GlobalConst.GLOBAL_CURRENT_FORM);
 	SessionData sessionData = (SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
-	List<CrmInfo> userlist =  (List<CrmInfo>) request.getAttribute("userlist");
-	CrmInfo user = new CrmInfo();
-	if(userlist!=null)
-	{
-		user = userlist.get(0);
-	}
+	CrmInfo user =  (CrmInfo) request.getAttribute("userlist");
+
+	
+
 
 %>
 
@@ -43,6 +36,7 @@
 		jQuery("#is_install").val('<%=user.getIs_install()  %>');
 		
 	});
+	</script>
 
 	
   </head>
