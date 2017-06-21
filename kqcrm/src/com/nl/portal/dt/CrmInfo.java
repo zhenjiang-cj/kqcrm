@@ -53,6 +53,49 @@ public class CrmInfo {
 	private String org_name;
 	private String data_level;
 	
+	private String repair_id;
+	private String warranty_date;
+	private String warranty_content;
+	private String repair_person;
+	private String repair_date;
+	private String repair_reason;
+	
+	public String getRepair_id() {
+		return repair_id;
+	}
+	public void setRepair_id(String repair_id) {
+		this.repair_id = repair_id;
+	}
+	public String getWarranty_date() {
+		return warranty_date;
+	}
+	public void setWarranty_date(String warranty_date) {
+		this.warranty_date = warranty_date;
+	}
+	public String getWarranty_content() {
+		return warranty_content;
+	}
+	public void setWarranty_content(String warranty_content) {
+		this.warranty_content = warranty_content;
+	}
+	public String getRepair_person() {
+		return repair_person;
+	}
+	public void setRepair_person(String repair_person) {
+		this.repair_person = repair_person;
+	}
+	public String getRepair_date() {
+		return repair_date;
+	}
+	public void setRepair_date(String repair_date) {
+		this.repair_date = repair_date;
+	}
+	public String getRepair_reason() {
+		return repair_reason;
+	}
+	public void setRepair_reason(String repair_reason) {
+		this.repair_reason = repair_reason;
+	}
 	public String getOrg_id() {
 		return org_id;
 	}
