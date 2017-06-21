@@ -8,6 +8,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -1384,6 +1386,120 @@ public class CrmAction extends BaseAppAction {
 		}
 	}
 	
+	public ActionForward toRepairAdd(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String bosscodestr = super.getBossCodeStr();
 
+		try
+		{
+			CrmForm formBean = (CrmForm)form;
+
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
+
+			getLogger(bosscodestr,GlobalConst.EXIT).info("进入保修记录新增页面。");
+			return mapping.findForward("repairadd");
+		}catch(Exception e){
+			getLogger(bosscodestr,GlobalConst.ERROR).error("进入保修记录新增页面出错:"+e.getMessage());
+			throw new Exception();
+		}
+	}
+	
+	public void queryKhById(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+			CrmSc sc = new CrmSc();
+			PrintWriter pWriter = null;
+		try {
+			CrmForm formBean = (CrmForm)form;
+			
+			CrmInfo info = sc.queryKhById(formBean);
+			// 返回字串
+			JSONArray jsonArray = JSONArray.fromObject(info);
+			
+			String result = "&kh_name="+info.getKh_name();
+
+			//String url =request.getContextPath()+"/crmAction.do?method=toRepairAdd"+result;
+			//doJump(0,url,"新增客户保修记录",request,response);
+			//doJumps(0,url,"repairAdd","新增客户保修记录",request,response);
+			
+			
+			response.setContentType("text/html;charset=UTF-8");  
+			pWriter = response.getWriter();
+			pWriter.write(jsonArray.toString());	
+
+		} catch (Exception e) {
+			throw new Exception();
+		}
+	}
+
+	
+	public void doRepairAdd(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		int retCode = 0;
+		try
+		{
+			
+			CrmForm formBean = (CrmForm)form;
+			CrmSc sc = new CrmSc();
+			SessionData sessionData =(SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
+			formBean.setOperatorId(sessionData.getSno());
+			
+			retCode = sc.doRepairAdd(formBean);
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);			
+
+			String url ="";
+			if(retCode == 0){
+				url =request.getContextPath()+"/crmAction.do?method=toRepairAdd";
+				doJumps(0,url,"repairAdd","新增客户保修记录",request,response);
+			}else{
+				url =request.getContextPath()+"/crmAction.do?method=toRepairAdd";
+				doJumps(-1,url,"repairAdd","新增客户保修记录",request,response);
+			}
+			
+		}catch(Exception e){
+			throw new Exception();
+		}
+	}
+	
+	public ActionForward queryRepairRecord(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String bosscodestr = super.getBossCodeStr();
+		int retCode = 0;
+		try
+		{
+			CrmForm formBean = (CrmForm)form;
+			CrmSc sc = new CrmSc();
+			//查询用户管辖的区域
+			SessionData sessionData =(SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
+			formBean.setOperatorId(sessionData.getSno());
+
+			formBean.setOrg_ids(sessionData.getRegion());
+			List<CrmInfo> repairlist = sc.queryRepairRecord(formBean);
+			
+			request.setAttribute("repairlist", repairlist);	
+			if(repairlist.size()>0)
+			{
+				formBean.setTotalCount(Integer.parseInt(repairlist.get(0).getTotalCount()));
+			}else{
+				formBean.setTotalCount(0);
+			}
+			
+			
+			request.setAttribute("pager", formBean);	
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
+			
+			getLogger(bosscodestr,GlobalConst.EXIT).info("进入保修记录页面。");
+			return mapping.findForward("repairquery");
+		}catch(Exception e){
+			getLogger(bosscodestr,GlobalConst.ERROR).error("进入保修记录页面出错:"+e.getMessage());
+			throw new Exception();
+		}
+	}
 
 }
