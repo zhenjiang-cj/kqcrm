@@ -879,5 +879,87 @@ public class CrmSc extends AbstractDB {
 		}
 		return retCode;
 	}
+	
+	public CrmInfo queryKhById(CrmForm userform)
+	{
+		CrmInfo userlist = null;
+		SqlMapClient smc = null;
+		try
+		{
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			CrmDb db = new CrmDb(smc);
+			HashMap param = new HashMap(); 
+			param.put("kh_id", userform.getKh_id());
+			userlist = db.queryKhById(param);
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			this.endTransaction(smc);
+		}
+		return userlist;
+	}
 
+	public int doRepairAdd(CrmForm form)  throws Exception{
+		SqlMapClient smc = null;
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try {
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			Map<String, String> param = new HashMap<String, String>();
+			CrmDb db = new CrmDb(smc);
+			param.put("kh_id",form.getKh_id());
+			param.put("kh_name",form.getKh_name());
+			param.put("provinces",form.getProvinces());
+			param.put("city",form.getCity());
+			param.put("region",form.getRegion());
+			param.put("kh_phone1",form.getKh_phone1());
+			param.put("kh_addr",form.getKh_addr());
+			param.put("warranty_date",form.getWarranty_date());
+			param.put("warranty_content",form.getWarranty_content());
+			param.put("repair_person",form.getRepair_person());
+			param.put("repair_date",form.getRepair_date());
+			param.put("repair_reason",form.getRepair_reason());
+			param.put("create_id",form.getOperatorId());			
+			
+			retCode = db.doRepairAdd(param);
+			
+			smc.commitTransaction();
+		} catch (Exception e) {
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		} finally {
+			this.endTransaction(smc);
+		}
+		return retCode;
+	}
+	
+	public List<CrmInfo> queryRepairRecord(CrmForm userform) {
+		List<CrmInfo> userlist = null;
+		SqlMapClient smc = null;
+		try
+		{
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			CrmDb db = new CrmDb(smc);
+			HashMap param = new HashMap(); 
+			param.put("kh_name", userform.getKh_name());
+			param.put("org_ids", userform.getOrg_ids());
+			param.put("page_num", userform.getPageNum());
+			param.put("page_size", userform.getNumPerPage());
+			userlist = db.queryRepairRecord(param);
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			this.endTransaction(smc);
+		}
+		return userlist;
+	}
+	
 }
