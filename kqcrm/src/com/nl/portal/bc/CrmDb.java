@@ -503,4 +503,43 @@ public class CrmDb extends AbstractDB {
 		}
 		return retCode;
 	}
+	
+	public CrmInfo queryKhById(HashMap param) {
+		getLogger(bossCodeStr,GlobalConst.ENTER).info("查询用户：");
+		CrmInfo detail = null;
+		
+		try{
+			detail = (CrmInfo)smc.queryForObject("CrmSql.queryKhById", param);
+			getLogger(bossCodeStr,GlobalConst.EXIT).info("查询用户结束。");
+		}catch(Exception e){
+			getLogger(bossCodeStr,GlobalConst.ERROR).error("::查询用户有错！::" + "error:"+e.getMessage());
+		}
+		return detail;
+	}
+	
+	public int doRepairAdd(Map<String, String> param) throws Exception {
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try
+		{
+			smc.insert("CrmSql.doRepairAdd", param);
+		}catch(Exception e){
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		}
+		return retCode;
+	}
+	
+	public List<CrmInfo> queryRepairRecord(HashMap param) {
+		getLogger(bossCodeStr,GlobalConst.ENTER).info("查询用户维护记录：");
+		List<CrmInfo> list = null;
+		
+		try{
+			list = smc.queryForList("CrmSql.queryRepairRecord", param);
+			getLogger(bossCodeStr,GlobalConst.EXIT).info("查询用户维护记录结束。");
+		}catch(Exception e){
+			getLogger(bossCodeStr,GlobalConst.ERROR).error("::查询用户维护记录有错！::" + "error:"+e.getMessage());
+		}
+		return list;
+	}
+
 }
