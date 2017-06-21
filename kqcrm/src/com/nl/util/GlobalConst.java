@@ -167,10 +167,10 @@ public class GlobalConst{
 	public static final String FUNCTION_CRM_USER_DEL = "113";//客户新增
 	public static final String FUNCTION_CRM_USER_EXP = "114";//客户导出
 	
-	public static final String FUNCTION_CRM_YXUSER_ADD = "121";//客户新增
-	public static final String FUNCTION_CRM_YXUSER_EDIT = "122";//客户修改
-	public static final String FUNCTION_CRM_YXUSER_DEL = "123";//客户删除
-	public static final String FUNCTION_CRM_YXUSER_EXP = "124";//客户导出
+	public static final String FUNCTION_CRM_YXUSER_ADD = "121";//意向客户新增
+	public static final String FUNCTION_CRM_YXUSER_EDIT = "122";//意向客户修改
+	public static final String FUNCTION_CRM_YXUSER_DEL = "123";//意向客户删除
+	public static final String FUNCTION_CRM_YXUSER_EXP = "124";//意向客户导出
 	
 	public static final String FUNCTION_HT_MANAGE="210";//合同管理
 	public static final String FUNCTION_HT_USER_ADD = "211";//客户新增
@@ -183,7 +183,8 @@ public class GlobalConst{
 	public static final String FUNCTION_HF_USER_EDIT = "312";//回访新增
 	public static final String FUNCTION_HF_USER_DEL = "313";//回访新增
 	public static final String FUNCTION_HF_USER_EXP = "314";//回访新增
-	
+	public static final String FUNCTION_REPAIR_ADD = "315";//维修记录录入
+	public static final String FUNCTION_REPAIR_QUERY = "316";//维修记录查询
 	/*操作类型*/
 	public static final String OPERATION_INSERT = "1";//增加
 	public static final String OPERATION_UPDATE = "2";//修改
