@@ -73,6 +73,28 @@ public class CrmForm extends BaseAppActionForm {
 	private String org_names;
 	private String org_ids;
 	
+	private String repair_id;
+	private String warranty_date;
+	private String warranty_content;
+	private String repair_person;
+	private String repair_date;
+	private String repair_reason;
+	
+	private String begin_date;
+	private String end_date;
+	
+	public String getBegin_date() {
+		return begin_date;
+	}
+	public void setBegin_date(String begin_date) {
+		this.begin_date = begin_date;
+	}
+	public String getEnd_date() {
+		return end_date;
+	}
+	public void setEnd_date(String end_date) {
+		this.end_date = end_date;
+	}
 	public String getOrg_ids() {
 		return org_ids;
 	}
@@ -426,6 +448,42 @@ public class CrmForm extends BaseAppActionForm {
 	}
 	public void setHf_material(String[] hf_material) {
 		this.hf_material = hf_material;
+	}
+	public String getRepair_id() {
+		return repair_id;
+	}
+	public void setRepair_id(String repair_id) {
+		this.repair_id = repair_id;
+	}
+	public String getWarranty_date() {
+		return warranty_date;
+	}
+	public void setWarranty_date(String warranty_date) {
+		this.warranty_date = warranty_date;
+	}
+	public String getWarranty_content() {
+		return warranty_content;
+	}
+	public void setWarranty_content(String warranty_content) {
+		this.warranty_content = warranty_content;
+	}
+	public String getRepair_person() {
+		return repair_person;
+	}
+	public void setRepair_person(String repair_person) {
+		this.repair_person = repair_person;
+	}
+	public String getRepair_date() {
+		return repair_date;
+	}
+	public void setRepair_date(String repair_date) {
+		this.repair_date = repair_date;
+	}
+	public String getRepair_reason() {
+		return repair_reason;
+	}
+	public void setRepair_reason(String repair_reason) {
+		this.repair_reason = repair_reason;
 	}
 
 }
