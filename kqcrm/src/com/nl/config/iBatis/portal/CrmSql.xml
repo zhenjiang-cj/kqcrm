@@ -796,5 +796,83 @@ select #ht_id#,#hf_id4#,CONVERT(varchar(12) , dateadd(MONTH,12,#ht_date_current#
 		
 	</update>
 	
+	
+	<select id='queryKhById' parameterClass="java.util.HashMap" resultClass="crminfo" >
+		select t1.*,case when t2.hf_type=1 then '第一次回访'
+				 when t2.hf_type=2 then '第二次回访'
+				 when t2.hf_type=3 then '第三次回访'
+				 when t2.hf_type=4 then '第四次回访'
+				 else '新装' end as hf_type,t2.hf_status from
+			(select a.kh_id,a.provinces,a.city,a.region,a.kh_name,a.kh_phone1,a.kh_addr,b.ht_id,b.ht_date_first
+			 from (select * from kq_kh_info where kh_id = #kh_id#			 
+			 <dynamic>
+				 <isNotEmpty property="org_ids">
+						 and charindex(a.region,#org_ids#) >0
+				</isNotEmpty>
+			 </dynamic>
+			 ) a 
+			 left join (select * from (select t.*,ROW_NUMBER() over(partition by t.kh_id order by t.ht_id desc) rm
+			              from kq_ht_info t where t.is_valid = 1) b where b.rm = 1 ) b 
+			 on a.kh_id = b.kh_id) t1 left join 
+			 (select * from (select t.*,ROW_NUMBER() over(partition by ht_id order by hf_id desc) rm from kq_hf_info t 
+			  where t.is_valid = 1 and t.hf_status = 1 ) b where b.rm = 1) t2
+			 on t1.ht_id = t2.ht_id
+	</select>
+	
+	<insert id="doRepairAdd" parameterClass="java.util.HashMap">		
+		insert into kq_repair_record
+		( 
+			kh_id,
+			kh_name,
+			provinces,
+			city,
+			region,
+			kh_phone1,
+			kh_addr,
+			warranty_date,
+			warranty_content,
+			repair_person,
+			repair_date,
+			repair_reason,
+			create_id,
+			create_date,
+			is_valid
+		)
+		values
+		(   #kh_id#,
+		    #kh_name#,
+		    #provinces#,
+		    #city#,
+		    #region#,
+		    #kh_phone1#,
+		    #kh_addr#,
+			#warranty_date#,
+			#warranty_content#,
+			#repair_person#,
+			#repair_date#,
+			#repair_reason#,
+			#create_id#,
+			getdate(),
+			1
+		)
+	</insert>
+	
+	<select id='queryRepairRecord' parameterClass="java.util.HashMap" resultClass="crminfo" >
+		select *
+		  from (select a.*, row_number() over(order by a.kh_id) rn, count(*) over() totalCount
+		          from (
+		          select a.* from kq_repair_record a
+		           where a.is_valid =1 
+		           <dynamic>
+					<isNotEmpty property="kh_name">
+							and a.kh_name  like '%$kh_name$%'
+					</isNotEmpty>
+					<isNotEmpty property="org_ids">
+							 and charindex(a.region,#org_ids#) >0
+					</isNotEmpty>
+				  </dynamic>         
+		                   ) a) t
+		 where t.rn>(#page_num#-1)*#page_size# and #page_num#*#page_size# >= t.rn
+	</select>
 
 </sqlMap>
