@@ -62,6 +62,8 @@
 			<forward name="repairadd" path="/coremain/crm/repair_add.jsp"/>
 			<forward name="repairquery" path="/coremain/crm/repair_query.jsp"/>
 			
+			
+			<forward name="deviceReport" path="/coremain/report/device_report.jsp"/>
 		</action>
 		
 	</action-mappings>

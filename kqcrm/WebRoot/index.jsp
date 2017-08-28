@@ -176,6 +176,13 @@ function fillSpace(key){
 				}
 				%>
 				<%
+				if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_TJ_MANAGE)){
+					%>
+					<li  ><a href="<%=path%>/coremain/report/frame.jsp"><span>统计报表</span></a></li>
+					<%
+				}
+				%>
+				<%
 				if(GlobalUtil.functionCheck(privlist,GlobalConst.FUNCTION_SYS_MANAGE)){
 					%>
 					<li ><a href="<%=path%>/coremain/portal/user/frame.jsp"><span>系统管理</span></a></li>
