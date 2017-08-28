@@ -962,4 +962,50 @@ public class CrmSc extends AbstractDB {
 		return userlist;
 	}
 	
+	public List<CrmInfo> queryDeviceReportSum(CrmForm userform) {
+		List<CrmInfo> datalist = null;
+		SqlMapClient smc = null;
+		try
+		{
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			CrmDb db = new CrmDb(smc);
+			HashMap param = new HashMap(); 
+			param.put("org_ids", userform.getOrg_ids());
+
+			datalist = db.queryDeviceReportSum(param);
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			this.endTransaction(smc);
+		}
+		return datalist;
+	}
+	
+	public List<CrmInfo> queryDeviceReportDetail(CrmForm userform) {
+		List<CrmInfo> datalist = null;
+		SqlMapClient smc = null;
+		try
+		{
+			smc = getSqlMapClient();
+			smc.startTransaction();
+			CrmDb db = new CrmDb(smc);
+			HashMap param = new HashMap(); 
+			param.put("org_id", userform.getOrg_id());
+			
+			datalist = db.queryDeviceReportDetail(param);
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			this.endTransaction(smc);
+		}
+		return datalist;
+	}
+	
 }

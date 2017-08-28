@@ -60,6 +60,14 @@ public class CrmInfo {
 	private String repair_date;
 	private String repair_reason;
 	
+	private String cnt_device;
+	
+	public String getCnt_device() {
+		return cnt_device;
+	}
+	public void setCnt_device(String cnt_device) {
+		this.cnt_device = cnt_device;
+	}
 	public String getRepair_id() {
 		return repair_id;
 	}

@@ -541,5 +541,31 @@ public class CrmDb extends AbstractDB {
 		}
 		return list;
 	}
+	
+	public List<CrmInfo> queryDeviceReportSum(HashMap param) {
+		getLogger(bossCodeStr,GlobalConst.ENTER).info("查询设备统计：");
+		List<CrmInfo> list = null;
+		
+		try{
+			list = smc.queryForList("CrmSql.queryDeviceReportSum", param);
+			getLogger(bossCodeStr,GlobalConst.EXIT).info("查询设备统计结束。");
+		}catch(Exception e){
+			getLogger(bossCodeStr,GlobalConst.ERROR).error("::查询设备统计有错！::" + "error:"+e.getMessage());
+		}
+		return list;
+	}
+	
+	public List<CrmInfo> queryDeviceReportDetail(HashMap param) {
+		getLogger(bossCodeStr,GlobalConst.ENTER).info("查询设备统计记录：");
+		List<CrmInfo> list = null;
+		
+		try{
+			list = smc.queryForList("CrmSql.queryDeviceReportDetail", param);
+			getLogger(bossCodeStr,GlobalConst.EXIT).info("查询设备统计记录结束。");
+		}catch(Exception e){
+			getLogger(bossCodeStr,GlobalConst.ERROR).error("::查询设备统计记录有错！::" + "error:"+e.getMessage());
+		}
+		return list;
+	}
 
 }

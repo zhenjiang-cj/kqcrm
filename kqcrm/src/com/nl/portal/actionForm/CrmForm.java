@@ -82,7 +82,14 @@ public class CrmForm extends BaseAppActionForm {
 	
 	private String begin_date;
 	private String end_date;
+	private String org_id;
 	
+	public String getOrg_id() {
+		return org_id;
+	}
+	public void setOrg_id(String org_id) {
+		this.org_id = org_id;
+	}
 	public String getBegin_date() {
 		return begin_date;
 	}

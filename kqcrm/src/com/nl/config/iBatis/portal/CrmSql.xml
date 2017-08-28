@@ -874,5 +874,56 @@ select #ht_id#,#hf_id4#,CONVERT(varchar(12) , dateadd(MONTH,12,#ht_date_current#
 		                   ) a) t
 		 where t.rn>(#page_num#-1)*#page_size# and #page_num#*#page_size# >= t.rn
 	</select>
+	
+	<select id='queryDeviceReportSum' parameterClass="java.util.HashMap" resultClass="crminfo" >
+		select t4.parent_org_id org_id,(select value_name from kq_dict_cfg where dict_id = 1000 and is_valid = 1 and value = t4.parent_org_id) org_name,
+			isnull(sum(t4.cnt_device),0) cnt_device,
+			isnull(SUM(t4.material1),0) material1,
+			isnull(SUM(t4.material2),0) material2,
+			isnull(SUM(t4.material3),0) material3,
+			isnull(SUM(t4.material4),0) material4
+			from
+			(select t3.parent_org_id,t2.* from
+			(select t1.region,COUNT(distinct t1.kh_id) as cnt_device,
+			SUM(material1) material1,
+			SUM(material2) material2,
+			SUM(material3) material3,
+			SUM(material4) material4
+			 from
+			(select a.*,b.material1,b.material2,b.material3,b.material4 from (select t.kh_id, (select distinct kh.region from kq_kh_info kh where kh.is_valid = 1 and kh.kh_id = t.kh_id ) as region, 
+			 t.ht_id,t.ht_date_first from kq_ht_info t where t.is_valid = 1) a 
+			 left join (select ht_id,material1,material2,material3,material4 from kq_hf_info where is_valid = 1 and hf_status = 1) b on  a.ht_id = b.ht_id) t1
+			 group by t1.region) t2 , kq_region_relation t3
+			where t2.region = t3.org_id) t4 
+			where 1=1
+			 <dynamic>
+				<isNotEmpty property="org_ids">
+						 and charindex(CAST(t4.region as varchar),#org_ids#) >0
+				</isNotEmpty>
+			  </dynamic> 
+			group by t4.parent_org_id order by t4.parent_org_id asc
+	</select>
+	
+	<select id='queryDeviceReportDetail' parameterClass="java.util.HashMap" resultClass="crminfo" >
+		select (select value_name from kq_dict_cfg where dict_id = 1012 and is_valid = 1 and value = t4.region) org_name,
+		       t4.cnt_device,
+			t4.material1,
+			t4.material2,
+			t4.material3,
+			t4.material4
+		from
+		(select t3.parent_org_id,t2.* from
+			(select t1.region,COUNT(distinct t1.ht_id) as cnt_device,
+			isnull(SUM(material1),0) material1,
+			isnull(SUM(material2),0) material2,
+			isnull(SUM(material3),0) material3,
+			isnull(SUM(material4),0) material4
+			 from
+			(select a.*,b.material1,b.material2,b.material3,b.material4 from (select (select distinct kh.region from kq_kh_info kh where kh.is_valid = 1 and kh.kh_id = t.kh_id ) as region, 
+			 t.ht_id,t.ht_date_first from kq_ht_info t where t.is_valid = 1) a 
+			 left join (select ht_id,material1,material2,material3,material4 from kq_hf_info where is_valid = 1 and hf_status = 1) b on  a.ht_id = b.ht_id) t1
+			 group by t1.region) t2,kq_region_relation t3
+			where t2.region = t3.org_id) t4 where t4.parent_org_id = #org_id#
+	</select>
 
 </sqlMap>

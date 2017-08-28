@@ -1501,5 +1501,89 @@ public class CrmAction extends BaseAppAction {
 			throw new Exception();
 		}
 	}
+	
+	public ActionForward queryDeviceReportSum(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String bosscodestr = super.getBossCodeStr();
+		int retCode = 0;
+		try
+		{
+			CrmForm formBean = (CrmForm)form;
+			CrmSc sc = new CrmSc();
+			//查询用户管辖的区域
+			SessionData sessionData =(SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
+			formBean.setOperatorId(sessionData.getSno());
+
+			formBean.setOrg_ids(sessionData.getRegion());
+			List<CrmInfo> datalist = sc.queryDeviceReportSum(formBean);
+			
+			request.setAttribute("datalist", datalist);	
+				
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
+			
+			getLogger(bosscodestr,GlobalConst.EXIT).info("进入设备统计页面。");
+			return mapping.findForward("deviceReport");
+		}catch(Exception e){
+			getLogger(bosscodestr,GlobalConst.ERROR).error("进入设备统计页面出错:"+e.getMessage());
+			throw new Exception();
+		}
+	}
+	
+	public ActionForward queryDeviceReportDetail(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String bosscodestr = super.getBossCodeStr();
+		int retCode = 0;
+		try
+		{
+			CrmForm formBean = (CrmForm)form;
+			CrmSc sc = new CrmSc();
+			List<CrmInfo> datalist = sc.queryDeviceReportDetail(formBean);
+			
+			formBean.setData_level(2);
+			request.setAttribute("datalist", datalist);	
+				
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);
+			
+			getLogger(bosscodestr,GlobalConst.EXIT).info("进入设备统计页面。");
+			return mapping.findForward("deviceReport");
+		}catch(Exception e){
+			getLogger(bosscodestr,GlobalConst.ERROR).error("进入设备统计页面出错:"+e.getMessage());
+			throw new Exception();
+		}
+	}
+	
+	public void doDeviceReportDetail(ActionMapping mapping,
+			ActionForm form,
+			HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		int retCode = 0;
+		try
+		{
+			
+			CrmForm formBean = (CrmForm)form;
+			CrmSc sc = new CrmSc();
+			SessionData sessionData =(SessionData)request.getSession().getAttribute(SessionConst.LOGIN_SESSION);
+			formBean.setOperatorId(sessionData.getSno());
+			
+			request.setAttribute(GlobalConst.GLOBAL_CURRENT_FORM, formBean);			
+
+			String url ="";
+			if(retCode == 0){
+				url =request.getContextPath()+"/crmAction.do?method=queryDeviceReportDetail&org_id="+formBean.getOrg_id();
+				doJumps(0,url,"deviceReport","设备统计_区县",request,response);
+			}else{
+				url =request.getContextPath()+"/crmAction.do?method=queryDeviceReportDetail&org_id="+formBean.getOrg_id();
+				doJumps(-1,url,"deviceReport","设备统计_区县",request,response);
+			}
+			
+		}catch(Exception e){
+			throw new Exception();
+		}
+	}
 
 }
