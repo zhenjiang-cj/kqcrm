@@ -133,7 +133,7 @@ public class GlobalConst{
 	public static final String LOGIN_ILLEGAL = "非法登录，请联系管理员！";
 	
 	/*全局的系统编号，和字典表中的相同*/
-	public static final int[] Global_SYSTEM_ID = {99,1,2,3};
+	public static final int[] Global_SYSTEM_ID = {99,1,2,3,4};
 	
 	/*form保存在request中的名称*/
 	public static final String GLOBAL_CURRENT_FORM = "form";
@@ -185,6 +185,11 @@ public class GlobalConst{
 	public static final String FUNCTION_HF_USER_EXP = "314";//回访新增
 	public static final String FUNCTION_REPAIR_ADD = "315";//维修记录录入
 	public static final String FUNCTION_REPAIR_QUERY = "316";//维修记录查询
+	
+	public static final String FUNCTION_TJ_MANAGE="410";//统计报表
+	public static final String FUNCTION_TJ_DEVICE="411";//设备统计
+	
+	
 	/*操作类型*/
 	public static final String OPERATION_INSERT = "1";//增加
 	public static final String OPERATION_UPDATE = "2";//修改
