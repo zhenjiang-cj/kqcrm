@@ -144,14 +144,19 @@
 	</div>
 	</div>
 	
-	<div class="tabsPage"  >
-		<ul class="tabsPageHeader"><li><span>合同新增</span></li></ul>
-	</div>
-	<div class="pageFormContent">
+		<div class="pageFormContent">
   <form class="pageForm required-validate" onsubmit="return validateCallback(this,navTabAjaxDone)" action="<%=path%>/crmAction.do?method=doHtAdd" method="post" name="userForm">
     <input type="hidden" name="kh_id" id="kh_id" value="<%=userform.getKh_id() %>">
     <input type="hidden" name="operatorId" id="operatorId" value="<%=userform.getOperatorId() %>">
-    
+	
+	<div class="panelBar"  >
+		<ul class="toolBar">
+			<li class=""><span>合同新增</span></li>
+			<li style="float: right;"><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			<li style="float: right;"><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+		</ul>
+	</div>
+
     
     <div class="pageFormContent nowrap"   style="height:170px">
 		
@@ -206,13 +211,14 @@
          </table>
 		
 	</div>
-	
+	<!--  
     <div class="formBar" >
 			<ul>
 				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
 				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
 			</ul>
     </div>
+    -->
 	</form>
 	</div>
   </body>
