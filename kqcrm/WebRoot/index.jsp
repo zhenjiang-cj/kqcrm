@@ -139,7 +139,6 @@ function fillSpace(key){
 					%>
 					<li><a>用户名称：<%=sessdata.getUser_name() %></a></li>
 					<li><a>用户工号：<%=sessdata.getUser_id() %></a></li>
-					<!-- <li><a>归属区域:<select class=""><%=regionoption %></select></a></li> -->
 					<%
 				}
 				%>
