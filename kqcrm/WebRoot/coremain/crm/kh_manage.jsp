@@ -32,7 +32,45 @@ if(sessdata!=null){
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page"> 
 	<link href="<%=path%>/css/content.css" rel="stylesheet" type="text/css"  />
+<script type="text/javascript">
+	 $(function(){
+        jQuery("#provinces",navTab.getCurrentPanel()).val('<%=userform.getProvinces()  %>');
+        jQuery("#city",navTab.getCurrentPanel()).val('<%=userform.getCity()  %>');
+        
+	});
+function provincesChange() {
+    jQuery("#city",navTab.getCurrentPanel()).html('');
+    var provinces = "";
+    provinces=jQuery("#city",navTab.getCurrentPanel()).val();
+    if(provinces==''){
+        provinces='';
+    }
+    alert(provinces);
+    try{
+		$.ajax({
+		    type:"post",
+			dataType:"json",
+			contentType:"application/json;charset=UTF-8",
+			url:'<%=path%>/coremain/portal/user/provincesChange.jsp?provinces='+provinces,
+		    success:function(data){
+	            if(null!=data){
+                    jQuery("#city",navTab.getCurrentPanel()).html(data[0].cityMap);
+	            }else{
+	                alert("没有获取地市信息");
+	            }
+		    },
+		    error:function (data){
+		        alert("获取地市信息信息失败！");
+		    }
+		});
+	}catch(e){
+		alert(e);
+	}
+}
+ 
 
+
+	</script>
   </head>
   
   <body>
@@ -75,6 +113,20 @@ if(sessdata!=null){
 				</td>
 				<td>
 					家庭地址：<input type="text" name="kh_addr" id="kh_addr" value="<%=userform.getKh_addr()==null?"":userform.getKh_addr() %>"  />
+				</td>
+				<td>
+					省份：
+					<select  name="provinces" id="provinces"   onchange="provincesChange();">
+						<option value="">--请选择--</option>
+						<%=DictMgmt.getSelectObj(DictMgmt.DICT_KQ_PROVINCES,"",false,false,"-1", -1, null, null, null,-1,"") %>
+					</select>
+				</td>
+				<td>
+					城市：
+					<select  name="city" id="city"    >
+						<option value="">--请选择--</option>
+						<%=DictMgmt.getSelectObj(DictMgmt.DICT_KQ_CITY,"",false,false,"-1", -1, null, null, null,-1,"") %>
+					</select>
 				</td>
 			</tr>
 		</table>

@@ -28,6 +28,7 @@ try
 	//formBean.setCity(sessionData.getCity());
 
 	List<UserInfo> userlist = sc.getCityByPro(formBean);
+	System.out.println("%%%%%%%%%userlist="+userlist.size());
 	
 	String options = "<option value=''>---È«²¿---</option>";
 	if(null!=userlist&&userlist.size()>0){ 
