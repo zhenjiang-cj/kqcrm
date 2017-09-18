@@ -40,6 +40,12 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 					<isNotEmpty property="kh_addr">
 							and a.kh_addr  like '%$kh_addr$%'
 					</isNotEmpty>
+					<isNotEmpty property="provinces">
+							and a.provinces  = #provinces#
+					</isNotEmpty>
+					<isNotEmpty property="city">
+							and a.city = #city#
+					</isNotEmpty>
 				  </dynamic>         
 		                   ) a) t
 		 where t.rn>(#page_num#-1)*#page_size# and #page_num#*#page_size# >= t.rn

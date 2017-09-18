@@ -32,6 +32,8 @@ public class CrmSc extends AbstractDB {
 			param.put("kh_addr", userform.getKh_addr());
 			param.put("page_num", userform.getPageNum());
 			param.put("page_size", userform.getNumPerPage());
+			param.put("provinces", userform.getProvinces());
+			param.put("city", userform.getCity());
 			
 			userlist = db.queryKh(param);
 		} catch(Exception e)
