@@ -151,6 +151,30 @@ public class CrmDb extends AbstractDB {
 		return retCode;
 	}
 	
+	public int doDelKhRelationHt(Map<String, String> param) throws Exception  {
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try
+		{
+			smc.insert("CrmSql.doDelKhRelationHt", param);
+		}catch(Exception e){
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		}
+		return retCode;
+	}
+	
+	public int doDelKhRelationHf(Map<String, String> param) throws Exception  {
+		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
+		try
+		{
+			smc.insert("CrmSql.doDelKhRelationHf", param);
+		}catch(Exception e){
+			retCode = GlobalConst.GLOBAL_RESULT_FAIL;
+			throw e;
+		}
+		return retCode;
+	}
+	
 	public int doYxkhDel(Map<String, String> param) throws Exception  {
 		int retCode = GlobalConst.GLOBAL_RESULT_SUCCESS;
 		try

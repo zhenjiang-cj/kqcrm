@@ -250,6 +250,14 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	  UPDATE kq_kh_info set is_valid=0,change_id = #operator_id#,change_date = getDate() where is_valid =1 and kh_id = #kh_id#
 	</update>
 	
+	<update id="doDelKhRelationHt" parameterClass="java.util.HashMap">
+	  UPDATE kq_ht_info set is_valid=0,change_id = #operator_id#,change_date = getDate() where is_valid =1 and kh_id = #kh_id#
+	</update>
+	
+	<update id="doDelKhRelationHf" parameterClass="java.util.HashMap">
+	  UPDATE kq_hf_info set is_valid=0 where is_valid =1 and ht_id in (select ht_id from kq_ht_info where is_valid =1 and kh_id = #kh_id# )
+	</update>
+	
 	<update id="doYxkhDel" parameterClass="java.util.HashMap">
 	  UPDATE kq_yxkh_info set is_valid=0,change_id = #operator_id#,change_date = getDate() where is_valid =1 and kh_id = #kh_id#
 	</update>
