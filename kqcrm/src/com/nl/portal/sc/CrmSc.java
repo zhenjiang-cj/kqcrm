@@ -254,9 +254,14 @@ public class CrmSc extends AbstractDB {
 			param.put("kh_id",form.getKh_id());
 			
 			retCode = db.doKhDel(param);
-			if(retCode == GlobalConst.GLOBAL_RESULT_FAIL)return retCode;
+			if(retCode == GlobalConst.GLOBAL_RESULT_FAIL) return retCode;
 			
-			 
+			//先删除回访记录，再删除合同
+			retCode = db.doDelKhRelationHf(param);
+			if(retCode == GlobalConst.GLOBAL_RESULT_FAIL) return retCode;
+			
+			retCode = db.doDelKhRelationHt(param);
+			if(retCode == GlobalConst.GLOBAL_RESULT_FAIL) return retCode;						
 			
 			smc.commitTransaction();
 		} catch (Exception e) {
