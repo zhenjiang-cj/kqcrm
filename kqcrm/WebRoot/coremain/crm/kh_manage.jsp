@@ -41,11 +41,11 @@ if(sessdata!=null){
 function provincesChange() {
     jQuery("#city",navTab.getCurrentPanel()).html('');
     var provinces = "";
-    provinces=jQuery("#city",navTab.getCurrentPanel()).val();
+    provinces=jQuery("#provinces",navTab.getCurrentPanel()).val();
     if(provinces==''){
         provinces='';
     }
-    alert(provinces);
+    //alert(provinces);
     try{
 		$.ajax({
 		    type:"post",
@@ -54,7 +54,9 @@ function provincesChange() {
 			url:'<%=path%>/coremain/portal/user/provincesChange.jsp?provinces='+provinces,
 		    success:function(data){
 	            if(null!=data){
-                    jQuery("#city",navTab.getCurrentPanel()).html(data[0].cityMap);
+	                // jQuery("#city",navTab.getCurrentPanel()).empty();
+                    //jQuery("#city",navTab.getCurrentPanel()).append(data[0].cityMap);
+                    jQuery("#city").html(data[0].cityMap);
 	            }else{
 	                alert("没有获取地市信息");
 	            }
