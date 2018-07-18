@@ -42,7 +42,7 @@ try
 	resultMap.put("cityMap",options);
 	//String result = GlobalFunc.getJosnStrForObject(resultMap);
 	JSONArray jsonArray = JSONArray.fromObject(resultMap);
-	//System.out.println("jsonArray=="+jsonArray);
+	System.out.println("jsonArray=="+jsonArray);
 	out.print(jsonArray);
 }catch(Exception e){
 //	getLogger(bosscodestr,GlobalConst.ERROR).error("进入欢迎页面出错:"+e.getMessage());
